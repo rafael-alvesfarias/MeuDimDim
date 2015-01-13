@@ -1,0 +1,12 @@
+target/classes/br/com/mdd/domain/DespesaFixa.class
+target/classes/br/com/mdd/domain/Orcamento$1.class
+target/classes/br/com/mdd/domain/Orcamento.class
+target/classes/br/com/mdd/web/controller/DespesasAnuaisController.class
+target/classes/br/com/mdd/web/view/OrcamentoDespesasAnuaisViewModel$ConjuntoDespesas.class
+target/classes/br/com/mdd/web/view/OrcamentoDespesasAnuaisViewModel.class
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/br.com.mdd/MeuDimDim/pom.properties
+target/classes/META-INF/maven/br.com.mdd/MeuDimDim/pom.xml
+target/test-classes/br/com/mdd/domain/DespesaTest.class
+target/test-classes/br/com/mdd/domain/OrcamentoTest.class
+target/test-classes/br/com/mdd/web/view/OrcamentoDespesasAnuaisViewModelTest.class
