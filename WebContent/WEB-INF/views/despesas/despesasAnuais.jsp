@@ -24,6 +24,10 @@
 	</script>
 </head>
 <body>
+	<div class="cabecalho">
+		<img src="<c:url value='/recursos/imagens/logo.png'/>"/>
+		<h1>Meu <span>Dimdim</span></h1>
+	</div>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="painel">
@@ -195,6 +199,8 @@
 				<input type="button" value="Salvar" class="botao-direita"/>
 			</div>
 		</form>
+	</div>
+	<div class="rodape">
 	</div>
 </body>
 </html>
