@@ -130,25 +130,32 @@ form table, form td, form tr{
 	display: none;
 }
 
-.cabecalho{
-	height: 62px;
-	padding-left: 30px;
-	padding-top: 15px;
-}
-
-.cabecalho h1{
-	font-size: 32px;
-	color: white;
-}
-
-.cabecalho span{
-	font-weight: 600;
-	font-size: 32px;
-	color: #DDDDDD;
-}
-
 .cabecalho img{
 	padding-right: 8px;
 	width: 60px;
 	float: left;
+}
+
+.cabecalho{
+	height: 67px;
+	padding-left: 50px;
+	padding-top: 10px;
+	color: white;
+}
+
+.cabecalho h1, span{
+	font-size: 32px;
+}
+
+.cabecalho span{
+	font-weight:900;
+	color: #65944A;
+}
+
+.cabecalho h2{
+	font-size: 11px;
+	position: absolute;
+	top: 50px;
+	left: 150px;
+	text-transform: none;
 }

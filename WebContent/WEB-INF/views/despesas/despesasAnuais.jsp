@@ -26,7 +26,8 @@
 <body>
 	<div class="cabecalho">
 		<img src="<c:url value='/recursos/imagens/logo.png'/>"/>
-		<h1>Meu <span>Dimdim</span></h1>
+		<h1>meu<span>dimdim</span></h1>
+		<h2>rumo à independência financeira</h2>
 	</div>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
