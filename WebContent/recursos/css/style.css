@@ -14,9 +14,8 @@ div{
 
 body{
 	height: 100%;
-	background-image: linear-gradient(#DDDDDD, #FFFFFF 85px);
-	background-repeat: no-repeat;
-    background-attachment: fixed;
+	background-image: url(../imagens/bg.jpg);
+	background-repeat: repeat-x;
 }
 
 .box{
@@ -129,4 +128,34 @@ form table, form td, form tr{
 
 .ui-widget-header{
 	display: none;
+}
+
+.cabecalho img{
+	padding-right: 8px;
+	width: 60px;
+	float: left;
+}
+
+.cabecalho{
+	height: 67px;
+	padding-left: 50px;
+	padding-top: 10px;
+	color: white;
+}
+
+.cabecalho h1, span{
+	font-size: 32px;
+}
+
+.cabecalho span{
+	font-weight:900;
+	color: #65944A;
+}
+
+.cabecalho h2{
+	font-size: 11px;
+	position: absolute;
+	top: 50px;
+	left: 150px;
+	text-transform: none;
 }
