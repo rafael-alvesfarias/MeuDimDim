@@ -18,7 +18,7 @@ public class DespesasAnuaisController {
 	
 	@RequestMapping("/despesasAnuais")
 	public String despesasAnuais(Model model){
-		Orcamento orcamentoDespesasFixas = getOrcamento().anual().gerar();
+		Orcamento orcamentoDespesasFixas = getOrcamento().anual().comPrevisao().gerar();
 		OrcamentoDespesasAnuaisViewModel orcamentoViewModel = new OrcamentoDespesasAnuaisViewModel(orcamentoDespesasFixas);
 		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModel);
 		return "/despesas/despesasAnuais";
@@ -31,8 +31,8 @@ public class DespesasAnuaisController {
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), 18);*/
 		
 		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 5, 12));
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 9, 20));
+		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 1, 12));
+		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 1, 20));
 		
 		despesas.add(agua);
 		despesas.add(luz);

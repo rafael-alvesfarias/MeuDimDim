@@ -7,7 +7,7 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 
 /**
- * Um orÃ§amento Ã© um conjunto de lanÃ§amentos realizados em um determinado perÃ­odo. 
+ * Um orçaamento é um conjunto de lançamentos realizados em um determinado período. 
  * @author rafaelfarias
  *
  */
@@ -16,6 +16,7 @@ public class Orcamento {
 	private Set<DespesaFixa> despesasFixas;
 	private LocalDate dataDe;
 	private LocalDate dataAte;
+	private boolean preverLancamentos = false;
 	
 	public Orcamento(Set<DespesaFixa> despesasFixas){
 		if(despesasFixas == null){
@@ -32,37 +33,43 @@ public class Orcamento {
 	}
 	
 	public Orcamento anual() {
-		Orcamento orcamentoAnual = new Orcamento(this.despesasFixas){
-			@Override
-			public Orcamento gerar() {
-				Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.getDespesasFixas());
-				for (DespesaFixa despesaFixa : this.getDespesasFixas()) {
-					int mesDespesa = despesaFixa.getDataVencimento().getMonthOfYear();
-					for(int novoMes = mesDespesa + 1; novoMes <= 12; novoMes++){
-						LocalDate novaData = despesaFixa.getDataVencimento().withMonthOfYear(novoMes);
-						DespesaFixa despesaFixaPrevista = new DespesaFixa(despesaFixa.getDescricao(), despesaFixa.getValor(), novaData);
-						if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
-							despesaFixasPrevistas.add(despesaFixaPrevista);
-						}
-					}
-				}
-				this.setDespesasFixas(despesaFixasPrevistas);
-				return super.gerar();
-			}
-		};
-		
 		LocalDate hoje = LocalDate.now();
-		orcamentoAnual.dataDe = hoje.withMonthOfYear(1).withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
-		orcamentoAnual.dataAte = hoje.withMonthOfYear(12).withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
+		this.dataDe = hoje.withMonthOfYear(1).withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
+		this.dataAte = hoje.withMonthOfYear(12).withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
 		
-		return orcamentoAnual;		
+		return this;		
 	}
 	
 	public Orcamento porPeriodo(LocalDate dataDe, LocalDate dataAte){
 		return this;
 	}
+	
+	public Orcamento comPrevisao(){
+		this.preverLancamentos = true;		
+		return this;
+	}
+	
+	private void gerarLancamentosPrevistos(){
+		Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.despesasFixas);
+		for (DespesaFixa despesaFixa : this.despesasFixas) {
+			int mesDespesa = despesaFixa.getDataVencimento().getMonthOfYear();
+			int ultimoMes = this.getDataAte().getMonthOfYear();
+			for(int novoMes = mesDespesa + 1; novoMes <= ultimoMes; novoMes++){
+				LocalDate novaData = despesaFixa.getDataVencimento().withMonthOfYear(novoMes);
+				DespesaFixa despesaFixaPrevista = new DespesaFixa(despesaFixa.getDescricao(), despesaFixa.getValor(), novaData);
+				if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
+					despesaFixasPrevistas.add(despesaFixaPrevista);
+				}
+			}
+		}
+		this.despesasFixas = despesaFixasPrevistas;
+	}
 
 	public Orcamento gerar() {
+		if(preverLancamentos){
+			this.gerarLancamentosPrevistos();
+		}
+		
 		Set<DespesaFixa> orcamento = new HashSet<DespesaFixa>();
 		for (DespesaFixa despesa : despesasFixas) {
 			if(estaDentroDoIntervalo(despesa.getDataVencimento())){

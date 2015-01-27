@@ -23,7 +23,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoAnualDespesasFixas() {
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("√Ågua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
+		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 2, 9));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2020, 1, 9));
 		despesasFixas.add(agua);
@@ -33,7 +33,7 @@ public class OrcamentoTest {
 		DespesaFixa luzEmJaneiro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataVencimento().minusMonths(1));
 		DespesaFixa luzEmDezembro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataVencimento().plusMonths(10));
 		
-		Orcamento orcamentoAnual = new Orcamento(despesasFixas).anual().gerar();
+		Orcamento orcamentoAnual = new Orcamento(despesasFixas).anual().comPrevisao().gerar();
 		
 		assertEquals(23, orcamentoAnual.getDespesasFixas().size());
 		assertTrue(orcamentoAnual.getDespesasFixas().contains(aguaEmMaio));
@@ -46,7 +46,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoMensalDeDespesasFixas(){
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("√Ågua", new BigDecimal("45.98"), LocalDate.now());
+		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), LocalDate.now());
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), LocalDate.now().plusMonths(1));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), LocalDate.now().plusYears(5));
 		despesasFixas.add(agua);
