@@ -36,7 +36,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th style="border:none; opacity:0;"/>
+							<th/>
 							<th>Janeiro</th>
 							<th>Fevereiro</th>
 							<th>Março</th>
@@ -61,20 +61,24 @@
 						</tr>
 					</tfoot>
 					<tbody>
-						<c:forEach var="conuntoDespesas" items="${orcamentoDespesasFixas.despesasAnuais}">
+						<c:forEach var="conuntoDespesas" items="${orcamentoDespesasFixas.despesasAnuais}" varStatus="status">
 							<tr>
 								<th>${conuntoDespesas.nomeDespesa}</th>
 								<c:forEach var="mes" begin="1" end="12">
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesasFixas[mes] != null}">
-											<td>R$ ${conuntoDespesas.despesasFixas[mes].valor}</td>
+											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+												R$ ${conuntoDespesas.despesasFixas[mes].valor}
+											</td>
 										</c:when>
 										<c:otherwise>
-											<td/>
+											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}"/>
 										</c:otherwise>
 									</c:choose>
 								</c:forEach>
-								<td>R$ ${conuntoDespesas.total}</td>
+								<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+									R$ ${conuntoDespesas.total}
+								</td>
 							</tr>
 						</c:forEach>
 					</tbody>
@@ -88,7 +92,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th style="border:none; opacity:0;"/>
+							<th/>
 							<th>Janeiro</th>
 							<th>Fevereiro</th>
 							<th>Março</th>
@@ -107,69 +111,69 @@
 					<tfoot>
 						<tr>
 							<th>TOTAL</th>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
 						</tr>
 					</tfoot>
 					<tbody>
 						<tr>
 							<th>Combustível</th>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
 						</tr>
 						<tr>
 							<th>Lazer</th>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
+							<td class="linha-par">R$ 99,99</td>
 						</tr>
 						<tr>
 							<th>Alimentação</th>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
-							<td>R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
+							<td class="linha-impar">R$ 99,99</td>
 						</tr>
 					</tbody>
 				</table>

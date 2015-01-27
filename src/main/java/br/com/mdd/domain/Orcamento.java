@@ -1,12 +1,8 @@
 package br.com.mdd.domain;
 
-import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import org.joda.time.LocalDate;
 
@@ -15,9 +11,9 @@ import org.joda.time.LocalDate;
  * @author rafaelfarias
  *
  */
-public class Orcamento implements Iterable<DespesaFixa> {
+public class Orcamento {
 	
-	protected Set<DespesaFixa> despesasFixas;
+	private Set<DespesaFixa> despesasFixas;
 	private LocalDate dataDe;
 	private LocalDate dataAte;
 	
@@ -25,23 +21,7 @@ public class Orcamento implements Iterable<DespesaFixa> {
 		if(despesasFixas == null){
 			throw new IllegalArgumentException("Conjunto de despesas não pode ser nulo!");
 		}
-		this.despesasFixas = despesasFixas;
-	}
-
-	public Map<String, List<DespesaFixa>> gerarOrcamentoDoAno() {
-		Map<String, List<DespesaFixa>> retorno = new TreeMap<String, List<DespesaFixa>>();
-		for (DespesaFixa despesa : despesasFixas) {
-			List<DespesaFixa> despesasAnuais = new ArrayList<DespesaFixa>(12);
-			
-			for(int mes = 1; mes <= 12; mes++){
-				LocalDate data = despesa.getDataVencimento().withDayOfMonth(despesa.getVencimento()).withMonthOfYear(Integer.valueOf(mes));
-				despesasAnuais.add(new DespesaFixa(despesa.getDescricao(), despesa.getValor(), data));
-			}
-			
-			retorno.put(despesa.getDescricao(), despesasAnuais);
-		}
-
-		return retorno;
+		this.despesasFixas = new HashSet<DespesaFixa>(despesasFixas);
 	}
 
 	public Orcamento mensal() {
@@ -55,8 +35,8 @@ public class Orcamento implements Iterable<DespesaFixa> {
 		Orcamento orcamentoAnual = new Orcamento(this.despesasFixas){
 			@Override
 			public Orcamento gerar() {
-				Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.despesasFixas);
-				for (DespesaFixa despesaFixa : this) {
+				Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.getDespesasFixas());
+				for (DespesaFixa despesaFixa : this.getDespesasFixas()) {
 					int mesDespesa = despesaFixa.getDataVencimento().getMonthOfYear();
 					for(int novoMes = mesDespesa + 1; novoMes <= 12; novoMes++){
 						LocalDate novaData = despesaFixa.getDataVencimento().withMonthOfYear(novoMes);
@@ -66,7 +46,7 @@ public class Orcamento implements Iterable<DespesaFixa> {
 						}
 					}
 				}
-				this.despesasFixas = despesaFixasPrevistas;
+				this.setDespesasFixas(despesaFixasPrevistas);
 				return super.gerar();
 			}
 		};
@@ -92,26 +72,33 @@ public class Orcamento implements Iterable<DespesaFixa> {
 		this.despesasFixas = orcamento;
 		return this;
 	}
-
-	@Override
-	public Iterator<DespesaFixa> iterator() {
-		return this.despesasFixas.iterator();
-	}
-	
-	public boolean contains(DespesaFixa despesa){
-		return this.despesasFixas.contains(despesa);
-	}
-	
-	public int size(){
-		return this.despesasFixas.size();
-	}
 	
 	private boolean estaDentroDoIntervalo(LocalDate data){
 		return dataDe.equals(data) || (dataDe.isBefore(data) && data.isBefore(dataAte)) || data.equals(dataAte);
 	}
-	
-	protected void add(DespesaFixa despesaFixa){
-		despesasFixas.add(despesaFixa);
+
+	public Set<DespesaFixa> getDespesasFixas() {
+		return Collections.unmodifiableSet(despesasFixas);
+	}
+
+	public void setDespesasFixas(Set<DespesaFixa> despesasFixas) {
+		this.despesasFixas = new HashSet<DespesaFixa>(despesasFixas);
+	}
+
+	public LocalDate getDataDe() {
+		return dataDe;
+	}
+
+	public void setDataDe(LocalDate dataDe) {
+		this.dataDe = dataDe;
+	}
+
+	public LocalDate getDataAte() {
+		return dataAte;
+	}
+
+	public void setDataAte(LocalDate dataAte) {
+		this.dataAte = dataAte;
 	}
 	
 }

@@ -4,10 +4,7 @@ import static org.junit.Assert.*;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
 import java.util.Set;
-import java.util.TreeSet;
 
 import org.joda.time.LocalDate;
 import org.junit.Before;
@@ -18,20 +15,9 @@ import br.com.mdd.domain.Orcamento;
 
 public class OrcamentoTest {
 	
-	private Orcamento orcamento;
-	private Set<DespesaFixa> despesasIniciais;
-
 	@Before
 	public void setUp() throws Exception {
-		despesasIniciais = new TreeSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), 10);
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), 12);
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), 30);
-		despesasIniciais.add(agua);
-		despesasIniciais.add(luz);
-		despesasIniciais.add(telefone);
 		
-		orcamento = new Orcamento(despesasIniciais);
 	}
 
 	@Test
@@ -49,11 +35,11 @@ public class OrcamentoTest {
 		
 		Orcamento orcamentoAnual = new Orcamento(despesasFixas).anual().gerar();
 		
-		assertEquals(23, orcamentoAnual.size());
-		assertTrue(orcamentoAnual.contains(aguaEmMaio));
-		assertTrue(orcamentoAnual.contains(luzEmDezembro));
-		assertFalse(orcamentoAnual.contains(luzEmJaneiro));
-		assertFalse(orcamentoAnual.contains(telefone));
+		assertEquals(23, orcamentoAnual.getDespesasFixas().size());
+		assertTrue(orcamentoAnual.getDespesasFixas().contains(aguaEmMaio));
+		assertTrue(orcamentoAnual.getDespesasFixas().contains(luzEmDezembro));
+		assertFalse(orcamentoAnual.getDespesasFixas().contains(luzEmJaneiro));
+		assertFalse(orcamentoAnual.getDespesasFixas().contains(telefone));
 		
 	}
 	
@@ -69,25 +55,10 @@ public class OrcamentoTest {
 		
 		Orcamento orcamentoMensal = new Orcamento(despesasFixas).mensal().gerar();
 		
-		assertEquals(1, orcamentoMensal.size());
-		assertTrue(orcamentoMensal.contains(agua));
-		assertFalse(orcamentoMensal.contains(luz));
-		assertFalse(orcamentoMensal.contains(telefone));
-	}
-	
-	@Test
-	public void testObterTotalDeDespesasAnuaisDeDeterminadaDespesaFixa(){
-		BigDecimal resultadoEsperado = new BigDecimal("551.76");
-		BigDecimal total = BigDecimal.ZERO;
-		String despesaDesejada = "Água";
-		Map<String, List<DespesaFixa>> obj = orcamento.gerarOrcamentoDoAno();
-		
-		List<DespesaFixa> despesasDeAguaNoAno = obj.get(despesaDesejada);
-		for (DespesaFixa d : despesasDeAguaNoAno) {
-			total = total.add(d.getValor());
-		}
-		
-		assertEquals(resultadoEsperado, total);
+		assertEquals(1, orcamentoMensal.getDespesasFixas().size());
+		assertTrue(orcamentoMensal.getDespesasFixas().contains(agua));
+		assertFalse(orcamentoMensal.getDespesasFixas().contains(luz));
+		assertFalse(orcamentoMensal.getDespesasFixas().contains(telefone));
 	}
 	
 	@Test(expected = IllegalArgumentException.class)

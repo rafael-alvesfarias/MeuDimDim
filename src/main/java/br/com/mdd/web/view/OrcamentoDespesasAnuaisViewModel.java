@@ -22,7 +22,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 
 	private void montar() {
 		despesasAnuais = new ArrayList<ConjuntoDespesas>();
-		for (DespesaFixa itemOrcamento : orcamento) {
+		for (DespesaFixa itemOrcamento : orcamento.getDespesasFixas()) {
 			ConjuntoDespesas conjuntoDespesas = null;
 			for (ConjuntoDespesas conj : despesasAnuais) {
 				if (conj.getNomeDespesa().equals(itemOrcamento.getDescricao())) {
