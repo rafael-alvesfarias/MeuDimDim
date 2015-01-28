@@ -7,7 +7,7 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 
 /**
- * Um or�aamento � um conjunto de lan�amentos realizados em um determinado per�odo. 
+ * Um orçamento é um conjunto de lançamentos realizados em um determinado período. 
  * @author rafaelfarias
  *
  */
@@ -41,6 +41,16 @@ public class Orcamento {
 	}
 	
 	public Orcamento porPeriodo(LocalDate dataDe, LocalDate dataAte){
+		if(dataDe == null || dataAte == null){
+			throw new IllegalArgumentException("Período passado por parâmetro não pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
+		}
+		
+		if(dataDe.isAfter(dataAte)){
+			throw new IllegalArgumentException("Período passado por parâmetro é inválido: dataDe="+ dataDe + "dataAte=" + dataAte);
+		}
+		
+		this.dataDe = dataDe;
+		this.dataAte = dataAte;
 		return this;
 	}
 	
@@ -66,6 +76,11 @@ public class Orcamento {
 	}
 
 	public Orcamento gerar() {
+		if(dataDe == null || dataAte == null){
+			despesasFixas = new HashSet<DespesaFixa>();
+			return this;
+		}
+		
 		if(preverLancamentos){
 			this.gerarLancamentosPrevistos();
 		}
@@ -96,16 +111,8 @@ public class Orcamento {
 		return dataDe;
 	}
 
-	public void setDataDe(LocalDate dataDe) {
-		this.dataDe = dataDe;
-	}
-
 	public LocalDate getDataAte() {
 		return dataAte;
-	}
-
-	public void setDataAte(LocalDate dataAte) {
-		this.dataAte = dataAte;
 	}
 	
 }

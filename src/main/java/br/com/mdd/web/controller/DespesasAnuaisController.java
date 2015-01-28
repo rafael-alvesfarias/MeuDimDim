@@ -26,9 +26,6 @@ public class DespesasAnuaisController {
 	
 	private static final Orcamento getOrcamento(){
 		Set<DespesaFixa> despesas = new TreeSet<DespesaFixa>();
-		/*DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), 10);
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), 12);
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), 18);*/
 		
 		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 1, 12));

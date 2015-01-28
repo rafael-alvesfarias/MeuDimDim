@@ -23,7 +23,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoAnualDespesasFixas() {
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
+		DespesaFixa agua = new DespesaFixa("√Ågua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 2, 9));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2020, 1, 9));
 		despesasFixas.add(agua);
@@ -46,7 +46,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoMensalDeDespesasFixas(){
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), LocalDate.now());
+		DespesaFixa agua = new DespesaFixa("ÔøΩgua", new BigDecimal("45.98"), LocalDate.now());
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), LocalDate.now().plusMonths(1));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), LocalDate.now().plusYears(5));
 		despesasFixas.add(agua);
@@ -64,6 +64,37 @@ public class OrcamentoTest {
 	@Test(expected = IllegalArgumentException.class)
 	public void testCriaObjetoOrcamentoComConjuntoDeDespesasNulo(){
 		new Orcamento(null);
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testOrcamentoComPeriodoNulo(){
+		Set<DespesaFixa> despesas = new HashSet<DespesaFixa>();
+		Orcamento orcamento = new Orcamento(despesas);
+		
+		try{
+			orcamento.porPeriodo(null, new LocalDate()).gerar();
+		}catch(IllegalArgumentException e){
+			orcamento.porPeriodo(new LocalDate(), null).gerar();
+		}
+	}
+	
+	@Test(expected = IllegalArgumentException.class)
+	public void testOrcamentoComPeriodoInvalido(){
+		Set<DespesaFixa> despesas = new HashSet<DespesaFixa>();
+		Orcamento orcamento = new Orcamento(despesas);
+		
+		orcamento.porPeriodo(LocalDate.now(), LocalDate.now().minusDays(1));
+	}
+	
+	@Test
+	public void testGerarOrcamentoSemInformarPeriodo(){
+		Set<DespesaFixa> despesas = new HashSet<DespesaFixa>();
+		despesas.add(new DespesaFixa("teste", BigDecimal.ZERO, LocalDate.now()));
+		Orcamento orcamento = new Orcamento(despesas);
+		
+		orcamento.gerar();
+		
+		assertEquals(orcamento.getDespesasFixas().size(), 0);
 	}
 
 }
