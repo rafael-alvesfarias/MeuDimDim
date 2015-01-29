@@ -62,10 +62,10 @@ public class Orcamento {
 	private void gerarLancamentosPrevistos(){
 		Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.despesasFixas);
 		for (DespesaFixa despesaFixa : this.despesasFixas) {
-			int mesDespesa = despesaFixa.getDataVencimento().getMonthOfYear();
+			int mesDespesa = despesaFixa.getDataLancamento().getMonthOfYear();
 			int ultimoMes = this.getDataAte().getMonthOfYear();
 			for(int novoMes = mesDespesa + 1; novoMes <= ultimoMes; novoMes++){
-				LocalDate novaData = despesaFixa.getDataVencimento().withMonthOfYear(novoMes);
+				LocalDate novaData = despesaFixa.getDataLancamento().withMonthOfYear(novoMes);
 				DespesaFixa despesaFixaPrevista = new DespesaFixa(despesaFixa.getDescricao(), despesaFixa.getValor(), novaData);
 				if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
 					despesaFixasPrevistas.add(despesaFixaPrevista);
@@ -87,7 +87,7 @@ public class Orcamento {
 		
 		Set<DespesaFixa> orcamento = new HashSet<DespesaFixa>();
 		for (DespesaFixa despesa : despesasFixas) {
-			if(estaDentroDoIntervalo(despesa.getDataVencimento())){
+			if(estaDentroDoIntervalo(despesa.getDataLancamento())){
 				orcamento.add(despesa);
 			}
 		}

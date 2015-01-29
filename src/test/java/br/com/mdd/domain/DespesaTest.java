@@ -46,8 +46,8 @@ public class DespesaTest {
 		
 		DespesaFixa aluguel = new DespesaFixa("Aluguel",  new BigDecimal("1200.0"));
 		DespesaFixa condominio = new DespesaFixa("Condomínio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-		LocalDate dataVencimentoAluguel = aluguel.getDataVencimento();
-		LocalDate dataVencimentoComdominio = condominio.getDataVencimento();
+		LocalDate dataVencimentoAluguel = aluguel.getDataLancamento();
+		LocalDate dataVencimentoComdominio = condominio.getDataLancamento();
 		
 		assertEquals(dataDeHoje, formatador.format(dataVencimentoAluguel.toDate()));
 		assertEquals(dataDeHoje, formatador.format(dataVencimentoComdominio.toDate()));

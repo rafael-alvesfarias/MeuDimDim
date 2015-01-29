@@ -29,9 +29,9 @@ public class OrcamentoTest {
 		despesasFixas.add(agua);
 		despesasFixas.add(luz);
 		despesasFixas.add(telefone);
-		DespesaFixa aguaEmMaio = new DespesaFixa(agua.getDescricao(), agua.getValor(), agua.getDataVencimento().plusMonths(4));
-		DespesaFixa luzEmJaneiro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataVencimento().minusMonths(1));
-		DespesaFixa luzEmDezembro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataVencimento().plusMonths(10));
+		DespesaFixa aguaEmMaio = new DespesaFixa(agua.getDescricao(), agua.getValor(), agua.getDataLancamento().plusMonths(4));
+		DespesaFixa luzEmJaneiro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataLancamento().minusMonths(1));
+		DespesaFixa luzEmDezembro = new DespesaFixa(luz.getDescricao(), luz.getValor(), luz.getDataLancamento().plusMonths(10));
 		
 		Orcamento orcamentoAnual = new Orcamento(despesasFixas).anual().comPrevisao().gerar();
 		

@@ -36,7 +36,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 				conjuntoDespesas.setDespesasFixas(new TreeMap<Integer, DespesaFixa>());
 				despesasAnuais.add(conjuntoDespesas);
 			}
-			Integer mes = Integer.valueOf(itemOrcamento.getDataVencimento().getMonthOfYear());
+			Integer mes = Integer.valueOf(itemOrcamento.getDataLancamento().getMonthOfYear());
 			conjuntoDespesas.getDespesasFixas().put(mes, itemOrcamento);
 		}
 		
