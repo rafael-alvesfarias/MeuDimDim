@@ -14,7 +14,7 @@ import org.junit.Test;
 
 import br.com.mdd.domain.DespesaFixa;
 
-public class DespesaTest {
+public class DespesaFixaTest {
 	
 	private static final DateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
 
