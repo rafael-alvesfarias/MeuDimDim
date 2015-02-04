@@ -23,7 +23,7 @@ public class DespesaFixa extends Despesa implements Comparable<DespesaFixa>{
 		LocalDate data = LocalDate.now();
 		Integer ultimoDiaDoMesAtual = data.dayOfMonth().getMaximumValue();
 		if(vencimento < 0 || vencimento > ultimoDiaDoMesAtual){
-			throw new IllegalArgumentException("Dia de vencimento passada por par√¢metro inv√°lida." + vencimento);
+			throw new IllegalArgumentException("Dia de vencimento passada por par‚metro inv·lida." + vencimento);
 		}
 		data.withDayOfMonth(vencimento);
 		this.setDataLancamento(data);
@@ -36,7 +36,7 @@ public class DespesaFixa extends Despesa implements Comparable<DespesaFixa>{
 
 	@Override
 	public String toString() {
-		return "DespesaFixa [descri√ß√£o=" + getDescricao() + ", vencimento="
+		return "DespesaFixa [descriÁ„o=" + getDescricao() + ", vencimento="
 				+ vencimento + ", data de vencimento=" + getDataLancamento()
 				+ ", valor=" + getValor() + "]";
 	}
