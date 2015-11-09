@@ -1,4 +1,4 @@
-package br.com.mdd.domain;
+package br.com.mdd.domain.model;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -6,8 +6,10 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
+import br.com.mdd.domain.model.DespesaFixa;
+
 /**
- * Um orÃ§amento Ã© um conjunto de lanÃ§amentos realizados em um determinado perÃ­odo. 
+ * Um orçamento é um conjunto de lançamentos realizados em um determinado período. 
  * @author rafaelfarias
  *
  */

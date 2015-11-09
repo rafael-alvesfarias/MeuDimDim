@@ -1,4 +1,4 @@
-package br.com.mdd.web.view;
+package br.com.mdd.web.view.model;
 
 import static org.junit.Assert.*;
 
@@ -11,9 +11,10 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.mdd.domain.DespesaFixa;
-import br.com.mdd.domain.Orcamento;
-import br.com.mdd.web.view.OrcamentoDespesasAnuaisViewModel.ConjuntoDespesas;
+import br.com.mdd.domain.model.DespesaFixa;
+import br.com.mdd.domain.model.Orcamento;
+import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel;
+import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel.ConjuntoDespesas;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
 

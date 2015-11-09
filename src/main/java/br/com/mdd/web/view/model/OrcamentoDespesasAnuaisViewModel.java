@@ -1,4 +1,4 @@
-package br.com.mdd.web.view;
+package br.com.mdd.web.view.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,8 +6,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
-import br.com.mdd.domain.DespesaFixa;
-import br.com.mdd.domain.Orcamento;
+import br.com.mdd.domain.model.DespesaFixa;
+import br.com.mdd.domain.model.Orcamento;
 
 public class OrcamentoDespesasAnuaisViewModel {
 

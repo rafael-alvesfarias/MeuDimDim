@@ -1,6 +1,8 @@
-package br.com.mdd.domain;
+package br.com.mdd.domain.model;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import java.math.BigDecimal;
 import java.util.HashSet;
@@ -9,9 +11,6 @@ import java.util.Set;
 import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
-
-import br.com.mdd.domain.DespesaFixa;
-import br.com.mdd.domain.Orcamento;
 
 public class OrcamentoTest {
 	
@@ -23,7 +22,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoAnualDespesasFixas() {
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("√Ågua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
+		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 2, 9));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2020, 1, 9));
 		despesasFixas.add(agua);
@@ -46,7 +45,7 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoMensalDeDespesasFixas(){
 		Set<DespesaFixa> despesasFixas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("ÔøΩgua", new BigDecimal("45.98"), LocalDate.now());
+		DespesaFixa agua = new DespesaFixa("¡gua", new BigDecimal("45.98"), LocalDate.now());
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), LocalDate.now().plusMonths(1));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), LocalDate.now().plusYears(5));
 		despesasFixas.add(agua);

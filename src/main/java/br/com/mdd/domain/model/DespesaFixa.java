@@ -1,10 +1,10 @@
-package br.com.mdd.domain;
+package br.com.mdd.domain.model;
 
 import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
 
-public class DespesaFixa extends Despesa implements Comparable<DespesaFixa>{
+public class DespesaFixa extends Despesa{
 	
 	private Integer vencimento;
 	
@@ -39,11 +39,6 @@ public class DespesaFixa extends Despesa implements Comparable<DespesaFixa>{
 		return "DespesaFixa [descrição=" + getDescricao() + ", vencimento="
 				+ vencimento + ", data de vencimento=" + getDataLancamento()
 				+ ", valor=" + getValor() + "]";
-	}
-
-	@Override
-	public int compareTo(DespesaFixa o) {
-		return this.getDescricao().compareTo(o.getDescricao());
 	}
 
 }

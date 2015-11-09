@@ -1,4 +1,4 @@
-package br.com.mdd.domain;
+package br.com.mdd.domain.model;
 
 import static org.junit.Assert.*;
 
@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.mdd.domain.DespesaFixa;
+import br.com.mdd.domain.model.DespesaFixa;
 
 public class DespesaFixaTest {
 	
@@ -27,7 +27,7 @@ public class DespesaFixaTest {
 		Integer diaDoMes = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
 		DespesaFixa aluguel = new DespesaFixa("Aluguel", new BigDecimal("1200.0"));
-		DespesaFixa condominio = new DespesaFixa("CondomÃ­nio",  new BigDecimal("350.0"), LocalDate.now());
+		DespesaFixa condominio = new DespesaFixa("Condomínio",  new BigDecimal("350.0"), LocalDate.now());
 		Integer vencimentoAluguel = aluguel.getVencimento();
 		Integer vencimentoComdominio = condominio.getVencimento();
 		
@@ -45,7 +45,7 @@ public class DespesaFixaTest {
 		String dataDeHoje = formatador.format(new Date());
 		
 		DespesaFixa aluguel = new DespesaFixa("Aluguel",  new BigDecimal("1200.0"));
-		DespesaFixa condominio = new DespesaFixa("CondomÃ­nio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		DespesaFixa condominio = new DespesaFixa("Condomínio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 		LocalDate dataVencimentoAluguel = aluguel.getDataLancamento();
 		LocalDate dataVencimentoComdominio = condominio.getDataLancamento();
 		

@@ -9,9 +9,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import br.com.mdd.domain.DespesaFixa;
-import br.com.mdd.domain.Orcamento;
-import br.com.mdd.web.view.OrcamentoDespesasAnuaisViewModel;
+import br.com.mdd.domain.model.DespesaFixa;
+import br.com.mdd.domain.model.Orcamento;
+import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel;
 
 @Controller
 public class DespesasAnuaisController {
