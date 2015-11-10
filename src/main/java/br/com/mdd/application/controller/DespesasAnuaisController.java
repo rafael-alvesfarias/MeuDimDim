@@ -1,4 +1,4 @@
-package br.com.mdd.web.controller;
+package br.com.mdd.application.controller;
 
 import java.math.BigDecimal;
 import java.util.Set;
@@ -9,9 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
 import br.com.mdd.domain.model.Orcamento;
-import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel;
+import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel;
 
 @Controller
 public class DespesasAnuaisController {
@@ -25,7 +26,7 @@ public class DespesasAnuaisController {
 	}
 	
 	private static final Orcamento getOrcamento(){
-		Set<DespesaFixa> despesas = new TreeSet<DespesaFixa>();
+		Set<Despesa> despesas = new TreeSet<Despesa>();
 		
 		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 1, 12));

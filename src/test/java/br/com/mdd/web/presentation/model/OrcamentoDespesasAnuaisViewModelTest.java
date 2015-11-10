@@ -1,4 +1,4 @@
-package br.com.mdd.web.view.model;
+package br.com.mdd.web.presentation.model;
 
 import static org.junit.Assert.*;
 
@@ -11,10 +11,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
+import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
 import br.com.mdd.domain.model.Orcamento;
-import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel;
-import br.com.mdd.web.view.model.OrcamentoDespesasAnuaisViewModel.ConjuntoDespesas;
+import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel;
+import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel.ConjuntoDespesas;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
 
@@ -28,8 +29,8 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
-		Set<DespesaFixa> despesas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("Ã�gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
+		Set<Despesa> despesas = new HashSet<Despesa>();
+		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 1, 12));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 1, 20));
 		despesas.add(agua);
@@ -46,7 +47,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		
 		//Conferindo os totais dos conjuntos
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("Ã�gua")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("�?gua")){
 				assertEquals(new BigDecimal("551.76"), conj.getTotal());
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(new BigDecimal("1184.76"), conj.getTotal());
@@ -66,8 +67,8 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeMesesVariados() {
-		Set<DespesaFixa> despesas = new HashSet<DespesaFixa>();
-		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
+		Set<Despesa> despesas = new HashSet<Despesa>();
+		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 5, 12));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 9, 20));
 		despesas.add(agua);

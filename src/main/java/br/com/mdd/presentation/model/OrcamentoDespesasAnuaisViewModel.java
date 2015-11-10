@@ -1,4 +1,4 @@
-package br.com.mdd.web.view.model;
+package br.com.mdd.presentation.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 
+import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
 import br.com.mdd.domain.model.Orcamento;
 
@@ -22,7 +23,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 
 	private void montar() {
 		despesasAnuais = new ArrayList<ConjuntoDespesas>();
-		for (DespesaFixa itemOrcamento : orcamento.getDespesasFixas()) {
+		for (Despesa itemOrcamento : orcamento.getDespesas()) {
 			ConjuntoDespesas conjuntoDespesas = null;
 			for (ConjuntoDespesas conj : despesasAnuais) {
 				if (conj.getNomeDespesa().equals(itemOrcamento.getDescricao())) {
@@ -37,7 +38,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 				despesasAnuais.add(conjuntoDespesas);
 			}
 			Integer mes = Integer.valueOf(itemOrcamento.getDataLancamento().getMonthOfYear());
-			conjuntoDespesas.getDespesasFixas().put(mes, itemOrcamento);
+			conjuntoDespesas.put(mes, itemOrcamento);
 		}
 		
 		totais = new ArrayList<BigDecimal>();
@@ -89,8 +90,15 @@ public class OrcamentoDespesasAnuaisViewModel {
 			return despesasFixas;
 		}
 
-		public void setDespesasFixas(Map<Integer, DespesaFixa> despesasFixas) {
-			this.despesasFixas = despesasFixas;
+		public void setDespesasFixas(Map<Integer, DespesaFixa> despesas) {
+			this.despesasFixas = despesas;
+		}
+		
+		
+		public void put(Integer key, Despesa despesa) {
+			if (despesa instanceof DespesaFixa) {
+				this.despesasFixas.put(key, (DespesaFixa) despesa);
+			}
 		}
 
 		@Override

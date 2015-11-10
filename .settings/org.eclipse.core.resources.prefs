@@ -1,3 +1,3 @@
 eclipse.preferences.version=1
-encoding//src/main/java/br/com/mdd/web/controller/DespesasAnuaisController.java=UTF-8
-encoding//src/test/java/br/com/mdd/web/view/model/OrcamentoDespesasAnuaisViewModelTest.java=UTF-8
+encoding//src/main/java/br/com/mdd/application/controller/DespesasAnuaisController.java=UTF-8
+encoding//src/test/java/br/com/mdd/web/presentation/model/OrcamentoDespesasAnuaisViewModelTest.java=UTF-8

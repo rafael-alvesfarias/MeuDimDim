@@ -15,16 +15,16 @@ import br.com.mdd.domain.model.DespesaFixa;
  */
 public class Orcamento {
 	
-	private Set<DespesaFixa> despesasFixas;
+	private Set<Despesa> despesas;
 	private LocalDate dataDe;
 	private LocalDate dataAte;
 	private boolean preverLancamentos = false;
 	
-	public Orcamento(Set<DespesaFixa> despesasFixas){
+	public Orcamento(Set<Despesa> despesasFixas){
 		if(despesasFixas == null){
 			throw new IllegalArgumentException("Conjunto de despesas não pode ser nulo!");
 		}
-		this.despesasFixas = new HashSet<DespesaFixa>(despesasFixas);
+		this.despesas = new HashSet<Despesa>(despesasFixas);
 	}
 
 	public Orcamento mensal() {
@@ -62,8 +62,8 @@ public class Orcamento {
 	}
 	
 	private void gerarLancamentosPrevistos(){
-		Set<DespesaFixa> despesaFixasPrevistas = new HashSet<DespesaFixa>(this.despesasFixas);
-		for (DespesaFixa despesaFixa : this.despesasFixas) {
+		Set<Despesa> despesaFixasPrevistas = new HashSet<Despesa>(this.despesas);
+		for (Despesa despesaFixa : this.despesas) {
 			int mesDespesa = despesaFixa.getDataLancamento().getMonthOfYear();
 			int ultimoMes = this.getDataAte().getMonthOfYear();
 			for(int novoMes = mesDespesa + 1; novoMes <= ultimoMes; novoMes++){
@@ -74,12 +74,12 @@ public class Orcamento {
 				}
 			}
 		}
-		this.despesasFixas = despesaFixasPrevistas;
+		this.despesas = despesaFixasPrevistas;
 	}
 
 	public Orcamento gerar() {
 		if(dataDe == null || dataAte == null){
-			despesasFixas = new HashSet<DespesaFixa>();
+			despesas = new HashSet<Despesa>();
 			return this;
 		}
 		
@@ -87,13 +87,13 @@ public class Orcamento {
 			this.gerarLancamentosPrevistos();
 		}
 		
-		Set<DespesaFixa> orcamento = new HashSet<DespesaFixa>();
-		for (DespesaFixa despesa : despesasFixas) {
+		Set<Despesa> orcamento = new HashSet<Despesa>();
+		for (Despesa despesa : despesas) {
 			if(estaDentroDoIntervalo(despesa.getDataLancamento())){
 				orcamento.add(despesa);
 			}
 		}
-		this.despesasFixas = orcamento;
+		this.despesas = orcamento;
 		return this;
 	}
 	
@@ -101,12 +101,12 @@ public class Orcamento {
 		return dataDe.equals(data) || (dataDe.isBefore(data) && data.isBefore(dataAte)) || data.equals(dataAte);
 	}
 
-	public Set<DespesaFixa> getDespesasFixas() {
-		return Collections.unmodifiableSet(despesasFixas);
+	public Set<Despesa> getDespesas() {
+		return Collections.unmodifiableSet(despesas);
 	}
 
-	public void setDespesasFixas(Set<DespesaFixa> despesasFixas) {
-		this.despesasFixas = new HashSet<DespesaFixa>(despesasFixas);
+	public void setDespesas(Set<Despesa> despesasFixas) {
+		this.despesas = new HashSet<Despesa>(despesasFixas);
 	}
 
 	public LocalDate getDataDe() {
