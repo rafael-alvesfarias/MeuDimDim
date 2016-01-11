@@ -22,8 +22,8 @@ public class OrcamentoTest {
 	@Test
 	public void testGerarOrcamentoAnualDespesasFixas() {
 		Set<Despesa> despesasFixas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2015, 1, 9));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 2, 9));
+		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 9));
+		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 2, 9));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2020, 1, 9));
 		despesasFixas.add(agua);
 		despesasFixas.add(luz);

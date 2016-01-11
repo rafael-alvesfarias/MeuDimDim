@@ -30,9 +30,9 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
 		Set<Despesa> despesas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 1, 12));
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 1, 20));
+		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
+		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
@@ -68,9 +68,9 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeMesesVariados() {
 		Set<Despesa> despesas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2015, 1, 10));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2015, 5, 12));
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2015, 9, 20));
+		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 5, 12));
+		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 9, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
@@ -80,7 +80,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		
 		//Conferindo as despesasFixas planejadas
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("Ã�gua")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
 				assertEquals(12, conj.getDespesasFixas().size(), 12);
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(7, conj.getDespesasFixas().size(), 7);
