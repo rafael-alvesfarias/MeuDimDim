@@ -24,11 +24,7 @@
 	</script>
 </head>
 <body>
-	<div class="cabecalho">
-		<img src="<c:url value='/recursos/imagens/logo.png'/>"/>
-		<h1>meu<span>dimdim</span></h1>
-		<h2>rumo à independência financeira</h2>
-	</div>
+	<c:import url="../header.jsp"/>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="painel">
@@ -84,7 +80,7 @@
 					</tbody>
 				</table>
 				<div class="botoes">
-					<input type="button" value="Nova Despesa" class="botao-esquerda" onclick="javascript:novaDespesa();"/>
+					<a href="#novaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
 				</div>
 			</div>
 			<div class="painel">
@@ -182,30 +178,9 @@
 			</div>
 		</div>
 	</div>
-	<div id="popup-nova-despesa" class="popup">
-		<h3 class="subtitulo">Despesa Fixa</h3>
-		<form>
-			<table>
-				<tr>
-					<td><label for="descricao">Descrição</label></td>
-					<td><input type="text" id="descricao"/></td>
-				</tr>
-				<tr>
-					<td><label for="valor">Valor</label></td>
-					<td><input type="text" id="valor"/></td>
-				</tr>
-				<tr>
-					<td><label for="data">Data de vencimento</label></td>
-					<td><input type="text" id="data"/></td>
-				</tr>
-			</table>
-			<div class="botoes">
-				<input type="button" value="Cancelar" class="botao-direita" onclick="cancelar();"/>
-				<input type="button" value="Salvar" class="botao-direita"/>
-			</div>
-		</form>
-	</div>
-	<div class="rodape">
-	</div>
+	
+	<c:import url="despesa.jsp"/>
+
+	<c:import url="../footer.jsp"/>
 </body>
 </html>
