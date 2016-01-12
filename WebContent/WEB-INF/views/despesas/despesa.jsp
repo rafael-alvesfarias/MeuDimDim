@@ -5,19 +5,19 @@
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
 		<h3 class="subtitulo">Nova Despesa</h3>
-		<form:form action="/despesas/despesa" method="POST">
+		<form:form action="despesa" method="POST" commandName="despesa">
 			<table>
 				<tr>
 					<td><label for="descricao">Descrição</label></td>
-					<td><input type="text" id="descricao" size="40"/></td>
+					<td><form:input id="descricao" path="descricao" size="40"/></td>
 				</tr>
 				<tr>
 					<td><label for="valor">Valor</label></td>
-					<td><input type="text" id="valor" size="12"/></td>
+					<td><form:input id="valor" path="valor" size="12"/></td>
 				</tr>
 				<tr>
 					<td><label for="data">Data de vencimento</label></td>
-					<td><input type="text" id="data" size="10"/></td>
+					<td><form:input id="data" path="dataLancamento" size="10"/></td>
 				</tr>
 				<tr>
 					<td><label for="categoria">Categoria</label></td>
@@ -46,7 +46,7 @@
 			</div>
 			<div class="botoes">
 				<a href="#close"><input type="button" value="Cancelar" class="botao-direita"/></a>
-				<input type="button" value="Salvar" class="botao-direita"/>
+				<input type="submit" value="Salvar" class="botao-direita"/>
 			</div>
 		</form:form>
 	</div>

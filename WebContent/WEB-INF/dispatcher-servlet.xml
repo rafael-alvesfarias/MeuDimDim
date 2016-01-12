@@ -19,6 +19,15 @@
 			<value>.jsp</value>
 		</property>
 	</bean>
+	<!-- Configuação dos converters e formatters  
+	<bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+		<property name="converters">
+			<set>
+				<bean class="some.package.SomeClass"></bean>
+			</set>
+		</property>
+	</bean>
+	-->
 	<mvc:annotation-driven/>
 	<mvc:resources mapping="/recursos/**" location="/recursos/" />
 </beans>

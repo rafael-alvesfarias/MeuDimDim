@@ -3,13 +3,18 @@ package br.com.mdd.domain.model;
 import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.NumberFormat;
+import org.springframework.format.annotation.NumberFormat.Style;
 
 public class Despesa implements Comparable<Despesa> {
 	
 	private String descricao;
 	
+	@NumberFormat(style = Style.CURRENCY)
 	private BigDecimal valor;
 	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataLancamento;
 
 	public Despesa(String descricao, BigDecimal valor, LocalDate dataLancamento) {

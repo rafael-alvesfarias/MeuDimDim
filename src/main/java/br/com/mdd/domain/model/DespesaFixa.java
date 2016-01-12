@@ -8,6 +8,10 @@ public class DespesaFixa extends Despesa{
 	
 	private Integer vencimento;
 	
+	public DespesaFixa() {
+		this(null, BigDecimal.ZERO);
+	}
+	
 	public DespesaFixa(String descricao, BigDecimal valor) {
 		super(descricao, valor);
 		this.vencimento = getDataLancamento().getDayOfMonth();

@@ -7,7 +7,9 @@ import java.util.TreeSet;
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
@@ -22,7 +24,13 @@ public class DespesasAnuaisController {
 		Orcamento orcamentoDespesasFixas = getOrcamento().anual().comPrevisao().gerar();
 		OrcamentoDespesasAnuaisViewModel orcamentoViewModel = new OrcamentoDespesasAnuaisViewModel(orcamentoDespesasFixas);
 		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModel);
+		model.addAttribute("despesa", new DespesaFixa());
 		return "/despesas/despesasAnuais";
+	}
+	
+	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
+	public String salvar(@ModelAttribute(value = "despesa") DespesaFixa despesa, Model model) {
+		return despesasAnuais(model);
 	}
 	
 	private static final Orcamento getOrcamento(){
