@@ -2,10 +2,19 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		$("#despesaFixa").change(function(e){
+			var despesaFixa = $(e).is(":checked");
+			$("#formDespesa").attr("action", "despesa?despesaFixa=" + despesaFixa);
+		});
+	});
+</script>
+
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
 		<h3 class="tituloPainel">Nova Despesa</h3>
-		<form:form action="despesa" method="POST" commandName="despesa">
+		<form:form action="despesa?despesaFixa=false" method="POST" commandName="despesa" id="formDespesa">
 			<table>
 				<tr>
 					<td><label for="descricao">Descrição</label></td>
@@ -35,7 +44,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" id="despesaFixa"/> Despesa Fixa</td>
+					<td colspan="2"><form:input path="" /><input type="checkbox" id="despesaFixa"/> Despesa Fixa</td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="checkbox" id="pago"/> Está pago</td>

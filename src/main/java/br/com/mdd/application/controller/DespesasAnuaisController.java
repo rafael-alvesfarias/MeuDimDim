@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.TreeSet;
 
+import javax.websocket.server.PathParam;
+
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -35,15 +37,14 @@ public class DespesasAnuaisController {
 		return "/despesas/despesasAnuais";
 	}
 	
-	@RequestMapping(value = "/despesa/fixa", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "despesa") DespesaFixa despesa, Model model) {
-		despesasFixas.add(despesa);
-		return despesasAnuais(model);
-	}
-	
-	@RequestMapping(value = "/despesa/variavel", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "despesa") Despesa despesa, Model model) {
-		despesasFixas.add(despesa);
+	@RequestMapping(value = "/despesa/{despesaFixa}", method = RequestMethod.POST)
+	public String salvar(@ModelAttribute(value = "despesa") Despesa despesa, @PathParam("despesaFixa") boolean despesaFixa, Model model) {
+		if(despesaFixa) {
+			despesasFixas.add(despesa);
+		} else {
+			despesasVariaveis.add(despesa);
+		}
+		
 		return despesasAnuais(model);
 	}
 	

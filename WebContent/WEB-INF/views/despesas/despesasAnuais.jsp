@@ -30,9 +30,11 @@
 		<div class="painel">
 			<h3 class="tituloPainel">Despesas Anuais</h3>
 			<!-- DESPESAS FIXAS -->
-			<h3 class="subtitulo">Despesas Fixas</h3>
 				<table>
 					<thead>
+						<tr>
+							<th colspan="14">Despesas Fixas</th>
+						</tr>
 						<tr>
 							<th/>
 							<th>Janeiro</th>
@@ -83,9 +85,11 @@
 				</table>
 				<br>
 				<!-- DESPESAS VARIÁVEIS -->
-				<h3 class="subtitulo">Despesas Variáveis</h3>
 				<table>
 					<thead>
+						<tr>
+							<th colspan="14">Despesas Variáveis</th>
+						</tr>
 						<tr>
 							<th/>
 							<th>Janeiro</th>
