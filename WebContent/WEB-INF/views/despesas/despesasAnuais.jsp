@@ -28,6 +28,8 @@
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="painel">
+			<h3 class="tituloPainel">Despesas Anuais</h3>
+			<!-- DESPESAS FIXAS -->
 			<h3 class="subtitulo">Despesas Fixas</h3>
 				<table>
 					<thead>
@@ -59,12 +61,12 @@
 					<tbody>
 						<c:forEach var="conuntoDespesas" items="${orcamentoDespesasFixas.despesasAnuais}" varStatus="status">
 							<tr>
-								<th>${conuntoDespesas.nomeDespesa}</th>
+								<th style="min-width: 121px;">${conuntoDespesas.nomeDespesa}</th>
 								<c:forEach var="mes" begin="1" end="12">
 									<c:choose>
-										<c:when test="${conuntoDespesas.despesasFixas[mes] != null}">
+										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												R$ ${conuntoDespesas.despesasFixas[mes].valor}
+												R$ ${conuntoDespesas.despesas[mes].valor}
 											</td>
 										</c:when>
 										<c:otherwise>
@@ -79,11 +81,8 @@
 						</c:forEach>
 					</tbody>
 				</table>
-				<div class="botoes">
-					<a href="#novaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
-				</div>
-			</div>
-			<div class="painel">
+				<br>
+				<!-- DESPESAS VARIÁVEIS -->
 				<h3 class="subtitulo">Despesas Variáveis</h3>
 				<table>
 					<thead>
@@ -107,74 +106,36 @@
 					<tfoot>
 						<tr>
 							<th>TOTAL</th>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
+							<c:forEach var="total" items="${orcamentoDespesasVariaveis.totais}">
+								<td>R$ ${total}</td>
+							</c:forEach>
 						</tr>
 					</tfoot>
 					<tbody>
-						<tr>
-							<th>Combustível</th>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-						</tr>
-						<tr>
-							<th>Lazer</th>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-							<td class="linha-par">R$ 99,99</td>
-						</tr>
-						<tr>
-							<th>Alimentação</th>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-							<td class="linha-impar">R$ 99,99</td>
-						</tr>
+						<c:forEach var="conuntoDespesas" items="${orcamentoDespesasVariaveis.despesasAnuais}" varStatus="status">
+							<tr>
+								<th style="min-width: 121px;">${conuntoDespesas.nomeDespesa}</th>
+								<c:forEach var="mes" begin="1" end="12">
+									<c:choose>
+										<c:when test="${conuntoDespesas.despesas[mes] != null}">
+											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+												R$ ${conuntoDespesas.despesas[mes].valor}
+											</td>
+										</c:when>
+										<c:otherwise>
+											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}"/>
+										</c:otherwise>
+									</c:choose>
+								</c:forEach>
+								<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+									R$ ${conuntoDespesas.total}
+								</td>
+							</tr>
+						</c:forEach>
 					</tbody>
 				</table>
 			<div class="botoes">
-				<input type="button" value="Nova Despesa" class="botao-esquerda"/>
+				<a href="#novaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
 			</div>
 		</div>
 	</div>

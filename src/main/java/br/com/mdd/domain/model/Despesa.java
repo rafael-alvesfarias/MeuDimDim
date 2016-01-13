@@ -1,6 +1,8 @@
 package br.com.mdd.domain.model;
 
 import java.math.BigDecimal;
+import java.text.Collator;
+import java.util.Locale;
 
 import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -92,7 +94,10 @@ public class Despesa implements Comparable<Despesa> {
 	
 	@Override
 	public int compareTo(Despesa o) {
-		return this.getDescricao().compareTo(o.getDescricao());
+		final Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+		collator.setStrength(Collator.PRIMARY);
+		
+		return collator.compare(this.descricao, o.getDescricao());
 	}
 
 }

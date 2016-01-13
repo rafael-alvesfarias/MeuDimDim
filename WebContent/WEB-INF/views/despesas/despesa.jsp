@@ -4,7 +4,7 @@
 
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
-		<h3 class="subtitulo">Nova Despesa</h3>
+		<h3 class="tituloPainel">Nova Despesa</h3>
 		<form:form action="despesa" method="POST" commandName="despesa">
 			<table>
 				<tr>

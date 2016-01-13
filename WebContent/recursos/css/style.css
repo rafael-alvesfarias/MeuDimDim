@@ -19,7 +19,7 @@ body{
 }
 
 .box{
-	width: 900px;
+	width: 1000px;
 	margin: 0 auto;
 	padding-top:30px;
 }
@@ -28,9 +28,10 @@ table{
 	border-collapse: collapse;
 }
 
-td,th{
+td, th{
 	border: 1px solid #DDD;
 	padding: 3px;
+	min-width: 56px;
 }
 
 th{
@@ -100,9 +101,16 @@ th{
 
 .subtitulo{
 	font-weight: 600;
+	color: #5FCF80;
+	font-weight: 600;
+	font-size: 13px;
+	padding-bottom: 10px;
+}
+
+.tituloPainel{
+	font-weight: 600;
 	font-size: 13px;
 	color: #FFF;
-	padding-bottom: 10px;
 	position: relative;
 	top: -27px;
 	left: -12px;
@@ -113,7 +121,8 @@ th{
 	border: 1px solid;
 	padding: 20px;
 	padding-top: 30px;
-	margin: 20px;
+	margin: 5px;
+	margin-top: 20px;
 	border-radius: 4px;
 	box-shadow: 3px 3px 3px #888888;
 	border-color: #CCCCCC;

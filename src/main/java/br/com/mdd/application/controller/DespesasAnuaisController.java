@@ -19,21 +19,35 @@ import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel;
 @Controller
 public class DespesasAnuaisController {
 	
+	private Set<Despesa> despesasFixas = getDespesasFixas();
+	private Set<Despesa> despesasVariaveis = getDespesasVariaveis();
+	
 	@RequestMapping("/despesasAnuais")
 	public String despesasAnuais(Model model){
-		Orcamento orcamentoDespesasFixas = getOrcamento().anual().comPrevisao().gerar();
-		OrcamentoDespesasAnuaisViewModel orcamentoViewModel = new OrcamentoDespesasAnuaisViewModel(orcamentoDespesasFixas);
-		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModel);
+		Orcamento orcamentoDespesasFixas = new Orcamento(despesasFixas).anual().comPrevisao().gerar();
+		Orcamento orcamentoDespesasVariaveis = new Orcamento(despesasVariaveis).anual().gerar();
+		OrcamentoDespesasAnuaisViewModel orcamentoViewModelDespesasFixasViewModel = new OrcamentoDespesasAnuaisViewModel(orcamentoDespesasFixas);
+		OrcamentoDespesasAnuaisViewModel orcamentoViewModelDespesasVariaveisViewModel = new OrcamentoDespesasAnuaisViewModel(orcamentoDespesasVariaveis);
+		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModelDespesasFixasViewModel);
+		model.addAttribute("orcamentoDespesasVariaveis", orcamentoViewModelDespesasVariaveisViewModel);
 		model.addAttribute("despesa", new DespesaFixa());
+		
 		return "/despesas/despesasAnuais";
 	}
 	
-	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
+	@RequestMapping(value = "/despesa/fixa", method = RequestMethod.POST)
 	public String salvar(@ModelAttribute(value = "despesa") DespesaFixa despesa, Model model) {
+		despesasFixas.add(despesa);
 		return despesasAnuais(model);
 	}
 	
-	private static final Orcamento getOrcamento(){
+	@RequestMapping(value = "/despesa/variavel", method = RequestMethod.POST)
+	public String salvar(@ModelAttribute(value = "despesa") Despesa despesa, Model model) {
+		despesasFixas.add(despesa);
+		return despesasAnuais(model);
+	}
+	
+	private static final Set<Despesa> getDespesasFixas(){
 		Set<Despesa> despesas = new TreeSet<Despesa>();
 		
 		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
@@ -44,7 +58,21 @@ public class DespesasAnuaisController {
 		despesas.add(luz);
 		despesas.add(telefone);
 		
-		return new Orcamento(despesas);	
+		return despesas;	
+	}
+	
+	private static final Set<Despesa> getDespesasVariaveis(){
+		Set<Despesa> despesas = new TreeSet<Despesa>();
+		
+		DespesaFixa combustivel = new DespesaFixa("Combustível", new BigDecimal("150"), new LocalDate(2016, 1, 5));
+		DespesaFixa lazer = new DespesaFixa("Lazer", new BigDecimal("250"), new LocalDate(2016, 1, 5));
+		DespesaFixa alimentacao = new DespesaFixa("Alimentacao", new BigDecimal("400"), new LocalDate(2016, 1, 5));
+		
+		despesas.add(combustivel);
+		despesas.add(lazer);
+		despesas.add(alimentacao);
+		
+		return despesas;	
 	}
 
 }

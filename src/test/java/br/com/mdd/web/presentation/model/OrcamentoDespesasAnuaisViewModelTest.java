@@ -30,7 +30,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
 		Set<Despesa> despesas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("�?gua", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
 		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
 		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
 		despesas.add(agua);
@@ -41,13 +41,13 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		OrcamentoDespesasAnuaisViewModel tabela = new OrcamentoDespesasAnuaisViewModel(orcamento);
 		
 		//Conferindo as despesasFixas planejadas
-		assertEquals(12, tabela.getDespesasAnuais().get(0).getDespesasFixas().size());
-		assertEquals(12, tabela.getDespesasAnuais().get(1).getDespesasFixas().size());
-		assertEquals(12, tabela.getDespesasAnuais().get(2).getDespesasFixas().size());
+		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
+			assertEquals(12, conj.getDespesas().size());
+		}
 		
 		//Conferindo os totais dos conjuntos
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("�?gua")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
 				assertEquals(new BigDecimal("551.76"), conj.getTotal());
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(new BigDecimal("1184.76"), conj.getTotal());
@@ -81,11 +81,11 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		//Conferindo as despesasFixas planejadas
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
 			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
-				assertEquals(12, conj.getDespesasFixas().size(), 12);
+				assertEquals(12, conj.getDespesas().size(), 12);
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
-				assertEquals(7, conj.getDespesasFixas().size(), 7);
+				assertEquals(7, conj.getDespesas().size(), 7);
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Telefone")){
-				assertEquals(4, conj.getDespesasFixas().size(), 4);
+				assertEquals(4, conj.getDespesas().size(), 4);
 			}
 		}
 		

@@ -1,10 +1,14 @@
 package br.com.mdd.presentation.model;
 
 import java.math.BigDecimal;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
+import java.util.TreeSet;
 
 import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
@@ -12,7 +16,7 @@ import br.com.mdd.domain.model.Orcamento;
 
 public class OrcamentoDespesasAnuaisViewModel {
 
-	private List<ConjuntoDespesas> despesasAnuais;
+	private Set<ConjuntoDespesas> despesas;
 	private List<BigDecimal> totais;
 	private Orcamento orcamento;
 
@@ -22,10 +26,10 @@ public class OrcamentoDespesasAnuaisViewModel {
 	}
 
 	private void montar() {
-		despesasAnuais = new ArrayList<ConjuntoDespesas>();
+		despesas = new TreeSet<ConjuntoDespesas>();
 		for (Despesa itemOrcamento : orcamento.getDespesas()) {
 			ConjuntoDespesas conjuntoDespesas = null;
-			for (ConjuntoDespesas conj : despesasAnuais) {
+			for (ConjuntoDespesas conj : despesas) {
 				if (conj.getNomeDespesa().equals(itemOrcamento.getDescricao())) {
 					conjuntoDespesas = conj;
 				}
@@ -34,8 +38,8 @@ public class OrcamentoDespesasAnuaisViewModel {
 				conjuntoDespesas = new ConjuntoDespesas();
 				conjuntoDespesas.setNomeDespesa(itemOrcamento.getDescricao());
 				
-				conjuntoDespesas.setDespesasFixas(new TreeMap<Integer, DespesaFixa>());
-				despesasAnuais.add(conjuntoDespesas);
+				conjuntoDespesas.setDespesas(new TreeMap<Integer, Despesa>());
+				despesas.add(conjuntoDespesas);
 			}
 			Integer mes = Integer.valueOf(itemOrcamento.getDataLancamento().getMonthOfYear());
 			conjuntoDespesas.put(mes, itemOrcamento);
@@ -46,9 +50,9 @@ public class OrcamentoDespesasAnuaisViewModel {
 		BigDecimal totalGeral = BigDecimal.ZERO;
 		for(int i = 1; i <= 12; i++){
 			BigDecimal total = BigDecimal.ZERO;
-			for (ConjuntoDespesas conjunto : despesasAnuais) {
-				if(conjunto.getDespesasFixas().get(i) != null){
-					total = total.add(conjunto.getDespesasFixas().get(i).getValor());
+			for (ConjuntoDespesas conjunto : despesas) {
+				if(conjunto.getDespesas().get(i) != null){
+					total = total.add(conjunto.getDespesas().get(i).getValor());
 				}
 			}
 			totais.add(total);
@@ -57,12 +61,12 @@ public class OrcamentoDespesasAnuaisViewModel {
 		totais.add(totalGeral);
 	}
 	
-	public List<ConjuntoDespesas> getDespesasAnuais() {
-		return despesasAnuais;
+	public Set<ConjuntoDespesas> getDespesasAnuais() {
+		return despesas;
 	}
 
-	public void setDespesasAnuais(List<ConjuntoDespesas> despesasAnuais) {
-		this.despesasAnuais = despesasAnuais;
+	public void setDespesasAnuais(Set<ConjuntoDespesas> despesasAnuais) {
+		this.despesas = despesasAnuais;
 	}
 	
 	public List<BigDecimal> getTotais() {
@@ -76,7 +80,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 	public class ConjuntoDespesas implements Comparable<ConjuntoDespesas> {
 		private String nomeDespesa;
 
-		private Map<Integer, DespesaFixa> despesasFixas;
+		private Map<Integer, Despesa> despesas;
 
 		public String getNomeDespesa() {
 			return nomeDespesa;
@@ -86,18 +90,18 @@ public class OrcamentoDespesasAnuaisViewModel {
 			this.nomeDespesa = nomeDespesa;
 		}
 
-		public Map<Integer, DespesaFixa> getDespesasFixas() {
-			return despesasFixas;
+		public Map<Integer, Despesa> getDespesas() {
+			return despesas;
 		}
 
-		public void setDespesasFixas(Map<Integer, DespesaFixa> despesas) {
-			this.despesasFixas = despesas;
+		public void setDespesas(Map<Integer, Despesa> despesas) {
+			this.despesas = despesas;
 		}
 		
 		
 		public void put(Integer key, Despesa despesa) {
 			if (despesa instanceof DespesaFixa) {
-				this.despesasFixas.put(key, (DespesaFixa) despesa);
+				this.despesas.put(key, (DespesaFixa) despesa);
 			}
 		}
 
@@ -136,14 +140,16 @@ public class OrcamentoDespesasAnuaisViewModel {
 
 		@Override
 		public int compareTo(ConjuntoDespesas o) {
-			return this.nomeDespesa.compareTo(o.getNomeDespesa());
+			final Collator collator = Collator.getInstance(new Locale("pt", "BR"));
+			collator.setStrength(Collator.PRIMARY);
+			return collator.compare(this.nomeDespesa, o.getNomeDespesa());
 		}
 		
 		public BigDecimal getTotal(){
 			BigDecimal total = BigDecimal.ZERO;
 			
-			for (Integer mes : despesasFixas.keySet()) {
-				total = total.add(despesasFixas.get(mes).getValor());
+			for (Integer mes : despesas.keySet()) {
+				total = total.add(despesas.get(mes).getValor());
 			}
 			
 			return total;
