@@ -18,6 +18,10 @@ public class Despesa implements Comparable<Despesa> {
 	
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataLancamento;
+	
+	public Despesa() {
+		this(null, BigDecimal.ZERO);
+	}
 
 	public Despesa(String descricao, BigDecimal valor, LocalDate dataLancamento) {
 		this.descricao = descricao;

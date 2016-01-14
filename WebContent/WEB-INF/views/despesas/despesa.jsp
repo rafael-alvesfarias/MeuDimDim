@@ -4,8 +4,8 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		$("#despesaFixa").change(function(e){
-			var despesaFixa = $(e).is(":checked");
+		$("#despesaFixa").change(function(){
+			var despesaFixa = $(this).is(":checked");
 			$("#formDespesa").attr("action", "despesa?despesaFixa=" + despesaFixa);
 		});
 	});
@@ -44,7 +44,7 @@
 					<td></td>
 				</tr>
 				<tr>
-					<td colspan="2"><form:input path="" /><input type="checkbox" id="despesaFixa"/> Despesa Fixa</td>
+					<td colspan="2"><input type="checkbox" id="despesaFixa"/> Despesa Fixa</td>
 				</tr>
 				<tr>
 					<td colspan="2"><input type="checkbox" id="pago"/> Está pago</td>

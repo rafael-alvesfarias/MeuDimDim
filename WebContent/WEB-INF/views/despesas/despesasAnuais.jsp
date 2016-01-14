@@ -33,7 +33,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="14">Despesas Fixas</th>
+							<th colspan="14" class="tableTitle">Despesas Fixas</th>
 						</tr>
 						<tr>
 							<th/>
@@ -88,7 +88,7 @@
 				<table>
 					<thead>
 						<tr>
-							<th colspan="14">Despesas Variáveis</th>
+							<th colspan="14" class="tableTitle">Despesas Variáveis</th>
 						</tr>
 						<tr>
 							<th/>

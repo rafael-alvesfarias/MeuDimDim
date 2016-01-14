@@ -4,14 +4,13 @@ import java.math.BigDecimal;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.websocket.server.PathParam;
-
 import org.joda.time.LocalDate;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Despesa;
 import br.com.mdd.domain.model.DespesaFixa;
@@ -37,10 +36,11 @@ public class DespesasAnuaisController {
 		return "/despesas/despesasAnuais";
 	}
 	
-	@RequestMapping(value = "/despesa/{despesaFixa}", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "despesa") Despesa despesa, @PathParam("despesaFixa") boolean despesaFixa, Model model) {
+	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
+	public String salvar(@ModelAttribute(value = "despesa") Despesa despesa, @RequestParam("despesaFixa") Boolean despesaFixa, Model model) {
 		if(despesaFixa) {
-			despesasFixas.add(despesa);
+			Despesa d = new DespesaFixa(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
+			despesasFixas.add(d);
 		} else {
 			despesasVariaveis.add(despesa);
 		}
@@ -65,9 +65,9 @@ public class DespesasAnuaisController {
 	private static final Set<Despesa> getDespesasVariaveis(){
 		Set<Despesa> despesas = new TreeSet<Despesa>();
 		
-		DespesaFixa combustivel = new DespesaFixa("Combustível", new BigDecimal("150"), new LocalDate(2016, 1, 5));
-		DespesaFixa lazer = new DespesaFixa("Lazer", new BigDecimal("250"), new LocalDate(2016, 1, 5));
-		DespesaFixa alimentacao = new DespesaFixa("Alimentacao", new BigDecimal("400"), new LocalDate(2016, 1, 5));
+		Despesa combustivel = new Despesa("Combustível", new BigDecimal("150"), new LocalDate(2016, 1, 5));
+		Despesa lazer = new Despesa("Lazer", new BigDecimal("250"), new LocalDate(2016, 1, 5));
+		Despesa alimentacao = new Despesa("Alimentacao", new BigDecimal("400"), new LocalDate(2016, 1, 5));
 		
 		despesas.add(combustivel);
 		despesas.add(lazer);

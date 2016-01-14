@@ -206,3 +206,8 @@ form table, form td, form tr{
 .linha-impar{
 	background-color: #DFE7FF;
 }
+
+.tableTitle{
+	font-size: 12px;
+	background-color: #EEE;
+}

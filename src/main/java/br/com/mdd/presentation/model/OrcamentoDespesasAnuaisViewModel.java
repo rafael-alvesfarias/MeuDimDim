@@ -100,9 +100,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 		
 		
 		public void put(Integer key, Despesa despesa) {
-			if (despesa instanceof DespesaFixa) {
-				this.despesas.put(key, (DespesaFixa) despesa);
-			}
+			this.despesas.put(key, despesa);
 		}
 
 		@Override
