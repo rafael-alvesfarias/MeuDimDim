@@ -2,19 +2,10 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
-<script type="text/javascript">
-	$(document).ready(function(){
-		$("#despesaFixa").change(function(){
-			var despesaFixa = $(this).is(":checked");
-			$("#formDespesa").attr("action", "despesa?despesaFixa=" + despesaFixa);
-		});
-	});
-</script>
-
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
 		<h3 class="tituloPainel">Nova Despesa</h3>
-		<form:form action="despesa?despesaFixa=false" method="POST" commandName="despesa" id="formDespesa">
+		<form:form action="despesa" method="POST" commandName="despesa" id="formDespesa">
 			<table>
 				<tr>
 					<td><label for="descricao">Descrição</label></td>
@@ -31,23 +22,19 @@
 				<tr>
 					<td><label for="categoria">Categoria</label></td>
 					<td>
-						<select id="categoria">
-							<option value="1">Alimentação</option>
-							<option value="2">Transporte</option>
-							<option value="3">Saúde</option>
-							<option value="4">Lazer</option>
-							<option value="5">Moradia</option> 
-						</select>
+						<form:select path="categoria" id="categoria">
+							<form:options items="${despesa.categorias}" itemValue="nome" itemLabel="descricao"/>
+						</form:select>
 					</td>
 				</tr>
 				<tr>
 					<td></td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" id="despesaFixa"/> Despesa Fixa</td>
+					<td colspan="2"><form:checkbox path="despesaFixa"/> Despesa Fixa</td>
 				</tr>
 				<tr>
-					<td colspan="2"><input type="checkbox" id="pago"/> Está pago</td>
+					<td colspan="2"><form:checkbox path="pago"/> Está pago</td>
 				</tr>
 			</table>
 			<div class="group">

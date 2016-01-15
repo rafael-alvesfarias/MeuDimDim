@@ -19,6 +19,10 @@ public class Despesa implements Comparable<Despesa> {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataLancamento;
 	
+	private Categoria categoria;
+	
+	private Boolean pago;
+	
 	public Despesa() {
 		this(null, BigDecimal.ZERO);
 	}
@@ -55,6 +59,22 @@ public class Despesa implements Comparable<Despesa> {
 
 	public void setValor(BigDecimal valor) {
 		this.valor = valor;
+	}
+
+	public Categoria getCategoria() {
+		return categoria;
+	}
+
+	public void setCategoria(Categoria categoria) {
+		this.categoria = categoria;
+	}
+
+	public Boolean getPago() {
+		return pago;
+	}
+
+	public void setPago(Boolean pago) {
+		this.pago = pago;
 	}
 
 	@Override
