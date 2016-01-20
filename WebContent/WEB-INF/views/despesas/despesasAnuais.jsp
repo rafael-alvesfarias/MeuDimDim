@@ -9,19 +9,6 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/recursos/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-	<script>
-		function novaDespesa(){
-			$(".popup").dialog({
-				dialogClass: "no-close",
-				modal: "true",
-				resizable: "false",
-			});
-		}
-		
-		function cancelar(){
-			$(".popup").dialog("close");
-		}
-	</script>
 </head>
 <body>
 	<c:import url="../header.jsp"/>
