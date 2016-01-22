@@ -9,7 +9,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
-public class Despesa implements Comparable<Despesa> {
+public class Expense implements Comparable<Expense> {
 	
 	private String descricao;
 	
@@ -19,21 +19,21 @@ public class Despesa implements Comparable<Despesa> {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate dataLancamento;
 	
-	private Categoria categoria;
+	private Category categoria;
 	
 	private Boolean pago;
 	
-	public Despesa() {
+	public Expense() {
 		this(null, BigDecimal.ZERO);
 	}
 
-	public Despesa(String descricao, BigDecimal valor, LocalDate dataLancamento) {
+	public Expense(String descricao, BigDecimal valor, LocalDate dataLancamento) {
 		this.descricao = descricao;
 		this.valor = valor;
 		this.dataLancamento = dataLancamento;
 	}
 
-	public Despesa(String descricao, BigDecimal valor) {
+	public Expense(String descricao, BigDecimal valor) {
 		this(descricao, valor, LocalDate.now());
 	}
 
@@ -61,11 +61,11 @@ public class Despesa implements Comparable<Despesa> {
 		this.valor = valor;
 	}
 
-	public Categoria getCategoria() {
+	public Category getCategoria() {
 		return categoria;
 	}
 
-	public void setCategoria(Categoria categoria) {
+	public void setCategoria(Category categoria) {
 		this.categoria = categoria;
 	}
 
@@ -97,7 +97,7 @@ public class Despesa implements Comparable<Despesa> {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Despesa other = (Despesa) obj;
+		Expense other = (Expense) obj;
 		if (dataLancamento == null) {
 			if (other.dataLancamento != null)
 				return false;
@@ -117,7 +117,7 @@ public class Despesa implements Comparable<Despesa> {
 	}
 	
 	@Override
-	public int compareTo(Despesa o) {
+	public int compareTo(Expense o) {
 		final Collator collator = Collator.getInstance(new Locale("pt", "BR"));
 		collator.setStrength(Collator.PRIMARY);
 		

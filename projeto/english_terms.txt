@@ -1,0 +1,14 @@
+ - income = renda
+ - debts = dívidas
+ - transactions
+ - savings = poupança
+ - assets/liabilities = ativos/passivos
+ - budget = orcamento
+ - accounts = conta
+ - bill = conta
+ - loan = empréstimo
+ - cash flow = fluxo de caixa
+ - funds = fundos
+ - stocks = ações
+ - credit card = cartão de crédito
+ - investments = investimentos

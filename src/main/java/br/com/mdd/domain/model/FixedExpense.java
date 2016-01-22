@@ -4,25 +4,25 @@ import java.math.BigDecimal;
 
 import org.joda.time.LocalDate;
 
-public class DespesaFixa extends Despesa{
+public class FixedExpense extends Expense{
 	
 	private Integer vencimento;
 	
-	public DespesaFixa() {
+	public FixedExpense() {
 		this(null, BigDecimal.ZERO);
 	}
 	
-	public DespesaFixa(String descricao, BigDecimal valor) {
+	public FixedExpense(String descricao, BigDecimal valor) {
 		super(descricao, valor);
 		this.vencimento = getDataLancamento().getDayOfMonth();
 	}
 
-	public DespesaFixa(String descricao, BigDecimal valor, LocalDate dataVencimento) {
+	public FixedExpense(String descricao, BigDecimal valor, LocalDate dataVencimento) {
 		super(descricao, valor, dataVencimento);
 		this.vencimento = dataVencimento.getDayOfMonth();
 	}
 
-	public DespesaFixa(String descricao, BigDecimal valor, Integer vencimento) {
+	public FixedExpense(String descricao, BigDecimal valor, Integer vencimento) {
 		super(descricao, valor);
 		LocalDate data = LocalDate.now();
 		Integer ultimoDiaDoMesAtual = data.dayOfMonth().getMaximumValue();

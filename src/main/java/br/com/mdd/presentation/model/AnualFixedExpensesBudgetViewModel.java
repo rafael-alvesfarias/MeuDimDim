@@ -10,24 +10,24 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import br.com.mdd.domain.model.Despesa;
-import br.com.mdd.domain.model.DespesaFixa;
-import br.com.mdd.domain.model.Orcamento;
+import br.com.mdd.domain.model.Expense;
+import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.Budget;
 
-public class OrcamentoDespesasAnuaisViewModel {
+public class AnualFixedExpensesBudgetViewModel {
 
 	private Set<ConjuntoDespesas> despesas;
 	private List<BigDecimal> totais;
-	private Orcamento orcamento;
+	private Budget orcamento;
 
-	public OrcamentoDespesasAnuaisViewModel(Orcamento orcamento) {
+	public AnualFixedExpensesBudgetViewModel(Budget orcamento) {
 		this.orcamento = orcamento;
 		montar();
 	}
 
 	private void montar() {
 		despesas = new TreeSet<ConjuntoDespesas>();
-		for (Despesa itemOrcamento : orcamento.getDespesas()) {
+		for (Expense itemOrcamento : orcamento.getExpenses()) {
 			ConjuntoDespesas conjuntoDespesas = null;
 			for (ConjuntoDespesas conj : despesas) {
 				if (conj.getNomeDespesa().equals(itemOrcamento.getDescricao())) {
@@ -38,7 +38,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 				conjuntoDespesas = new ConjuntoDespesas();
 				conjuntoDespesas.setNomeDespesa(itemOrcamento.getDescricao());
 				
-				conjuntoDespesas.setDespesas(new TreeMap<Integer, Despesa>());
+				conjuntoDespesas.setDespesas(new TreeMap<Integer, Expense>());
 				despesas.add(conjuntoDespesas);
 			}
 			Integer mes = Integer.valueOf(itemOrcamento.getDataLancamento().getMonthOfYear());
@@ -80,7 +80,7 @@ public class OrcamentoDespesasAnuaisViewModel {
 	public class ConjuntoDespesas implements Comparable<ConjuntoDespesas> {
 		private String nomeDespesa;
 
-		private Map<Integer, Despesa> despesas;
+		private Map<Integer, Expense> despesas;
 
 		public String getNomeDespesa() {
 			return nomeDespesa;
@@ -90,16 +90,16 @@ public class OrcamentoDespesasAnuaisViewModel {
 			this.nomeDespesa = nomeDespesa;
 		}
 
-		public Map<Integer, Despesa> getDespesas() {
+		public Map<Integer, Expense> getDespesas() {
 			return despesas;
 		}
 
-		public void setDespesas(Map<Integer, Despesa> despesas) {
+		public void setDespesas(Map<Integer, Expense> despesas) {
 			this.despesas = despesas;
 		}
 		
 		
-		public void put(Integer key, Despesa despesa) {
+		public void put(Integer key, Expense despesa) {
 			this.despesas.put(key, despesa);
 		}
 
@@ -132,8 +132,8 @@ public class OrcamentoDespesasAnuaisViewModel {
 			return true;
 		}
 
-		private OrcamentoDespesasAnuaisViewModel getOuterType() {
-			return OrcamentoDespesasAnuaisViewModel.this;
+		private AnualFixedExpensesBudgetViewModel getOuterType() {
+			return AnualFixedExpensesBudgetViewModel.this;
 		}
 
 		@Override

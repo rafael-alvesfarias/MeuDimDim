@@ -11,11 +11,11 @@ import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.mdd.domain.model.Despesa;
-import br.com.mdd.domain.model.DespesaFixa;
-import br.com.mdd.domain.model.Orcamento;
-import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel;
-import br.com.mdd.presentation.model.OrcamentoDespesasAnuaisViewModel.ConjuntoDespesas;
+import br.com.mdd.domain.model.Expense;
+import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.Budget;
+import br.com.mdd.presentation.model.AnualFixedExpensesBudgetViewModel;
+import br.com.mdd.presentation.model.AnualFixedExpensesBudgetViewModel.ConjuntoDespesas;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
 
@@ -29,16 +29,16 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
-		Set<Despesa> despesas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
+		Set<Expense> despesas = new HashSet<Expense>();
+		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
+		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Orcamento orcamento = new Orcamento(despesas).anual().comPrevisao().gerar();
+		Budget orcamento = new Budget(despesas).anual().withPrediction().generate();
 		
-		OrcamentoDespesasAnuaisViewModel tabela = new OrcamentoDespesasAnuaisViewModel(orcamento);
+		AnualFixedExpensesBudgetViewModel tabela = new AnualFixedExpensesBudgetViewModel(orcamento);
 		
 		//Conferindo as despesasFixas planejadas
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
@@ -67,16 +67,16 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeMesesVariados() {
-		Set<Despesa> despesas = new HashSet<Despesa>();
-		DespesaFixa agua = new DespesaFixa("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
-		DespesaFixa luz = new DespesaFixa("Luz", new BigDecimal("98.73"), new LocalDate(2016, 5, 12));
-		DespesaFixa telefone = new DespesaFixa("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 9, 20));
+		Set<Expense> despesas = new HashSet<Expense>();
+		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 5, 12));
+		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 9, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Orcamento orcamento = new Orcamento(despesas).anual().comPrevisao().gerar();
+		Budget orcamento = new Budget(despesas).anual().withPrediction().generate();
 		
-		OrcamentoDespesasAnuaisViewModel tabela = new OrcamentoDespesasAnuaisViewModel(orcamento);
+		AnualFixedExpensesBudgetViewModel tabela = new AnualFixedExpensesBudgetViewModel(orcamento);
 		
 		//Conferindo as despesasFixas planejadas
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {

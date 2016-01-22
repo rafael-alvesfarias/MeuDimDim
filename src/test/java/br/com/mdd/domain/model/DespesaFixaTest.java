@@ -12,7 +12,7 @@ import org.joda.time.LocalDate;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.mdd.domain.model.DespesaFixa;
+import br.com.mdd.domain.model.FixedExpense;
 
 public class DespesaFixaTest {
 	
@@ -26,8 +26,8 @@ public class DespesaFixaTest {
 	public void testVerificaVencimentoDespesaFixa() {
 		Integer diaDoMes = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
-		DespesaFixa aluguel = new DespesaFixa("Aluguel", new BigDecimal("1200.0"));
-		DespesaFixa condominio = new DespesaFixa("Condomínio",  new BigDecimal("350.0"), LocalDate.now());
+		FixedExpense aluguel = new FixedExpense("Aluguel", new BigDecimal("1200.0"));
+		FixedExpense condominio = new FixedExpense("Condomínio",  new BigDecimal("350.0"), LocalDate.now());
 		Integer vencimentoAluguel = aluguel.getVencimento();
 		Integer vencimentoComdominio = condominio.getVencimento();
 		
@@ -37,15 +37,15 @@ public class DespesaFixaTest {
 	
 	@Test(expected=IllegalArgumentException.class)
 	public void testCriaDespesaFixaComVencimentoInvalido(){
-		new DespesaFixa("telefone",  new BigDecimal("98.0"), 32);
+		new FixedExpense("telefone",  new BigDecimal("98.0"), 32);
 	}
 	
 	@Test
 	public void testObtemDataDoVencimento(){
 		String dataDeHoje = formatador.format(new Date());
 		
-		DespesaFixa aluguel = new DespesaFixa("Aluguel",  new BigDecimal("1200.0"));
-		DespesaFixa condominio = new DespesaFixa("Condomínio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		FixedExpense aluguel = new FixedExpense("Aluguel",  new BigDecimal("1200.0"));
+		FixedExpense condominio = new FixedExpense("Condomínio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
 		LocalDate dataVencimentoAluguel = aluguel.getDataLancamento();
 		LocalDate dataVencimentoComdominio = condominio.getDataLancamento();
 		

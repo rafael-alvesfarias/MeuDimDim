@@ -8,9 +8,9 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
-import br.com.mdd.domain.model.Categoria;
+import br.com.mdd.domain.model.Category;
 
-public class DespesaViewModel {
+public class ExpenseViewModel {
 	
 	private String descricao;
 	
@@ -26,7 +26,7 @@ public class DespesaViewModel {
 	
 	private Boolean pago;
 	
-	private Set<Categoria> categorias;
+	private Set<Category> categorias;
 
 	public String getDescricao() {
 		return descricao;
@@ -60,11 +60,11 @@ public class DespesaViewModel {
 		this.categoria = categoria;
 	}
 
-	public Set<Categoria> getCategorias() {
+	public Set<Category> getCategorias() {
 		return categorias;
 	}
 
-	public void setCategorias(Set<Categoria> categorias) {
+	public void setCategorias(Set<Category> categorias) {
 		this.categorias = categorias;
 	}
 
