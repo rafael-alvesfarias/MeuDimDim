@@ -2,5 +2,6 @@ SPIRNG + HIBERNATE 4
 http://www.codejava.net/frameworks/spring/spring-4-and-hibernate-4-integration-tutorial-part-1-xml-configuration
 http://www.codejava.net/frameworks/spring/spring-4-and-hibernate-4-integration-tutorial-part-2-java-based-configuration
 http://www.codejava.net/frameworks/spring/spring-mvc-beginner-tutorial-with-spring-tool-suite-ide
+http://www.baeldung.com/hibernate-4-spring
 SPRING MVC CONFIGURATION
 http://kielczewski.eu/2013/11/spring-mvc-without-web-xml-using-webapplicationinitializer/
