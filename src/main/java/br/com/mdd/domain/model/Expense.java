@@ -4,77 +4,94 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Locale;
 
-import org.joda.time.LocalDate;
-import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.format.annotation.NumberFormat;
-import org.springframework.format.annotation.NumberFormat.Style;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+import org.joda.time.LocalDate;
+
+@Entity
+@Table(name="expense")
 public class Expense implements Comparable<Expense> {
 	
-	private String descricao;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer id;
 	
-	@NumberFormat(style = Style.CURRENCY)
-	private BigDecimal valor;
+	private String name;
 	
-	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private LocalDate dataLancamento;
+	private BigDecimal value;
 	
-	private Category categoria;
+	private LocalDate maturityDate;
 	
-	private Boolean pago;
+	@ManyToOne
+	private Category category;
 	
-	public Expense() {
-		this(null, BigDecimal.ZERO);
+	private Boolean paid;
+	
+	Expense() {
+		//Construtor necessário para framework
 	}
 
 	public Expense(String descricao, BigDecimal valor, LocalDate dataLancamento) {
-		this.descricao = descricao;
-		this.valor = valor;
-		this.dataLancamento = dataLancamento;
+		this.name = descricao;
+		this.value = valor;
+		this.maturityDate = dataLancamento;
 	}
 
 	public Expense(String descricao, BigDecimal valor) {
 		this(descricao, valor, LocalDate.now());
 	}
 
-	public String getDescricao() {
-		return descricao;
+	public Integer getId() {
+		return id;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
-	public LocalDate getDataLancamento() {
-		return dataLancamento;
+	public String getName() {
+		return name;
 	}
 
-	public void setDataLancamento(LocalDate dataLancamento) {
-		this.dataLancamento = dataLancamento;
+	public void setName(String descricao) {
+		this.name = descricao;
 	}
 
-	public BigDecimal getValor() {
-		return valor;
+	public LocalDate getMaturityDate() {
+		return maturityDate;
 	}
 
-	public void setValor(BigDecimal valor) {
-		this.valor = valor;
+	public void setMaturityDate(LocalDate dataLancamento) {
+		this.maturityDate = dataLancamento;
 	}
 
-	public Category getCategoria() {
-		return categoria;
+	public BigDecimal getValue() {
+		return value;
 	}
 
-	public void setCategoria(Category categoria) {
-		this.categoria = categoria;
+	public void setValue(BigDecimal value) {
+		this.value = value;
 	}
 
-	public Boolean getPago() {
-		return pago;
+	public Category getCategory() {
+		return category;
 	}
 
-	public void setPago(Boolean pago) {
-		this.pago = pago;
+	public void setCategory(Category category) {
+		this.category = category;
+	}
+
+	public Boolean getPaid() {
+		return paid;
+	}
+
+	public void setPaid(Boolean paid) {
+		this.paid = paid;
 	}
 
 	@Override
@@ -82,10 +99,10 @@ public class Expense implements Comparable<Expense> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((dataLancamento == null) ? 0 : dataLancamento.hashCode());
+				+ ((maturityDate == null) ? 0 : maturityDate.hashCode());
 		result = prime * result
-				+ ((descricao == null) ? 0 : descricao.hashCode());
-		result = prime * result + ((valor == null) ? 0 : valor.hashCode());
+				+ ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -98,20 +115,20 @@ public class Expense implements Comparable<Expense> {
 		if (getClass() != obj.getClass())
 			return false;
 		Expense other = (Expense) obj;
-		if (dataLancamento == null) {
-			if (other.dataLancamento != null)
+		if (maturityDate == null) {
+			if (other.maturityDate != null)
 				return false;
-		} else if (!dataLancamento.equals(other.dataLancamento))
+		} else if (!maturityDate.equals(other.maturityDate))
 			return false;
-		if (descricao == null) {
-			if (other.descricao != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!descricao.equals(other.descricao))
+		} else if (!name.equals(other.name))
 			return false;
-		if (valor == null) {
-			if (other.valor != null)
+		if (value == null) {
+			if (other.value != null)
 				return false;
-		} else if (!valor.equals(other.valor))
+		} else if (!value.equals(other.value))
 			return false;
 		return true;
 	}
@@ -121,7 +138,7 @@ public class Expense implements Comparable<Expense> {
 		final Collator collator = Collator.getInstance(new Locale("pt", "BR"));
 		collator.setStrength(Collator.PRIMARY);
 		
-		return collator.compare(this.descricao, o.getDescricao());
+		return collator.compare(this.name, o.getName());
 	}
 
 }

@@ -64,11 +64,11 @@ public class Budget {
 	private void geeratePredictedExpenses(){
 		Set<Expense> despesaFixasPrevistas = new HashSet<Expense>(this.expenses);
 		for (Expense despesaFixa : this.expenses) {
-			int mesDespesa = despesaFixa.getDataLancamento().getMonthOfYear();
+			int mesDespesa = despesaFixa.getMaturityDate().getMonthOfYear();
 			int ultimoMes = this.getDateTo().getMonthOfYear();
 			for(int novoMes = mesDespesa + 1; novoMes <= ultimoMes; novoMes++){
-				LocalDate novaData = despesaFixa.getDataLancamento().withMonthOfYear(novoMes);
-				FixedExpense despesaFixaPrevista = new FixedExpense(despesaFixa.getDescricao(), despesaFixa.getValor(), novaData);
+				LocalDate novaData = despesaFixa.getMaturityDate().withMonthOfYear(novoMes);
+				FixedExpense despesaFixaPrevista = new FixedExpense(despesaFixa.getName(), despesaFixa.getValue(), novaData);
 				if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
 					despesaFixasPrevistas.add(despesaFixaPrevista);
 				}
@@ -89,7 +89,7 @@ public class Budget {
 		
 		Set<Expense> orcamento = new HashSet<Expense>();
 		for (Expense despesa : expenses) {
-			if(isInsideInterval(despesa.getDataLancamento())){
+			if(isInsideInterval(despesa.getMaturityDate())){
 				orcamento.add(despesa);
 			}
 		}

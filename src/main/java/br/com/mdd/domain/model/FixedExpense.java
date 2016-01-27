@@ -14,7 +14,7 @@ public class FixedExpense extends Expense{
 	
 	public FixedExpense(String descricao, BigDecimal valor) {
 		super(descricao, valor);
-		this.vencimento = getDataLancamento().getDayOfMonth();
+		this.vencimento = getMaturityDate().getDayOfMonth();
 	}
 
 	public FixedExpense(String descricao, BigDecimal valor, LocalDate dataVencimento) {
@@ -30,7 +30,7 @@ public class FixedExpense extends Expense{
 			throw new IllegalArgumentException("Dia de vencimento passada por parâmetro inválida." + vencimento);
 		}
 		data.withDayOfMonth(vencimento);
-		this.setDataLancamento(data);
+		this.setMaturityDate(data);
 		this.vencimento = vencimento;
 	}
 
@@ -40,9 +40,9 @@ public class FixedExpense extends Expense{
 
 	@Override
 	public String toString() {
-		return "DespesaFixa [descrição=" + getDescricao() + ", vencimento="
-				+ vencimento + ", data de vencimento=" + getDataLancamento()
-				+ ", valor=" + getValor() + "]";
+		return "DespesaFixa [descrição=" + getName() + ", vencimento="
+				+ vencimento + ", data de vencimento=" + getMaturityDate()
+				+ ", valor=" + getValue() + "]";
 	}
 
 }

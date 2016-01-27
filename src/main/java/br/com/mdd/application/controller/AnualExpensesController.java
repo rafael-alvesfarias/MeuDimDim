@@ -52,7 +52,7 @@ public class AnualExpensesController {
 			d = new Expense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
 			despesasVariaveis.add(d);
 		}
-		d.setCategoria(getCategoria(despesa.getCategoria()));
+		d.setCategory(getCategoria(despesa.getCategoria()));
 		return despesasAnuais(model);
 	}
 	

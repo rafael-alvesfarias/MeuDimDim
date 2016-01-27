@@ -10,9 +10,8 @@ import java.util.Set;
 import java.util.TreeMap;
 import java.util.TreeSet;
 
-import br.com.mdd.domain.model.Expense;
-import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.Expense;
 
 public class AnualFixedExpensesBudgetViewModel {
 
@@ -30,18 +29,18 @@ public class AnualFixedExpensesBudgetViewModel {
 		for (Expense itemOrcamento : orcamento.getExpenses()) {
 			ConjuntoDespesas conjuntoDespesas = null;
 			for (ConjuntoDespesas conj : despesas) {
-				if (conj.getNomeDespesa().equals(itemOrcamento.getDescricao())) {
+				if (conj.getNomeDespesa().equals(itemOrcamento.getName())) {
 					conjuntoDespesas = conj;
 				}
 			}
 			if (conjuntoDespesas == null) {
 				conjuntoDespesas = new ConjuntoDespesas();
-				conjuntoDespesas.setNomeDespesa(itemOrcamento.getDescricao());
+				conjuntoDespesas.setNomeDespesa(itemOrcamento.getName());
 				
 				conjuntoDespesas.setDespesas(new TreeMap<Integer, Expense>());
 				despesas.add(conjuntoDespesas);
 			}
-			Integer mes = Integer.valueOf(itemOrcamento.getDataLancamento().getMonthOfYear());
+			Integer mes = Integer.valueOf(itemOrcamento.getMaturityDate().getMonthOfYear());
 			conjuntoDespesas.put(mes, itemOrcamento);
 		}
 		
@@ -52,7 +51,7 @@ public class AnualFixedExpensesBudgetViewModel {
 			BigDecimal total = BigDecimal.ZERO;
 			for (ConjuntoDespesas conjunto : despesas) {
 				if(conjunto.getDespesas().get(i) != null){
-					total = total.add(conjunto.getDespesas().get(i).getValor());
+					total = total.add(conjunto.getDespesas().get(i).getValue());
 				}
 			}
 			totais.add(total);
@@ -147,7 +146,7 @@ public class AnualFixedExpensesBudgetViewModel {
 			BigDecimal total = BigDecimal.ZERO;
 			
 			for (Integer mes : despesas.keySet()) {
-				total = total.add(despesas.get(mes).getValor());
+				total = total.add(despesas.get(mes).getValue());
 			}
 			
 			return total;
