@@ -55,7 +55,7 @@
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												R$ ${conuntoDespesas.despesas[mes].valor}
+												R$ ${conuntoDespesas.despesas[mes].value}
 											</td>
 										</c:when>
 										<c:otherwise>
@@ -110,7 +110,7 @@
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												R$ ${conuntoDespesas.despesas[mes].valor}
+												R$ ${conuntoDespesas.despesas[mes].value}
 											</td>
 										</c:when>
 										<c:otherwise>

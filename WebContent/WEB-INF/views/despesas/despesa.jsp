@@ -23,7 +23,7 @@
 					<td><label for="categoria">Categoria</label></td>
 					<td>
 						<form:select path="categoria" id="categoria">
-							<form:options items="${despesa.categorias}" itemValue="nome" itemLabel="descricao"/>
+							<form:options items="${despesa.categorias}" itemValue="name" itemLabel="description"/>
 						</form:select>
 					</td>
 				</tr>

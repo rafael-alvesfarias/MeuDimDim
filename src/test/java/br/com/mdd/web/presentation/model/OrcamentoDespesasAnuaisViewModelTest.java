@@ -13,9 +13,9 @@ import org.junit.Test;
 
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.presentation.view.model.AnualFixedExpensesBudgetViewModel;
+import br.com.mdd.presentation.view.model.AnualFixedExpensesBudgetViewModel.ConjuntoDespesas;
 import br.com.mdd.domain.model.Budget;
-import br.com.mdd.presentation.model.AnualFixedExpensesBudgetViewModel;
-import br.com.mdd.presentation.model.AnualFixedExpensesBudgetViewModel.ConjuntoDespesas;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
 

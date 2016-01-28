@@ -17,6 +17,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
+import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.Income;
+import br.com.mdd.domain.model.User;
 
 @Configuration
 @EnableTransactionManagement
@@ -43,8 +46,11 @@ public class PersistenceConfig {
 		LocalSessionFactoryBuilder sessionBuilder = new LocalSessionFactoryBuilder(dataSource);
 		
 		sessionBuilder
+			.addAnnotatedClass(Category.class)
 			.addAnnotatedClass(Expense.class)
-			.addAnnotatedClass(Category.class);
+			.addAnnotatedClass(FixedExpense.class)
+			.addAnnotatedClass(Income.class)
+			.addAnnotatedClass(User.class);
 		
 		sessionBuilder.addProperties(getHibernateProperties());
 		
@@ -61,8 +67,8 @@ public class PersistenceConfig {
 	
 	private Properties getHibernateProperties() {
 	    Properties properties = new Properties();
-	    properties.put("hibernate.show_sql", env.getProperty("hibernate.dialect"));
-	    properties.put("hibernate.dialect", env.getProperty("hibernate.show_sql"));
+	    properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+	    properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
 	    properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
 	    
 	    return properties;

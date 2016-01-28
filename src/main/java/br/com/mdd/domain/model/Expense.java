@@ -4,10 +4,14 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Locale;
 
+import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -15,22 +19,29 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name="expense")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name = "type")
 public class Expense implements Comparable<Expense> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "expense_id")
 	private Integer id;
 	
 	private String name;
 	
 	private BigDecimal value;
 	
+	@Column(name="maturity_date")
 	private LocalDate maturityDate;
 	
 	@ManyToOne
 	private Category category;
 	
 	private Boolean paid;
+	
+	@ManyToOne
+	private User user;
 	
 	Expense() {
 		//Construtor necessário para framework
@@ -92,6 +103,14 @@ public class Expense implements Comparable<Expense> {
 
 	public void setPaid(Boolean paid) {
 		this.paid = paid;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	@Override

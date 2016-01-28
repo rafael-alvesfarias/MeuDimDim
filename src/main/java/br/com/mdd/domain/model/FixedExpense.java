@@ -2,24 +2,32 @@ package br.com.mdd.domain.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Table;
+
 import org.joda.time.LocalDate;
 
+@Entity
+@Table(name="fixed_expense")
 public class FixedExpense extends Expense{
 	
-	private Integer vencimento;
+	@Column(name = "maturity_day")
+	private Integer maturityDay;
 	
-	public FixedExpense() {
-		this(null, BigDecimal.ZERO);
+	@SuppressWarnings("unused")
+	private FixedExpense() {
+		//This constructor shouldn't be used
 	}
 	
 	public FixedExpense(String descricao, BigDecimal valor) {
 		super(descricao, valor);
-		this.vencimento = getMaturityDate().getDayOfMonth();
+		this.maturityDay = getMaturityDate().getDayOfMonth();
 	}
 
 	public FixedExpense(String descricao, BigDecimal valor, LocalDate dataVencimento) {
 		super(descricao, valor, dataVencimento);
-		this.vencimento = dataVencimento.getDayOfMonth();
+		this.maturityDay = dataVencimento.getDayOfMonth();
 	}
 
 	public FixedExpense(String descricao, BigDecimal valor, Integer vencimento) {
@@ -31,17 +39,17 @@ public class FixedExpense extends Expense{
 		}
 		data.withDayOfMonth(vencimento);
 		this.setMaturityDate(data);
-		this.vencimento = vencimento;
+		this.maturityDay = vencimento;
 	}
 
-	public Integer getVencimento() {
-		return vencimento;
+	public Integer getMaturityDay() {
+		return maturityDay;
 	}
 
 	@Override
 	public String toString() {
 		return "DespesaFixa [descrição=" + getName() + ", vencimento="
-				+ vencimento + ", data de vencimento=" + getMaturityDate()
+				+ maturityDay + ", data de vencimento=" + getMaturityDate()
 				+ ", valor=" + getValue() + "]";
 	}
 

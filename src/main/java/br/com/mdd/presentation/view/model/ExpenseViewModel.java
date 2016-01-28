@@ -1,4 +1,4 @@
-package br.com.mdd.presentation.model;
+package br.com.mdd.presentation.view.model;
 
 import java.math.BigDecimal;
 import java.util.Set;
