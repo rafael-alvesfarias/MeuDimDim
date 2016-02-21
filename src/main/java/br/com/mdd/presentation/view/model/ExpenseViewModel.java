@@ -9,8 +9,12 @@ import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import br.com.mdd.domain.model.Category;
+import br.com.mdd.domain.model.Expense;
+import br.com.mdd.domain.model.FixedExpense;
 
 public class ExpenseViewModel {
+	
+	private Integer id;
 	
 	private String descricao;
 	
@@ -27,6 +31,31 @@ public class ExpenseViewModel {
 	private Boolean pago;
 	
 	private Set<Category> categorias;
+	
+	public static final ExpenseViewModel fromExpense(Expense expense) {
+		ExpenseViewModel e = new ExpenseViewModel();
+		e.setCategoria(expense.getCategory().getName());
+		e.setDataLancamento(expense.getMaturityDate());
+		e.setDescricao(expense.getName());
+		e.setDespesaFixa(true);
+		e.setId(expense.getId());
+		e.setPago(expense.getPaid());
+		e.setValor(expense.getValue());
+		
+		if(expense instanceof FixedExpense) {
+			e.setDespesaFixa(true);			
+		}
+		
+		return e;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getDescricao() {
 		return descricao;

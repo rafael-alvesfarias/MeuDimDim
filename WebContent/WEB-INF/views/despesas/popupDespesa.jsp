@@ -2,11 +2,20 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
+<script type="text/javascript">
+	$(document).ready(function(){
+		if($.isNumeric($("#idDespesa").val())) {
+			window.location.hash = "novaDespesa";
+		}
+	});
+</script>
+
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
 		<h3 class="tituloPainel">Nova Despesa</h3>
-		<form:form action="despesa" method="POST" commandName="despesa" id="formDespesa">
-			<form:hidden path="id"/>
+		<c:url var="salvar" value="/despesa"></c:url>
+		<form:form action="${salvar}" method="POST" commandName="despesa" id="formDespesa">
+			<form:hidden path="id" id="idDespesa"/>
 			<table>
 				<tr>
 					<td><label for="descricao">Descrição</label></td>

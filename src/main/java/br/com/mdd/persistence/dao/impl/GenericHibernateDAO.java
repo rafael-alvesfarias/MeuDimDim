@@ -11,7 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mdd.persistence.dao.GenericDAO;
 
-@Repository
+@Repository(value = "genericDAO")
 public class GenericHibernateDAO<T> implements GenericDAO<T> {
 	
 	private SessionFactory sessionFactory;
@@ -48,6 +48,10 @@ public class GenericHibernateDAO<T> implements GenericDAO<T> {
 			createCriteria(clazz)
 			.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 		return list;
+	}
+	
+	protected SessionFactory getSessionFactory() {
+		return sessionFactory;
 	}
 
 }

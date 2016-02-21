@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import br.com.mdd.domain.model.FixedExpense;
 
 /**
- * Um orçamento é um conjunto de lançamentos realizados em um determinado período. 
+ * Um orï¿½amento ï¿½ um conjunto de lanï¿½amentos realizados em um determinado perï¿½odo. 
  * @author rafaelfarias
  *
  */
@@ -22,7 +22,7 @@ public class Budget {
 	
 	public Budget(Set<Expense> despesasFixas){
 		if(despesasFixas == null){
-			throw new IllegalArgumentException("Conjunto de despesas não pode ser nulo!");
+			throw new IllegalArgumentException("Conjunto de despesas nï¿½o pode ser nulo!");
 		}
 		this.expenses = new HashSet<Expense>(despesasFixas);
 	}
@@ -44,11 +44,11 @@ public class Budget {
 	
 	public Budget withPeriod(LocalDate dataDe, LocalDate dataAte){
 		if(dataDe == null || dataAte == null){
-			throw new IllegalArgumentException("Período passado por parâmetro não pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
+			throw new IllegalArgumentException("Perï¿½odo passado por parï¿½metro nï¿½o pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
 		}
 		
 		if(dataDe.isAfter(dataAte)){
-			throw new IllegalArgumentException("Período passado por parâmetro é inválido: dataDe="+ dataDe + "dataAte=" + dataAte);
+			throw new IllegalArgumentException("Perï¿½odo passado por parï¿½metro ï¿½ invï¿½lido: dataDe="+ dataDe + "dataAte=" + dataAte);
 		}
 		
 		this.dateFrom = dataDe;
@@ -61,14 +61,15 @@ public class Budget {
 		return this;
 	}
 	
-	private void geeratePredictedExpenses(){
+	private void generatePredictedExpenses(){
 		Set<Expense> despesaFixasPrevistas = new HashSet<Expense>(this.expenses);
 		for (Expense despesaFixa : this.expenses) {
 			int mesDespesa = despesaFixa.getMaturityDate().getMonthOfYear();
 			int ultimoMes = this.getDateTo().getMonthOfYear();
-			for(int novoMes = mesDespesa + 1; novoMes <= ultimoMes; novoMes++){
+			for(int novoMes = mesDespesa + 1 ; novoMes <= ultimoMes; novoMes++){
 				LocalDate novaData = despesaFixa.getMaturityDate().withMonthOfYear(novoMes);
 				FixedExpense despesaFixaPrevista = new FixedExpense(despesaFixa.getName(), despesaFixa.getValue(), novaData);
+				despesaFixaPrevista.setId(despesaFixa.getId());
 				if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
 					despesaFixasPrevistas.add(despesaFixaPrevista);
 				}
@@ -84,7 +85,7 @@ public class Budget {
 		}
 		
 		if(predictExpenses){
-			this.geeratePredictedExpenses();
+			this.generatePredictedExpenses();
 		}
 		
 		Set<Expense> orcamento = new HashSet<Expense>();

@@ -44,7 +44,7 @@ public class Expense implements Comparable<Expense> {
 	private User user;
 	
 	Expense() {
-		//Construtor necessário para framework
+		//Construtor necessï¿½rio para framework
 	}
 
 	public Expense(String descricao, BigDecimal valor, LocalDate dataLancamento) {
