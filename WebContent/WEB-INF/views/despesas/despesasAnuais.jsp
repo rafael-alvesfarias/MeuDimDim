@@ -10,6 +10,13 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/recursos/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			$("#botaoNovaDespesa").click(function(){
+				limparPopup();
+			});
+		});
+	</script>
 </head>
 <body>
 	<spring:url value="/editarDespesa" var="urlEditar" htmlEscape="true"></spring:url>
@@ -132,7 +139,7 @@
 					</tbody>
 				</table>
 			<div class="botoes">
-				<a href="#novaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
+				<a href="#novaDespesa" id="botaoNovaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
 			</div>
 		</div>
 	</div>

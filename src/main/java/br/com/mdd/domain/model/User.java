@@ -23,7 +23,7 @@ public class User {
 	
 	private String login;
 	
-	//TODO How is the best form to represent a password?
+	//TODO What is the best form to represent a password?
 	private String password;
 	
 	@OneToMany

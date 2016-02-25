@@ -8,11 +8,29 @@
 			window.location.hash = "novaDespesa";
 		}
 	});
+	function limparPopup() {
+		$("#formDespesa input[type=text]").each(function(a, b) {
+			alert($(b).val());
+		});
+		$("#formDespesa input[type=hidden]").each(function(a, b) {
+			alert($(b).val());
+		});
+		$("#formDespesa input[type=select]").each(function(a, b) {
+			alert($(b).val());
+		});
+	}
 </script>
 
 <div id="novaDespesa" class="modalDialog" title="Nova Despesa">
 	<div>
-		<h3 class="tituloPainel">Nova Despesa</h3>
+		<c:choose>
+			<c:when test="${despesa.id != null}">
+				<h3 class="tituloPainel">Editar Despesa</h3>
+			</c:when>
+			<c:otherwise>
+				<h3 class="tituloPainel">Nova Despesa</h3>
+			</c:otherwise>	
+		</c:choose>
 		<c:url var="salvar" value="/despesa"></c:url>
 		<form:form action="${salvar}" method="POST" commandName="despesa" id="formDespesa">
 			<form:hidden path="id" id="idDespesa"/>
