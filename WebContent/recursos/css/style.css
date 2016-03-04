@@ -24,6 +24,10 @@ body{
 	padding-top:30px;
 }
 
+a {
+	text-decoration: none;
+}
+
 table{
 	border-collapse: collapse;
 }

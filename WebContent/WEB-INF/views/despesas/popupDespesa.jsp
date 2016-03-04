@@ -10,13 +10,16 @@
 	});
 	function limparPopup() {
 		$("#formDespesa input[type=text]").each(function(a, b) {
-			alert($(b).val());
+			$(b).val("");
 		});
 		$("#formDespesa input[type=hidden]").each(function(a, b) {
-			alert($(b).val());
+			$(b).val("");
 		});
-		$("#formDespesa input[type=select]").each(function(a, b) {
-			alert($(b).val());
+		$("#formDespesa select").each(function(a, b) {
+			$(b).children("option").eq(0).prop("selected", true);
+		});
+		$("#formDespesa input[type=checkbox]").each(function(a, b) {
+			$(b).prop("checked", false);
 		});
 	}
 </script>
