@@ -15,36 +15,51 @@
 			$("#botaoNovaDespesa").click(function(){
 				limparPopup();
 			});
+			
+			$(".cellControl").click(function(a, b) {
+				var cellMenu = $(this).next(".cellMenu");
+				var visible = cellMenu.is(":visible");
+				$(".cellMenu").each(function(){
+					$(this).hide();	
+				});
+				if (visible) {
+					cellMenu.hide();
+				} else {
+					cellMenu.show();
+				}				
+			});
 		});
 	</script>
 </head>
 <body>
 	<spring:url value="/editarDespesa" var="urlEditar" htmlEscape="true"></spring:url>
+	<spring:url value="/excluirDespesa" var="urlExcluir" htmlEscape="true"></spring:url>
+	<spring:url value="/despesasMensais" var="urlDespesasMensais" htmlEscape="true"></spring:url>
 	<c:import url="../header.jsp"/>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="painel">
 			<h3 class="tituloPainel">Despesas Anuais</h3>
 			<!-- DESPESAS FIXAS -->
-				<table>
+				<table class="editableCells">
 					<thead>
 						<tr>
 							<th colspan="14" class="tableTitle">Despesas Fixas</th>
 						</tr>
 						<tr>
 							<th/>
-							<th>Janeiro</th>
-							<th>Fevereiro</th>
-							<th>Março</th>
-							<th>Abril</th>
-							<th>Maio</th>
-							<th>Junho</th>
-							<th>Julho</th>
-							<th>Agosto</th>
-							<th>Setembro</th>
-							<th>Outubro</th>
-							<th>Novembro</th>
-							<th>Dezembro</th>
+							<th><a href="${urlDespesasMensais}/janeiro">Janeiro</a></th>
+							<th><a href="${urlDespesasMensais}/fevereiro">Fevereiro</a></th>
+							<th><a href="${urlDespesasMensais}/marco">Março</a></th>
+							<th><a href="${urlDespesasMensais}/abril">Abril</a></th>
+							<th><a href="${urlDespesasMensais}/maio">Maio</a></th>
+							<th><a href="${urlDespesasMensais}/junho">Junho</a></th>
+							<th><a href="${urlDespesasMensais}/julho">Julho</a></th>
+							<th><a href="${urlDespesasMensais}/agosto">Agosto</a></th>
+							<th><a href="${urlDespesasMensais}/setembro">Setembro</a></th>
+							<th><a href="${urlDespesasMensais}/outubro">Outubro</a></th>
+							<th><a href="${urlDespesasMensais}/novembro">Novembro</a></th>
+							<th><a href="${urlDespesasMensais}/dezembro">Dezembro</a></th>
 							<th>TOTAL</th>
 						</tr>
 					</thead>
@@ -67,6 +82,15 @@
 												<a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">
 													R$ ${conuntoDespesas.despesas[mes].value}
 												</a>
+												<div class="cellControl">
+													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
+												</div>
+												<div class="cellMenu">
+													<ul>
+														<li><a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
+														<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}">Excluir</a></li>
+													</ul>
+												</div>
 											</td>
 										</c:when>
 										<c:otherwise>
@@ -83,25 +107,25 @@
 				</table>
 				<br>
 				<!-- DESPESAS VARIÁVEIS -->
-				<table>
+				<table class="editableCells">
 					<thead>
 						<tr>
 							<th colspan="14" class="tableTitle">Despesas Variáveis</th>
 						</tr>
 						<tr>
 							<th/>
-							<th>Janeiro</th>
-							<th>Fevereiro</th>
-							<th>Março</th>
-							<th>Abril</th>
-							<th>Maio</th>
-							<th>Junho</th>
-							<th>Julho</th>
-							<th>Agosto</th>
-							<th>Setembro</th>
-							<th>Outubro</th>
-							<th>Novembro</th>
-							<th>Dezembro</th>
+							<th><a href="${urlDespesasMensais}/janeiro">Janeiro</a></th>
+							<th><a href="${urlDespesasMensais}/fevereiro">Fevereiro</a></th>
+							<th><a href="${urlDespesasMensais}/marco">Março</a></th>
+							<th><a href="${urlDespesasMensais}/abril">Abril</a></th>
+							<th><a href="${urlDespesasMensais}/maio">Maio</a></th>
+							<th><a href="${urlDespesasMensais}/junho">Junho</a></th>
+							<th><a href="${urlDespesasMensais}/julho">Julho</a></th>
+							<th><a href="${urlDespesasMensais}/agosto">Agosto</a></th>
+							<th><a href="${urlDespesasMensais}/setembro">Setembro</a></th>
+							<th><a href="${urlDespesasMensais}/outubro">Outubro</a></th>
+							<th><a href="${urlDespesasMensais}/novembro">Novembro</a></th>
+							<th><a href="${urlDespesasMensais}/dezembro">Dezembro</a></th>
 							<th>TOTAL</th>
 						</tr>
 					</thead>
@@ -121,9 +145,16 @@
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												<a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">
-													R$ ${conuntoDespesas.despesas[mes].value}
-												</a>
+												R$ ${conuntoDespesas.despesas[mes].value}
+												<div class="cellControl">
+													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
+												</div>
+												<div class="cellMenu">
+													<ul>
+														<li><a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
+														<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}">Excluir</a></li>
+													</ul>
+												</div>
 											</td>
 										</c:when>
 										<c:otherwise>

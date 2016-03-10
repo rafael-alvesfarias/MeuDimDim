@@ -4,7 +4,7 @@
 	padding: 0;
 	font-family: 'Source Sans Pro', sans-serif;
 	font-weight: 500;
-	font-size: 11px;
+	font-size: 10px;
 	line-height: 1.5;
 }
 
@@ -26,7 +26,14 @@ body{
 
 a {
 	text-decoration: none;
+	color: inherit;
+	font-weight: inherit;
 }
+
+a:HOVER {
+	text-decoration: underline;
+}
+
 
 table{
 	border-collapse: collapse;
@@ -214,4 +221,47 @@ form table, form td, form tr{
 .tableTitle{
 	font-size: 12px;
 	background-color: #EEE;
+}
+
+.editableCells td .cellControl {
+    float: left;
+    position: relative;
+    top: -3px;
+    left: 48px;
+    height: 0px;
+    width: 0px;
+    padding: 0px;
+    margin: 0px;
+}
+
+.editableCells td div img {
+	height: 10px;
+	width: 10px;
+}
+
+.editableCells td div img:HOVER{
+	cursor: pointer;
+}
+
+.cellMenu {
+	display: none;
+	position: absolute;
+	background-color: gray;
+	font-weight: 600;
+}
+
+.cellMenu ul {
+	position:absolute; left:46px; top:-7px; z-index:999;
+	margin:0; padding:5px; list-style:none;
+	background:#fff; color:#333;
+	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;
+	-moz-box-shadow:0 0 5px #999; -webkit-box-shadow:0 0 5px #999; box-shadow:0 0 5px #999
+}
+
+.cellMenu ul li {
+	padding:5px;
+}
+
+.cellMenu ul li:hover {
+	background:#DFE7FF;
 }

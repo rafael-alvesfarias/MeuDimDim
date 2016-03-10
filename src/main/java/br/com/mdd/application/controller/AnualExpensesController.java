@@ -96,6 +96,16 @@ public class AnualExpensesController {
 		return "/despesas/despesasAnuais";
 	}
 	
+	@Transactional(readOnly=true)
+	@RequestMapping("/excluirDespesa/{id}")
+	public String excluirDespesa(Model model, @PathVariable Integer id){
+		
+		Expense expense = expensesDAO.find(id, Expense.class);
+		expensesDAO.remove(expense);
+		
+		return despesasAnuais(model);
+	}
+	
 	private Category getCategoria(String nome) {
 		for (Category categoria : categorias) {
 			if (categoria.getName().equals(nome)) {
