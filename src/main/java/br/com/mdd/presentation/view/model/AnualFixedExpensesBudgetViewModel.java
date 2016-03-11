@@ -20,11 +20,15 @@ public class AnualFixedExpensesBudgetViewModel {
 	private Budget orcamento;
 
 	public AnualFixedExpensesBudgetViewModel(Budget orcamento) {
-		this.orcamento = orcamento;
-		montar();
+		this(orcamento, null);
 	}
 
-	private void montar() {
+	public AnualFixedExpensesBudgetViewModel(Budget orcamento, Map<Integer, Integer> exclusionsMap) {
+		this.orcamento = orcamento;
+		montar(exclusionsMap);
+	}
+
+	private void montar(Map<Integer, Integer> exclusionsMap) {
 		despesas = new TreeSet<ConjuntoDespesas>();
 		for (Expense itemOrcamento : orcamento.getExpenses()) {
 			ConjuntoDespesas conjuntoDespesas = null;
@@ -36,12 +40,17 @@ public class AnualFixedExpensesBudgetViewModel {
 			if (conjuntoDespesas == null) {
 				conjuntoDespesas = new ConjuntoDespesas();
 				conjuntoDespesas.setNomeDespesa(itemOrcamento.getName());
+				conjuntoDespesas.setIdDespesa(itemOrcamento.getId());
 				
 				conjuntoDespesas.setDespesas(new TreeMap<Integer, Expense>());
 				despesas.add(conjuntoDespesas);
 			}
 			Integer mes = Integer.valueOf(itemOrcamento.getMaturityDate().getMonthOfYear());
-			conjuntoDespesas.put(mes, itemOrcamento);
+			//Verifica se não esta na lista de exlusões
+			if (exclusionsMap == null || exclusionsMap.get(itemOrcamento.getId()) == null 
+					|| mes.compareTo(exclusionsMap.get(itemOrcamento.getId())) < 0) {
+				conjuntoDespesas.put(mes, itemOrcamento);
+			}
 		}
 		
 		totais = new ArrayList<BigDecimal>();
@@ -78,6 +87,8 @@ public class AnualFixedExpensesBudgetViewModel {
 
 	public class ConjuntoDespesas implements Comparable<ConjuntoDespesas> {
 		private String nomeDespesa;
+		
+		private Integer idDespesa;
 
 		private Map<Integer, Expense> despesas;
 
@@ -87,6 +98,14 @@ public class AnualFixedExpensesBudgetViewModel {
 
 		public void setNomeDespesa(String nomeDespesa) {
 			this.nomeDespesa = nomeDespesa;
+		}
+
+		public Integer getIdDespesa() {
+			return idDespesa;
+		}
+
+		public void setIdDespesa(Integer idDespesa) {
+			this.idDespesa = idDespesa;
 		}
 
 		public Map<Integer, Expense> getDespesas() {

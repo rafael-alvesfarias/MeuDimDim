@@ -1,7 +1,11 @@
 package br.com.mdd.application.controller;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
@@ -37,6 +42,9 @@ public class AnualExpensesController {
 	private ExpenseDAO expensesDAO;
 	
 	@Autowired
+	private HttpSession session;
+	
+	@Autowired
 	@Qualifier("genericDAO")
 	private GenericDAO<Category> categoriesDAO;
 	
@@ -57,8 +65,15 @@ public class AnualExpensesController {
 	private void gerarOrcamentoAnual(Model model) {
 		Budget orcamentoDespesasFixas = new Budget(despesasFixas).anual().withPrediction().generate();
 		Budget orcamentoDespesasVariaveis = new Budget(despesasVariaveis).anual().generate();
-		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas);
+		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasFixasViewModel;
 		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasVariaveisViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasVariaveis);
+		@SuppressWarnings("unchecked")
+		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
+		if (exclusionsMap != null) {
+			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas, exclusionsMap);
+		} else {
+			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas);
+		}
 		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModelDespesasFixasViewModel);
 		model.addAttribute("orcamentoDespesasVariaveis", orcamentoViewModelDespesasVariaveisViewModel);
 	}
@@ -96,12 +111,22 @@ public class AnualExpensesController {
 		return "/despesas/despesasAnuais";
 	}
 	
-	@Transactional(readOnly=true)
+	@Transactional
 	@RequestMapping("/excluirDespesa/{id}")
-	public String excluirDespesa(Model model, @PathVariable Integer id){
-		
+	public String excluirDespesa(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
 		Expense expense = expensesDAO.find(id, Expense.class);
-		expensesDAO.remove(expense);
+		//Verifica se despesa não gerada automáticamente
+		if (mes != null && mes > expense.getMaturityDate().getMonthOfYear()) {
+			@SuppressWarnings("unchecked")
+			Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
+			if (exclusionsMap == null) {
+				exclusionsMap = new HashMap<Integer, Integer>();
+				session.setAttribute("exclusionsMap", exclusionsMap);
+			}
+			exclusionsMap.put(id, mes);
+		} else {
+			expensesDAO.remove(expense);
+		}
 		
 		return despesasAnuais(model);
 	}

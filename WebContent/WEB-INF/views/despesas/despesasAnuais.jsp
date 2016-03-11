@@ -17,7 +17,7 @@
 			});
 			
 			$(".cellControl").click(function(a, b) {
-				var cellMenu = $(this).next(".cellMenu");
+				var cellMenu = $(this).child(".cellMenu");
 				var visible = cellMenu.is(":visible");
 				$(".cellMenu").each(function(){
 					$(this).hide();	
@@ -79,17 +79,14 @@
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												<a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">
-													R$ ${conuntoDespesas.despesas[mes].value}
-												</a>
 												<div class="cellControl">
-													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
-												</div>
-												<div class="cellMenu">
+													R$ ${conuntoDespesas.despesas[mes].value}
+													<div class="cellMenu">
 													<ul>
 														<li><a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
-														<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}">Excluir</a></li>
+														<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}?mes=${mes}">Excluir</a></li>
 													</ul>
+												</div>
 												</div>
 											</td>
 										</c:when>
@@ -145,16 +142,16 @@
 									<c:choose>
 										<c:when test="${conuntoDespesas.despesas[mes] != null}">
 											<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-												R$ ${conuntoDespesas.despesas[mes].value}
 												<div class="cellControl">
-													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
+													R$ ${conuntoDespesas.despesas[mes].value}
+													<div class="cellMenu">
+														<ul>
+															<li><a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
+															<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}">Excluir</a></li>
+														</ul>
+													</div>
 												</div>
-												<div class="cellMenu">
-													<ul>
-														<li><a href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
-														<li><a href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}">Excluir</a></li>
-													</ul>
-												</div>
+
 											</td>
 										</c:when>
 										<c:otherwise>

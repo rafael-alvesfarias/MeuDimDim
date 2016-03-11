@@ -37,7 +37,7 @@ public class GenericHibernateDAO<T> implements GenericDAO<T> {
 	@Override
 	@Transactional
 	public T find(Serializable id, Class<T> clazz) {
-		return (T) sessionFactory.getCurrentSession().load(clazz, id);
+		return (T) sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
 	@SuppressWarnings("unchecked")
