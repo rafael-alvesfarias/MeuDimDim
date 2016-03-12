@@ -42,7 +42,7 @@ table{
 td, th{
 	border: 1px solid #DDD;
 	padding: 3px;
-	min-width: 56px;
+	min-width: 61px;
 }
 
 th{
@@ -133,7 +133,6 @@ th{
 	border: 1px solid;
 	padding: 5px;
 	padding-top: 30px;
-	margin: 5px;
 	margin-top: 20px;
 	border-radius: 4px;
 	box-shadow: 3px 3px 3px #888888;
@@ -224,26 +223,23 @@ form table, form td, form tr{
 	background-color: #EEE;
 }
 
-.editableCells td {
-	overflow: scroll;
+.editableCells td div {
+	float: left;
+	margin: 0;
+	padding: 0;
+
 }
 
-.editableCells td .cellControl {
-    float: left;
-    position: relative;
-    top: -3px;
-    left: 48px;
-    height: 0px;
-    width: 0px;
-    padding: 0px;
-    margin: 0px;
+.cellControl{
+    width:0;
+    height:0;
 }
 
-.cellControl {
-	background-image: url(../imagens/down-arrow.png);
-	background-repeat: no-repeat;
-	background-size: 10px 10px;
-}
+.cellControl img {
+	display: none;
+	width: 10px;
+	height: 10px;
+} 
 
 .cellControl:HOVER{
 	cursor: pointer;
@@ -257,7 +253,7 @@ form table, form td, form tr{
 }
 
 .cellMenu ul {
-	position:absolute; left:46px; top:-7px; z-index:999;
+	position:absolute; left:50px; top:10px; z-index:999;
 	margin:0; padding:5px; list-style:none;
 	background:#fff; color:#333;
 	-moz-border-radius:5px; -webkit-border-radius:5px; border-radius:5px;
