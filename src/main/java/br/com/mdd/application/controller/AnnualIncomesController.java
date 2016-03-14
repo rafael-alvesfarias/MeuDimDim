@@ -22,24 +22,21 @@ import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.Income;
 import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.AnualFixedExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.ExpenseViewModel;
+import br.com.mdd.presentation.view.model.IncomeViewModel;
 
 @Controller
-public class AnualExpensesController {
+public class AnnualIncomesController {
 	
-	private Set<Expense> despesasFixas;
+	private Set<Income> incomes;
 	
-	private Set<Expense> despesasVariaveis;
+	private Set<Category> categories;
 	
-	private Set<Category> categorias;
-	
-	private ExpenseViewModel despesa;
-	
-	@Autowired
-	private ExpenseDAO expensesDAO;
+	private IncomeViewModel income;
 	
 	@Autowired
 	private HttpSession session;
@@ -48,13 +45,12 @@ public class AnualExpensesController {
 	@Qualifier("genericDAO")
 	private GenericDAO<Category> categoriesDAO;
 	
-	@RequestMapping("/despesasAnuais")
-	public String despesasAnuais(Model model){
-		despesasFixas = getDespesasFixas();
-		despesasVariaveis = getDespesasVariaveis();
-		categorias = getCategorias();
-		despesa = new ExpenseViewModel();
-		despesa.setCategorias(categorias);
+	@RequestMapping("/incomes/annual")
+	public String annualIncomes(Model model){
+		incomes = getDespesasFixas();
+		categories = getCategorias();
+		income = new IncomeViewModel();
+		income.setCategories(categories);
 		model.addAttribute("despesa", despesa);
 		
 		gerarOrcamentoAnual(model);
@@ -63,16 +59,15 @@ public class AnualExpensesController {
 	}
 
 	private void gerarOrcamentoAnual(Model model) {
-		Budget orcamentoDespesasFixas = new Budget(despesasFixas).annual().withPrediction().generate();
-		Budget orcamentoDespesasVariaveis = new Budget(despesasVariaveis).annual().generate();
+		Budget annualIncomesBudget = new Budget(incomes).annual().withPrediction().generate();
 		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasFixasViewModel;
 		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasVariaveisViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasVariaveis);
 		@SuppressWarnings("unchecked")
 		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
 		if (exclusionsMap != null) {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas, exclusionsMap);
+			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(annualIncomesBudget, exclusionsMap);
 		} else {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas);
+			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(annualIncomesBudget);
 		}
 		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModelDespesasFixasViewModel);
 		model.addAttribute("orcamentoDespesasVariaveis", orcamentoViewModelDespesasVariaveisViewModel);
@@ -92,7 +87,7 @@ public class AnualExpensesController {
 		d.setCategory(getCategoria(despesa.getCategoria()));
 		expensesDAO.save(d);
 		
-		return despesasAnuais(model);
+		return annualIncomes(model);
 	}
 	
 	@Transactional(readOnly=true)
@@ -104,7 +99,7 @@ public class AnualExpensesController {
 		gerarOrcamentoAnual(model);
 		
 		despesa = ExpenseViewModel.fromExpense(expense);
-		despesa.setCategorias(categorias);
+		despesa.setCategorias(categories);
 		
 		model.addAttribute("despesa", despesa);
 		
@@ -128,11 +123,11 @@ public class AnualExpensesController {
 			expensesDAO.remove(expense);
 		}
 		
-		return despesasAnuais(model);
+		return annualIncomes(model);
 	}
 	
 	private Category getCategoria(String nome) {
-		for (Category categoria : categorias) {
+		for (Category categoria : categories) {
 			if (categoria.getName().equals(nome)) {
 				return categoria;
 			}

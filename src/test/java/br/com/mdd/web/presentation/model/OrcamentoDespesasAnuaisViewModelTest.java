@@ -30,13 +30,13 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
 		Set<Expense> despesas = new HashSet<Expense>();
-		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		FixedExpense agua = new FixedExpense("ï¿½gua", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
 		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
 		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget orcamento = new Budget(despesas).anual().withPrediction().generate();
+		Budget orcamento = new Budget(despesas).annual().withPrediction().generate();
 		
 		AnualFixedExpensesBudgetViewModel tabela = new AnualFixedExpensesBudgetViewModel(orcamento);
 		
@@ -47,7 +47,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		
 		//Conferindo os totais dos conjuntos
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("ï¿½gua")){
 				assertEquals(new BigDecimal("551.76"), conj.getTotal());
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(new BigDecimal("1184.76"), conj.getTotal());
@@ -68,19 +68,19 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeMesesVariados() {
 		Set<Expense> despesas = new HashSet<Expense>();
-		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
+		FixedExpense agua = new FixedExpense("ï¿½gua", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
 		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 5, 12));
 		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 9, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget orcamento = new Budget(despesas).anual().withPrediction().generate();
+		Budget orcamento = new Budget(despesas).annual().withPrediction().generate();
 		
 		AnualFixedExpensesBudgetViewModel tabela = new AnualFixedExpensesBudgetViewModel(orcamento);
 		
 		//Conferindo as despesasFixas planejadas
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("ï¿½gua")){
 				assertEquals(12, conj.getDespesas().size(), 12);
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(7, conj.getDespesas().size(), 7);
@@ -91,7 +91,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		
 		//Conferindo os totais dos conjuntos
 		for (ConjuntoDespesas conj : tabela.getDespesasAnuais()) {
-			if(conj.getNomeDespesa().equalsIgnoreCase("Água")){
+			if(conj.getNomeDespesa().equalsIgnoreCase("ï¿½gua")){
 				assertEquals(new BigDecimal("551.76"), conj.getTotal());
 			}else if(conj.getNomeDespesa().equalsIgnoreCase("Luz")){
 				assertEquals(new BigDecimal("789.84"), conj.getTotal());

@@ -9,7 +9,7 @@ import org.joda.time.LocalDate;
 import br.com.mdd.domain.model.FixedExpense;
 
 /**
- * Um or�amento � um conjunto de lan�amentos realizados em um determinado per�odo. 
+ * Um orçamento é um conjunto de lançamentos realizados em um determinado período. 
  * @author rafaelfarias
  *
  */
@@ -22,7 +22,7 @@ public class Budget {
 	
 	public Budget(Set<Expense> despesasFixas){
 		if(despesasFixas == null){
-			throw new IllegalArgumentException("Conjunto de despesas n�o pode ser nulo!");
+			throw new IllegalArgumentException("Conjunto de despesas não pode ser nulo!");
 		}
 		this.expenses = new HashSet<Expense>(despesasFixas);
 	}
@@ -34,7 +34,7 @@ public class Budget {
 		return this;
 	}
 	
-	public Budget anual() {
+	public Budget annual() {
 		LocalDate hoje = LocalDate.now();
 		this.dateFrom = hoje.withMonthOfYear(1).withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
 		this.dateTo = hoje.withMonthOfYear(12).withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
@@ -44,11 +44,11 @@ public class Budget {
 	
 	public Budget withPeriod(LocalDate dataDe, LocalDate dataAte){
 		if(dataDe == null || dataAte == null){
-			throw new IllegalArgumentException("Per�odo passado por par�metro n�o pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
+			throw new IllegalArgumentException("Período passado por parâmetro não pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
 		}
 		
 		if(dataDe.isAfter(dataAte)){
-			throw new IllegalArgumentException("Per�odo passado por par�metro � inv�lido: dataDe="+ dataDe + "dataAte=" + dataAte);
+			throw new IllegalArgumentException("Período passado por parâmetro é inválido: dataDe="+ dataDe + "dataAte=" + dataAte);
 		}
 		
 		this.dateFrom = dataDe;
