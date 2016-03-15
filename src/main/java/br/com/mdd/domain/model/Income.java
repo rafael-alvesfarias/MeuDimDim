@@ -14,19 +14,12 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "income")
-public class Income {
+public class Income extends Entry {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "income_id")
 	private Integer id;
-	
-	private String name;
-	
-	private BigDecimal value;
-	
-	@Column(name = "due_date")
-	private LocalDate dueDate;
 	
 	@ManyToOne
 	private Category category;
@@ -36,36 +29,18 @@ public class Income {
 	@ManyToOne
 	private User user;
 
+	public Income(String name, BigDecimal value, LocalDate dueDate) {
+		this.setName(name);
+		this.setValue(value);
+		this.setDueDate(dueDate);
+	}
+
 	public Integer getId() {
 		return id;
 	}
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
-	}
-
-	public LocalDate getDueDate() {
-		return dueDate;
-	}
-
-	public void setDueDate(LocalDate dueDate) {
-		this.dueDate = dueDate;
 	}
 
 	public Category getCategory() {

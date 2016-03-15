@@ -27,7 +27,7 @@ public class DespesaFixaTest {
 		Integer diaDoMes = Calendar.getInstance().get(Calendar.DAY_OF_MONTH);
 		
 		FixedExpense aluguel = new FixedExpense("Aluguel", new BigDecimal("1200.0"));
-		FixedExpense condominio = new FixedExpense("Condomínio",  new BigDecimal("350.0"), LocalDate.now());
+		FixedExpense condominio = new FixedExpense("CondomÃ­nio",  new BigDecimal("350.0"), LocalDate.now());
 		Integer vencimentoAluguel = aluguel.getMaturityDay();
 		Integer vencimentoComdominio = condominio.getMaturityDay();
 		
@@ -45,9 +45,9 @@ public class DespesaFixaTest {
 		String dataDeHoje = formatador.format(new Date());
 		
 		FixedExpense aluguel = new FixedExpense("Aluguel",  new BigDecimal("1200.0"));
-		FixedExpense condominio = new FixedExpense("Condomínio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
-		LocalDate dataVencimentoAluguel = aluguel.getMaturityDate();
-		LocalDate dataVencimentoComdominio = condominio.getMaturityDate();
+		FixedExpense condominio = new FixedExpense("CondomÃ­nio",  new BigDecimal("350.0"), Calendar.getInstance().get(Calendar.DAY_OF_MONTH));
+		LocalDate dataVencimentoAluguel = aluguel.getDueDate();
+		LocalDate dataVencimentoComdominio = condominio.getDueDate();
 		
 		assertEquals(dataDeHoje, formatador.format(dataVencimentoAluguel.toDate()));
 		assertEquals(dataDeHoje, formatador.format(dataVencimentoComdominio.toDate()));

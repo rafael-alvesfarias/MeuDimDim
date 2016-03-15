@@ -20,14 +20,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
-import br.com.mdd.domain.model.Expense;
-import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.Income;
-import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.persistence.dao.GenericDAO;
-import br.com.mdd.presentation.view.model.AnualFixedExpensesBudgetViewModel;
-import br.com.mdd.presentation.view.model.ExpenseViewModel;
-import br.com.mdd.presentation.view.model.IncomeViewModel;
+import br.com.mdd.presentation.view.model.income.AnnualIncomesBudgetViewModel;
+import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
 @Controller
 public class AnnualIncomesController {
@@ -45,73 +41,70 @@ public class AnnualIncomesController {
 	@Qualifier("genericDAO")
 	private GenericDAO<Category> categoriesDAO;
 	
+	@Autowired
+	@Qualifier("genericDAO")
+	private GenericDAO<Income> incomesDAO;
+	
 	@RequestMapping("/incomes/annual")
 	public String annualIncomes(Model model){
-		incomes = getDespesasFixas();
-		categories = getCategorias();
-		income = new IncomeViewModel();
-		income.setCategories(categories);
-		model.addAttribute("despesa", despesa);
+		incomes = getIncomes();
+		categories = getCategories();
+		this.income = new IncomeViewModel();
+		this.income.setCategories(categories);
+		model.addAttribute("income", this.income);
 		
-		gerarOrcamentoAnual(model);
+		generateAnnualBudget(model);
 		
-		return "/despesas/despesasAnuais";
+		return "/incomes/annualIncomes";
 	}
 
-	private void gerarOrcamentoAnual(Model model) {
-		Budget annualIncomesBudget = new Budget(incomes).annual().withPrediction().generate();
-		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasFixasViewModel;
-		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasVariaveisViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasVariaveis);
+	private void generateAnnualBudget(Model model) {
+		Budget<Income> annualIncomesBudget = new Budget<Income>(incomes).annual().withPrediction().generate();
+		AnnualIncomesBudgetViewModel incomesBudgetViewModel;
 		@SuppressWarnings("unchecked")
 		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
 		if (exclusionsMap != null) {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(annualIncomesBudget, exclusionsMap);
+			incomesBudgetViewModel = new AnnualIncomesBudgetViewModel(annualIncomesBudget, exclusionsMap);
 		} else {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(annualIncomesBudget);
+			incomesBudgetViewModel = new AnnualIncomesBudgetViewModel(annualIncomesBudget);
 		}
-		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModelDespesasFixasViewModel);
-		model.addAttribute("orcamentoDespesasVariaveis", orcamentoViewModelDespesasVariaveisViewModel);
+		model.addAttribute("incomesBudget", incomesBudgetViewModel);
 	}
 	
-	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "despesa") ExpenseViewModel despesa, Model model) {
-		Expense d = null;
-		if(despesa.getDespesaFixa()) {
-			d = new FixedExpense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
-		} else {
-			d = new Expense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
-		}
-		d.setId(despesa.getId());
+	@RequestMapping(value = "/income", method = RequestMethod.POST)
+	public String salvar(@ModelAttribute(value = "income") IncomeViewModel income, Model model) {
+		Income i = new Income(income.getName(), income.getValue(), income.getDueDate());
+		i.setId(income.getId());
 		
-		d.setPaid(despesa.getPago());
-		d.setCategory(getCategoria(despesa.getCategoria()));
-		expensesDAO.save(d);
+		i.setReceived(income.getReceived());
+		i.setCategory(getCategory(income.getCategory()));
+		incomesDAO.save(i);
 		
 		return annualIncomes(model);
 	}
 	
 	@Transactional(readOnly=true)
-	@RequestMapping("/editarDespesa/{id}")
-	public String editarDespesa(Model model, @PathVariable Integer id){
+	@RequestMapping("/updateIncome/{id}")
+	public String updateIncome(Model model, @PathVariable Integer id){
 		
-		Expense expense = expensesDAO.find(id, Expense.class);
+		Income i = incomesDAO.find(id, Income.class);
 		
-		gerarOrcamentoAnual(model);
+		generateAnnualBudget(model);
 		
-		despesa = ExpenseViewModel.fromExpense(expense);
-		despesa.setCategorias(categories);
+		income = IncomeViewModel.fromIncome(i);
+		income.setCategories(categories);
 		
-		model.addAttribute("despesa", despesa);
+		model.addAttribute("income", income);
 		
-		return "/despesas/despesasAnuais";
+		return "/incomes/annualIncomes";
 	}
 	
 	@Transactional
-	@RequestMapping("/excluirDespesa/{id}")
-	public String excluirDespesa(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
-		Expense expense = expensesDAO.find(id, Expense.class);
-		//Verifica se despesa não gerada automáticamente
-		if (mes != null && mes > expense.getMaturityDate().getMonthOfYear()) {
+	@RequestMapping(value="/deleteIncome/{id}")
+	public String deleteIncome(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
+		Income income = incomesDAO.find(id, Income.class);
+		//Verifica se receita não gerada automaticamente
+		if (mes != null && mes > income.getDueDate().getMonthOfYear()) {
 			@SuppressWarnings("unchecked")
 			Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
 			if (exclusionsMap == null) {
@@ -120,13 +113,13 @@ public class AnnualIncomesController {
 			}
 			exclusionsMap.put(id, mes);
 		} else {
-			expensesDAO.remove(expense);
+			incomesDAO.remove(income);
 		}
 		
 		return annualIncomes(model);
 	}
 	
-	private Category getCategoria(String nome) {
+	private Category getCategory(String nome) {
 		for (Category categoria : categories) {
 			if (categoria.getName().equals(nome)) {
 				return categoria;
@@ -135,19 +128,13 @@ public class AnnualIncomesController {
 		return null;
 	}
 	
-	private Set<Expense> getDespesasFixas(){
-		Set<Expense> despesas = new TreeSet<Expense>(expensesDAO.findAllFixedExpenses());
+	private Set<Income> getIncomes(){
+		Set<Income> incomes = new TreeSet<Income>(incomesDAO.findAll(Income.class));
 		
-		return despesas;	
+		return incomes;	
 	}
-	
-	private Set<Expense> getDespesasVariaveis(){
-		Set<Expense> despesas = new TreeSet<Expense>(expensesDAO.findAllVariableExpenses());
-		
-		return despesas;	
-	}
-	
-	private Set<Category> getCategorias() {
+
+	private Set<Category> getCategories() {
 		Set<Category> categorias = new TreeSet<>(categoriesDAO.findAll(Category.class));
 		
 		return categorias;

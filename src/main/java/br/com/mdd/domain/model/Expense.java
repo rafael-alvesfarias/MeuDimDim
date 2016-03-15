@@ -21,19 +21,12 @@ import org.joda.time.LocalDate;
 @Table(name="expense")
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "type")
-public class Expense implements Comparable<Expense> {
+public class Expense extends Entry implements Comparable<Expense> {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "expense_id")
 	private Integer id;
-	
-	private String name;
-	
-	private BigDecimal value;
-	
-	@Column(name="maturity_date")
-	private LocalDate maturityDate;
 	
 	@ManyToOne
 	private Category category;
@@ -44,13 +37,13 @@ public class Expense implements Comparable<Expense> {
 	private User user;
 	
 	Expense() {
-		//Construtor necess�rio para framework
+		//Construtor necessário para framework
 	}
 
-	public Expense(String descricao, BigDecimal valor, LocalDate dataLancamento) {
-		this.name = descricao;
-		this.value = valor;
-		this.maturityDate = dataLancamento;
+	public Expense(String name, BigDecimal value, LocalDate maturityDate) {
+		this.setName(name);
+		this.setValue(value);
+		this.setDueDate(maturityDate);
 	}
 
 	public Expense(String descricao, BigDecimal valor) {
@@ -63,30 +56,6 @@ public class Expense implements Comparable<Expense> {
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String descricao) {
-		this.name = descricao;
-	}
-
-	public LocalDate getMaturityDate() {
-		return maturityDate;
-	}
-
-	public void setMaturityDate(LocalDate dataLancamento) {
-		this.maturityDate = dataLancamento;
-	}
-
-	public BigDecimal getValue() {
-		return value;
-	}
-
-	public void setValue(BigDecimal value) {
-		this.value = value;
 	}
 
 	public Category getCategory() {
@@ -118,10 +87,10 @@ public class Expense implements Comparable<Expense> {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result
-				+ ((maturityDate == null) ? 0 : maturityDate.hashCode());
+				+ ((this.getDueDate() == null) ? 0 : this.getDueDate().hashCode());
 		result = prime * result
-				+ ((name == null) ? 0 : name.hashCode());
-		result = prime * result + ((value == null) ? 0 : value.hashCode());
+				+ ((this.getName() == null) ? 0 : this.getName().hashCode());
+		result = prime * result + ((this.getValue() == null) ? 0 : this.getValue().hashCode());
 		return result;
 	}
 
@@ -134,20 +103,20 @@ public class Expense implements Comparable<Expense> {
 		if (getClass() != obj.getClass())
 			return false;
 		Expense other = (Expense) obj;
-		if (maturityDate == null) {
-			if (other.maturityDate != null)
+		if (this.getDueDate() == null) {
+			if (other.getDueDate() != null)
 				return false;
-		} else if (!maturityDate.equals(other.maturityDate))
+		} else if (!this.getDueDate().equals(other.getDueDate()))
 			return false;
-		if (name == null) {
-			if (other.name != null)
+		if (this.getName() == null) {
+			if (other.getName() != null)
 				return false;
-		} else if (!name.equals(other.name))
+		} else if (!this.getName().equals(other.getName()))
 			return false;
-		if (value == null) {
-			if (other.value != null)
+		if (this.getValue() == null) {
+			if (other.getValue() != null)
 				return false;
-		} else if (!value.equals(other.value))
+		} else if (!this.getValue().equals(other.getValue()))
 			return false;
 		return true;
 	}
@@ -157,7 +126,7 @@ public class Expense implements Comparable<Expense> {
 		final Collator collator = Collator.getInstance(new Locale("pt", "BR"));
 		collator.setStrength(Collator.PRIMARY);
 		
-		return collator.compare(this.name, o.getName());
+		return collator.compare(this.getName(), o.getName());
 	}
 
 }

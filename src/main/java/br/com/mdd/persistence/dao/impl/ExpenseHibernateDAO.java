@@ -23,7 +23,7 @@ public class ExpenseHibernateDAO extends GenericHibernateDAO<Expense> implements
 
 	@Override
 	@Transactional(readOnly = true)
-	public List<Expense> findAllFixedExpenses() {
+	public List<FixedExpense> findAllFixedExpenses() {
 		return getSessionFactory().getCurrentSession()
 				.createCriteria(FixedExpense.class)
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();

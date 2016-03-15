@@ -35,7 +35,7 @@ public class ExpenseViewModel {
 	public static final ExpenseViewModel fromExpense(Expense expense) {
 		ExpenseViewModel e = new ExpenseViewModel();
 		e.setCategoria(expense.getCategory().getName());
-		e.setDataLancamento(expense.getMaturityDate());
+		e.setDataLancamento(expense.getDueDate());
 		e.setDescricao(expense.getName());
 		e.setDespesaFixa(true);
 		e.setId(expense.getId());

@@ -45,7 +45,7 @@
 <body>
 	<spring:url value="/updateIncome" var="urlUpdate" htmlEscape="true"></spring:url>
 	<spring:url value="/deleteIncome" var="urlDelete" htmlEscape="true"></spring:url>
-	<spring:url value="/receitasMensais" var="urlMonthlyIncomes" htmlEscape="true"></spring:url>
+	<spring:url value="/incomes/monthly" var="urlMonthlyIncomes" htmlEscape="true"></spring:url>
 	<c:import url="../header.jsp"/>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Receitas</h2>

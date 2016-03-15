@@ -6,35 +6,33 @@ import java.util.Set;
 
 import org.joda.time.LocalDate;
 
-import br.com.mdd.domain.model.FixedExpense;
-
 /**
  * Um orçamento é um conjunto de lançamentos realizados em um determinado período. 
  * @author rafaelfarias
  *
  */
-public class Budget {
+public class Budget<E extends Entry> {
 	
-	private Set<Expense> expenses;
+	private Set<E> entries;
 	private LocalDate dateFrom;
 	private LocalDate dateTo;
-	private boolean predictExpenses = false;
+	private boolean predictEntries = false;
 	
-	public Budget(Set<Expense> despesasFixas){
-		if(despesasFixas == null){
+	public Budget(Set<E> entries){
+		if(entries == null){
 			throw new IllegalArgumentException("Conjunto de despesas não pode ser nulo!");
 		}
-		this.expenses = new HashSet<Expense>(despesasFixas);
+		this.entries = new HashSet<E>(entries);
 	}
 
-	public Budget monthly() {
+	public Budget<E> monthly() {
 		LocalDate hoje = LocalDate.now();
 		this.dateFrom = hoje.withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
 		this.dateTo = hoje.withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
 		return this;
 	}
 	
-	public Budget annual() {
+	public Budget<E> annual() {
 		LocalDate hoje = LocalDate.now();
 		this.dateFrom = hoje.withMonthOfYear(1).withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
 		this.dateTo = hoje.withMonthOfYear(12).withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
@@ -42,7 +40,7 @@ public class Budget {
 		return this;		
 	}
 	
-	public Budget withPeriod(LocalDate dataDe, LocalDate dataAte){
+	public Budget<E> withPeriod(LocalDate dataDe, LocalDate dataAte){
 		if(dataDe == null || dataAte == null){
 			throw new IllegalArgumentException("Período passado por parâmetro não pode ser nulo: dataDe="+ dataDe + "dataAte=" + dataAte);
 		}
@@ -56,45 +54,54 @@ public class Budget {
 		return this;
 	}
 	
-	public Budget withPrediction(){
-		this.predictExpenses = true;		
+	public Budget<E> withPrediction(){
+		this.predictEntries = true;		
 		return this;
 	}
 	
-	private void generatePredictedExpenses(){
-		Set<Expense> despesaFixasPrevistas = new HashSet<Expense>(this.expenses);
-		for (Expense despesaFixa : this.expenses) {
-			int mesDespesa = despesaFixa.getMaturityDate().getMonthOfYear();
+	private void generatePredictedEntries() throws InstantiationException, IllegalAccessException{
+		Set<E> predictedEntries = new HashSet<E>(this.entries);
+		for (E entry : this.entries) {
+			int mesDespesa = entry.getDueDate().getMonthOfYear();
 			int ultimoMes = this.getDateTo().getMonthOfYear();
 			for(int novoMes = mesDespesa + 1 ; novoMes <= ultimoMes; novoMes++){
-				LocalDate novaData = despesaFixa.getMaturityDate().withMonthOfYear(novoMes);
-				FixedExpense despesaFixaPrevista = new FixedExpense(despesaFixa.getName(), despesaFixa.getValue(), novaData);
-				despesaFixaPrevista.setId(despesaFixa.getId());
-				if(!despesaFixasPrevistas.contains(despesaFixaPrevista)){
-					despesaFixasPrevistas.add(despesaFixaPrevista);
+				LocalDate novaData = entry.getDueDate().withMonthOfYear(novoMes);
+				//FIXME Possível problema de performance
+				@SuppressWarnings("unchecked")
+				E predictedEntry = (E) entry.getClass().newInstance();
+				predictedEntry.setName(entry.getName());
+				predictedEntry.setValue(entry.getValue());
+				predictedEntry.setDueDate(novaData);
+				
+				if(!predictedEntries.contains(predictedEntry)){
+					predictedEntries.add((E) predictedEntry);
 				}
 			}
 		}
-		this.expenses = despesaFixasPrevistas;
+		this.entries = predictedEntries;
 	}
 
-	public Budget generate() {
+	public Budget<E> generate() {
 		if(dateFrom == null || dateTo == null){
-			expenses = new HashSet<Expense>();
+			entries = new HashSet<E>();
 			return this;
 		}
 		
-		if(predictExpenses){
-			this.generatePredictedExpenses();
-		}
-		
-		Set<Expense> orcamento = new HashSet<Expense>();
-		for (Expense despesa : expenses) {
-			if(isInsideInterval(despesa.getMaturityDate())){
-				orcamento.add(despesa);
+		if(predictEntries){
+			try {
+				this.generatePredictedEntries();
+			} catch (InstantiationException | IllegalAccessException e) {
+				throw new RuntimeException("Erro ao instanciar o tipo.", e);
 			}
 		}
-		this.expenses = orcamento;
+		
+		Set<E> budget = new HashSet<E>();
+		for (Entry entry : entries) {
+			if(isInsideInterval(entry.getDueDate())){
+				budget.add((E) entry);
+			}
+		}
+		this.entries = budget;
 		return this;
 	}
 	
@@ -102,12 +109,12 @@ public class Budget {
 		return dateFrom.equals(data) || (dateFrom.isBefore(data) && data.isBefore(dateTo)) || data.equals(dateTo);
 	}
 
-	public Set<Expense> getExpenses() {
-		return Collections.unmodifiableSet(expenses);
+	public Set<E> getEntries() {
+		return Collections.unmodifiableSet(entries);
 	}
 
-	public void setExpenses(Set<Expense> expenses) {
-		this.expenses = new HashSet<Expense>(expenses);
+	public void setExpenses(Set<E> entries) {
+		this.entries = new HashSet<E>(entries);
 	}
 
 	public LocalDate getDateFrom() {

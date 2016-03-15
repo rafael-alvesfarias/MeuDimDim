@@ -24,13 +24,13 @@ import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.persistence.dao.GenericDAO;
-import br.com.mdd.presentation.view.model.AnualFixedExpensesBudgetViewModel;
+import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.ExpenseViewModel;
 
 @Controller
 public class AnualExpensesController {
 	
-	private Set<Expense> despesasFixas;
+	private Set<FixedExpense> despesasFixas;
 	
 	private Set<Expense> despesasVariaveis;
 	
@@ -63,19 +63,19 @@ public class AnualExpensesController {
 	}
 
 	private void gerarOrcamentoAnual(Model model) {
-		Budget orcamentoDespesasFixas = new Budget(despesasFixas).annual().withPrediction().generate();
-		Budget orcamentoDespesasVariaveis = new Budget(despesasVariaveis).annual().generate();
-		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasFixasViewModel;
-		AnualFixedExpensesBudgetViewModel orcamentoViewModelDespesasVariaveisViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasVariaveis);
+		Budget<FixedExpense> orcamentoDespesasFixas = new Budget<FixedExpense>(despesasFixas).annual().withPrediction().generate();
+		Budget<Expense> orcamentoDespesasVariaveis = new Budget<Expense>(despesasVariaveis).annual().generate();
+		AnualExpensesBudgetViewModel<FixedExpense> orcamentoDespesasFixasViewModel;
+		AnualExpensesBudgetViewModel<Expense> orcamentoDespesasVariaveisViewModel = new AnualExpensesBudgetViewModel<Expense>(orcamentoDespesasVariaveis);
 		@SuppressWarnings("unchecked")
 		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
 		if (exclusionsMap != null) {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas, exclusionsMap);
+			orcamentoDespesasFixasViewModel = new AnualExpensesBudgetViewModel<FixedExpense>(orcamentoDespesasFixas, exclusionsMap);
 		} else {
-			orcamentoViewModelDespesasFixasViewModel = new AnualFixedExpensesBudgetViewModel(orcamentoDespesasFixas);
+			orcamentoDespesasFixasViewModel = new AnualExpensesBudgetViewModel<FixedExpense>(orcamentoDespesasFixas);
 		}
-		model.addAttribute("orcamentoDespesasFixas", orcamentoViewModelDespesasFixasViewModel);
-		model.addAttribute("orcamentoDespesasVariaveis", orcamentoViewModelDespesasVariaveisViewModel);
+		model.addAttribute("orcamentoDespesasFixas", orcamentoDespesasFixasViewModel);
+		model.addAttribute("orcamentoDespesasVariaveis", orcamentoDespesasVariaveisViewModel);
 	}
 	
 	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
@@ -116,7 +116,7 @@ public class AnualExpensesController {
 	public String excluirDespesa(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
 		Expense expense = expensesDAO.find(id, Expense.class);
 		//Verifica se despesa não gerada automáticamente
-		if (mes != null && mes > expense.getMaturityDate().getMonthOfYear()) {
+		if (mes != null && mes > expense.getDueDate().getMonthOfYear()) {
 			@SuppressWarnings("unchecked")
 			Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
 			if (exclusionsMap == null) {
@@ -140,8 +140,8 @@ public class AnualExpensesController {
 		return null;
 	}
 	
-	private Set<Expense> getDespesasFixas(){
-		Set<Expense> despesas = new TreeSet<Expense>(expensesDAO.findAllFixedExpenses());
+	private Set<FixedExpense> getDespesasFixas(){
+		Set<FixedExpense> despesas = new TreeSet<FixedExpense>(expensesDAO.findAllFixedExpenses());
 		
 		return despesas;	
 	}

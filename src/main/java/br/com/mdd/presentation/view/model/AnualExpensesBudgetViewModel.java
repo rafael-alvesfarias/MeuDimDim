@@ -13,24 +13,24 @@ import java.util.TreeSet;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Expense;
 
-public class AnualFixedExpensesBudgetViewModel {
+public class AnualExpensesBudgetViewModel<E extends Expense> {
 
 	private Set<ConjuntoDespesas> despesas;
 	private List<BigDecimal> totais;
-	private Budget orcamento;
+	private Budget<E> orcamento;
 
-	public AnualFixedExpensesBudgetViewModel(Budget orcamento) {
+	public AnualExpensesBudgetViewModel(Budget<E> orcamento) {
 		this(orcamento, null);
 	}
 
-	public AnualFixedExpensesBudgetViewModel(Budget orcamento, Map<Integer, Integer> exclusionsMap) {
+	public AnualExpensesBudgetViewModel(Budget<E> orcamento, Map<Integer, Integer> exclusionsMap) {
 		this.orcamento = orcamento;
 		montar(exclusionsMap);
 	}
 
 	private void montar(Map<Integer, Integer> exclusionsMap) {
 		despesas = new TreeSet<ConjuntoDespesas>();
-		for (Expense itemOrcamento : orcamento.getExpenses()) {
+		for (Expense itemOrcamento : orcamento.getEntries()) {
 			ConjuntoDespesas conjuntoDespesas = null;
 			for (ConjuntoDespesas conj : despesas) {
 				if (conj.getNomeDespesa().equals(itemOrcamento.getName())) {
@@ -45,7 +45,7 @@ public class AnualFixedExpensesBudgetViewModel {
 				conjuntoDespesas.setDespesas(new TreeMap<Integer, Expense>());
 				despesas.add(conjuntoDespesas);
 			}
-			Integer mes = Integer.valueOf(itemOrcamento.getMaturityDate().getMonthOfYear());
+			Integer mes = Integer.valueOf(itemOrcamento.getDueDate().getMonthOfYear());
 			//Verifica se não esta na lista de exlusões
 			if (exclusionsMap == null || exclusionsMap.get(itemOrcamento.getId()) == null 
 					|| mes.compareTo(exclusionsMap.get(itemOrcamento.getId())) < 0) {
@@ -150,8 +150,8 @@ public class AnualFixedExpensesBudgetViewModel {
 			return true;
 		}
 
-		private AnualFixedExpensesBudgetViewModel getOuterType() {
-			return AnualFixedExpensesBudgetViewModel.this;
+		private AnualExpensesBudgetViewModel<E> getOuterType() {
+			return AnualExpensesBudgetViewModel.this;
 		}
 
 		@Override
