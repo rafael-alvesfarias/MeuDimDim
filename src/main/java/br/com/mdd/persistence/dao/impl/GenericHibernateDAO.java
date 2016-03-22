@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 import org.hibernate.Criteria;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -14,13 +15,9 @@ import br.com.mdd.persistence.dao.GenericDAO;
 @Repository(value = "genericDAO")
 public class GenericHibernateDAO<T> implements GenericDAO<T> {
 	
+	@Autowired
 	private SessionFactory sessionFactory;
 	
-	@Autowired
-	public GenericHibernateDAO(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
-	}
-
 	@Override
 	@Transactional
 	public void save(T t) {
@@ -50,8 +47,12 @@ public class GenericHibernateDAO<T> implements GenericDAO<T> {
 		return list;
 	}
 	
-	protected SessionFactory getSessionFactory() {
-		return sessionFactory;
+	protected Session getSession() {
+		return sessionFactory.getCurrentSession();
+	}
+	
+	public void setSessionFactory(SessionFactory sessionFactory) {
+		this.sessionFactory = sessionFactory;
 	}
 
 }

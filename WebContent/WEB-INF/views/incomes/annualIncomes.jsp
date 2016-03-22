@@ -32,11 +32,9 @@
 			
 			$(".editableCells td").mouseenter(function() {
 				var imagem = $(this).find("img");
-				console.log(imagem);
 				imagem.show();
 			}).mouseleave(function() {
 				var imagem = $(this).find("img");
-				console.log(imagem);
 				imagem.hide();
 			});
 		});

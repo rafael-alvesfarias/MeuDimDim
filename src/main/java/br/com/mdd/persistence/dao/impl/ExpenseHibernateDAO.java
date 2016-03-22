@@ -16,24 +16,17 @@ import br.com.mdd.persistence.dao.ExpenseDAO;
 @Repository
 public class ExpenseHibernateDAO extends GenericHibernateDAO<Expense> implements ExpenseDAO {
 	
-	@Autowired
-	public ExpenseHibernateDAO(SessionFactory sessionFactory) {
-		super(sessionFactory);
-	}
-
 	@Override
 	@Transactional(readOnly = true)
 	public List<FixedExpense> findAllFixedExpenses() {
-		return getSessionFactory().getCurrentSession()
-				.createCriteria(FixedExpense.class)
+		return getSession().createCriteria(FixedExpense.class)
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
 	@Override
 	@Transactional(readOnly = true)
 	public List<Expense> findAllVariableExpenses() {
-		return getSessionFactory().getCurrentSession()
-				.createCriteria(Expense.class)
+		return getSession().createCriteria(Expense.class)
 				.add(Restrictions.eq("class", "Expense"))
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
