@@ -22,6 +22,7 @@ import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.VariableExpense;
 import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel;
@@ -84,7 +85,7 @@ public class AnualExpensesController {
 		if(despesa.getDespesaFixa()) {
 			d = new FixedExpense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
 		} else {
-			d = new Expense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
+			d = new VariableExpense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
 		}
 		d.setId(despesa.getId());
 		

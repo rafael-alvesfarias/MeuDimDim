@@ -10,7 +10,7 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name="fixed_expense")
-public class FixedExpense extends Expense{
+public class FixedExpense extends Expense {
 	
 	@Column(name = "maturity_day")
 	private Integer maturityDay;
@@ -35,7 +35,7 @@ public class FixedExpense extends Expense{
 		LocalDate data = LocalDate.now();
 		Integer ultimoDiaDoMesAtual = data.dayOfMonth().getMaximumValue();
 		if(vencimento < 0 || vencimento > ultimoDiaDoMesAtual){
-			throw new IllegalArgumentException("Dia de vencimento passada por par�metro inv�lida." + vencimento);
+			throw new IllegalArgumentException("Dia de vencimento passada por parâmetro inválida." + vencimento);
 		}
 		data.withDayOfMonth(vencimento);
 		this.setDueDate(data);

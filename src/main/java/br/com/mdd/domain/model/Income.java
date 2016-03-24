@@ -4,9 +4,6 @@ import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,14 +13,10 @@ import org.joda.time.LocalDate;
 @Table(name = "income")
 public class Income extends Entry {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "income_id")
-	private Integer id;
-	
 	@ManyToOne
 	private Category category;
 	
+	@Column
 	private Boolean received;
 	
 	@ManyToOne
@@ -33,14 +26,6 @@ public class Income extends Entry {
 		this.setName(name);
 		this.setValue(value);
 		this.setDueDate(dueDate);
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Category getCategory() {

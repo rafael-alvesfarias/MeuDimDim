@@ -20,6 +20,7 @@ import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.Income;
 import br.com.mdd.domain.model.User;
+import br.com.mdd.domain.model.VariableExpense;
 
 @Configuration
 @EnableTransactionManagement
@@ -50,7 +51,8 @@ public class PersistenceConfig {
 			.addAnnotatedClass(Expense.class)
 			.addAnnotatedClass(FixedExpense.class)
 			.addAnnotatedClass(Income.class)
-			.addAnnotatedClass(User.class);
+			.addAnnotatedClass(User.class)
+			.addAnnotatedClass(VariableExpense.class);
 		
 		sessionBuilder.addProperties(getHibernateProperties());
 		

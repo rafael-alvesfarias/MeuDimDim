@@ -4,14 +4,10 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Locale;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
-import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -19,18 +15,15 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name="expense")
-@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
-@DiscriminatorColumn(name = "type")
-public class Expense extends Entry implements Comparable<Expense> {
-	
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name = "expense_id")
-	private Integer id;
+@AttributeOverrides({
+    @AttributeOverride(name="id", column=@Column(name="expense_id"))
+})
+public abstract class Expense extends Entry implements Comparable<Expense> {
 	
 	@ManyToOne
 	private Category category;
 	
+	@Column
 	private Boolean paid;
 	
 	@ManyToOne
@@ -48,14 +41,6 @@ public class Expense extends Entry implements Comparable<Expense> {
 
 	public Expense(String descricao, BigDecimal valor) {
 		this(descricao, valor, LocalDate.now());
-	}
-
-	public Integer getId() {
-		return id;
-	}
-
-	public void setId(Integer id) {
-		this.id = id;
 	}
 
 	public Category getCategory() {
