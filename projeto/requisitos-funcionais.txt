@@ -1,13 +1,13 @@
-1ª Etapa - Despesas e Orçamentos
-1) Cadastrar, Editar e Excluir Despesas Variáveis
-2) Cadastrar, Editar e Excluir Despesas Fixas
-3) Visualizar o orçamento mensal
-4) Visualizar o orçamento anual
+1ï¿½ Etapa - Despesas e OrÃ§amentos
+1) Cadastrar, Editar e Excluir Despesas VariÃ¡veis OK
+2) Cadastrar, Editar e Excluir Despesas Fixas OK
+3) Visualizar o orÃ§amento mensal
+4) Visualizar o orÃ§amento anual OK
 =================================================
-2ª Etapa - Receitas e Orçamentos
+2ï¿½ Etapa - Receitas e OrÃ§amentos
 =================================================
-3ª Etapa - Resumo de Despesas e Receitas
+3ï¿½ Etapa - Resumo de Despesas e Receitas
 =================================================
-4ª Etapa - Despesas com cartão de crédito
+4ï¿½ Etapa - Despesas com cartÃ£o de crÃ©dito
 =================================================
-5ª Etapa - Investimentos
+5ï¿½ Etapa - Investimentos

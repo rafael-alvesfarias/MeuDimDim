@@ -69,6 +69,7 @@ public class Budget<E extends Entry> {
 				//FIXME Possível problema de performance
 				@SuppressWarnings("unchecked")
 				E predictedEntry = (E) entry.getClass().newInstance();
+				predictedEntry.setId(entry.getId());
 				predictedEntry.setName(entry.getName());
 				predictedEntry.setValue(entry.getValue());
 				predictedEntry.setDueDate(novaData);

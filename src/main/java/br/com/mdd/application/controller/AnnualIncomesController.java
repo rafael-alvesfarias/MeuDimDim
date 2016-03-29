@@ -20,7 +20,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
+import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
+import br.com.mdd.persistence.dao.CategoryDAO;
 import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.income.AnnualIncomesBudgetViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
@@ -38,8 +40,7 @@ public class AnnualIncomesController {
 	private HttpSession session;
 	
 	@Autowired
-	@Qualifier("genericDAO")
-	private GenericDAO<Category> categoriesDAO;
+	private CategoryDAO categoryDAO;
 	
 	@Autowired
 	@Qualifier("genericDAO")
@@ -135,7 +136,7 @@ public class AnnualIncomesController {
 	}
 
 	private Set<Category> getCategories() {
-		Set<Category> categorias = new TreeSet<>(categoriesDAO.findAll(Category.class));
+		Set<Category> categorias = new TreeSet<>(categoryDAO.findAllCategoriesByType(CategoryType.INCOME));
 		
 		return categorias;
 	}

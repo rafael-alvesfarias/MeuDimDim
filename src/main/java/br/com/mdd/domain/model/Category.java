@@ -1,6 +1,9 @@
 package br.com.mdd.domain.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -10,7 +13,10 @@ import javax.persistence.Table;
 @Table(name = "category")
 public class Category implements Comparable<Category> {
 	
-	
+	public enum CategoryType {
+		INCOME, EXPENSE, SAVINGS
+	}
+		
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Integer id;
@@ -18,6 +24,10 @@ public class Category implements Comparable<Category> {
 	private String name;
 	
 	private String description;
+	
+	@Column
+	@Enumerated(EnumType.STRING)
+	private CategoryType type;
 	
 	Category() {
 		//This constructor should't be called
@@ -52,11 +62,20 @@ public class Category implements Comparable<Category> {
 		this.description = description;
 	}
 
+	public CategoryType getType() {
+		return type;
+	}
+
+	public void setType(CategoryType type) {
+		this.type = type;
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((type == null) ? 0 : type.hashCode());
 		return result;
 	}
 
@@ -73,6 +92,8 @@ public class Category implements Comparable<Category> {
 			if (other.name != null)
 				return false;
 		} else if (!name.equals(other.name))
+			return false;
+		if (type != other.type)
 			return false;
 		return true;
 	}

@@ -8,7 +8,6 @@ import java.util.TreeSet;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
@@ -20,11 +19,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Category;
+import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.VariableExpense;
+import br.com.mdd.persistence.dao.CategoryDAO;
 import br.com.mdd.persistence.dao.ExpenseDAO;
-import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.ExpenseViewModel;
 
@@ -46,8 +46,7 @@ public class AnualExpensesController {
 	private HttpSession session;
 	
 	@Autowired
-	@Qualifier("genericDAO")
-	private GenericDAO<Category> categoriesDAO;
+	private CategoryDAO categoryDAO;
 	
 	@RequestMapping("/despesasAnuais")
 	public String despesasAnuais(Model model){
@@ -154,7 +153,7 @@ public class AnualExpensesController {
 	}
 	
 	private Set<Category> getCategorias() {
-		Set<Category> categorias = new TreeSet<>(categoriesDAO.findAll(Category.class));
+		Set<Category> categorias = new TreeSet<>(categoryDAO.findAllCategoriesByType(CategoryType.EXPENSE));
 		
 		return categorias;
 	}
