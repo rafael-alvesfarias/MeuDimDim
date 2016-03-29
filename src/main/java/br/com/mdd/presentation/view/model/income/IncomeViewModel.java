@@ -31,7 +31,9 @@ public class IncomeViewModel {
 	
 	public static final IncomeViewModel fromIncome(Income income) {
 		IncomeViewModel i = new IncomeViewModel();
-		i.setCategory(income.getCategory().getName());
+		if (income.getCategory() != null) {
+			i.setCategory(income.getCategory().getName());
+		}
 		i.setDueDate(income.getDueDate());
 		i.setName(income.getName());
 		i.setId(income.getId());

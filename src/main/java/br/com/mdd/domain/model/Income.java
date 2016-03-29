@@ -2,6 +2,8 @@ package br.com.mdd.domain.model;
 
 import java.math.BigDecimal;
 
+import javax.persistence.AttributeOverride;
+import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToOne;
@@ -11,7 +13,10 @@ import org.joda.time.LocalDate;
 
 @Entity
 @Table(name = "income")
-public class Income extends Entry {
+@AttributeOverrides({
+    @AttributeOverride(name="id", column=@Column(name="income_id"))
+})
+public class Income extends Entry{
 	
 	@ManyToOne
 	private Category category;
@@ -23,9 +28,11 @@ public class Income extends Entry {
 	private User user;
 
 	public Income(String name, BigDecimal value, LocalDate dueDate) {
-		this.setName(name);
-		this.setValue(value);
-		this.setDueDate(dueDate);
+		super(name, value, dueDate);
+	}
+	
+	Income() {
+		
 	}
 
 	public Category getCategory() {

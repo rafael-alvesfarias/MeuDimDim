@@ -15,7 +15,6 @@ public class FixedExpense extends Expense {
 	@Column(name = "maturity_day")
 	private Integer maturityDay;
 	
-	@SuppressWarnings("unused")
 	FixedExpense() {
 		//This constructor shouldn't be used
 	}

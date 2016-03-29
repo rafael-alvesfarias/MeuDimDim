@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
 	$(document).ready(function(){
-		if($.isNumeric($("#idIncome").val())) {
+		if($.isNumeric($("#id").val())) {
 			window.location.hash = "newIncome";
 		}
 	});
