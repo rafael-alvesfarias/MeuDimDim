@@ -267,3 +267,26 @@ form table, form td, form tr{
 .cellMenu ul li:hover {
 	background:#DFE7FF;
 }
+
+.topMenu {
+	background-image: linear-gradient(#EEE , #DDD);
+	padding: 0;
+	height: 38px;
+	color: #333;
+}
+
+.topMenu ul {
+	list-style: none;
+}
+
+.topMenu li {
+	font-weight: 600;
+	font-size: 12px;
+	padding: 10px;
+	float: left;
+}
+
+.topMenu li:hover {
+	background-image: linear-gradient(#DDD , #CCC);
+	border-bottom: 1px solid #63a62f;
+}

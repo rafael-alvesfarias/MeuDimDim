@@ -57,18 +57,18 @@
 					</tr>
 					<tr>
 						<th/>
-						<th><a href="${urlReceitasMensais}/jan">Janeiro</a></th>
-						<th><a href="${urlReceitasMensais}/fev">Fevereiro</a></th>
-						<th><a href="${urlReceitasMensais}/mar">Março</a></th>
-						<th><a href="${urlReceitasMensais}/apr">Abril</a></th>
-						<th><a href="${urlReceitasMensais}/may">Maio</a></th>
-						<th><a href="${urlReceitasMensais}/jun">Junho</a></th>
-						<th><a href="${urlReceitasMensais}/jul">Julho</a></th>
-						<th><a href="${urlReceitasMensais}/aug">Agosto</a></th>
-						<th><a href="${urlReceitasMensais}/set">Setembro</a></th>
-						<th><a href="${urlReceitasMensais}/out">Outubro</a></th>
-						<th><a href="${urlReceitasMensais}/nov">Novembro</a></th>
-						<th><a href="${urlReceitasMensais}/dec">Dezembro</a></th>
+						<th><a href="${urlMonthlyIncomes}/jan">Janeiro</a></th>
+						<th><a href="${urlMonthlyIncomes}/fev">Fevereiro</a></th>
+						<th><a href="${urlMonthlyIncomes}/mar">Março</a></th>
+						<th><a href="${urlMonthlyIncomes}/apr">Abril</a></th>
+						<th><a href="${urlMonthlyIncomes}/may">Maio</a></th>
+						<th><a href="${urlMonthlyIncomes}/jun">Junho</a></th>
+						<th><a href="${urlMonthlyIncomes}/jul">Julho</a></th>
+						<th><a href="${urlMonthlyIncomes}/aug">Agosto</a></th>
+						<th><a href="${urlMonthlyIncomes}/set">Setembro</a></th>
+						<th><a href="${urlMonthlyIncomes}/out">Outubro</a></th>
+						<th><a href="${urlMonthlyIncomes}/nov">Novembro</a></th>
+						<th><a href="${urlMonthlyIncomes}/dec">Dezembro</a></th>
 						<th>TOTAL</th>
 					</tr>
 				</thead>
