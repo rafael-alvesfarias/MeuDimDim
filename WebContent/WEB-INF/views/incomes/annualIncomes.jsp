@@ -115,7 +115,7 @@
 				</tbody>
 			</table>
 			<div class="botoes">
-				<a href="#newIncome" id="btnNewIncome"><input type="button" value="Nova Receita" class="botao-esquerda"/></a>
+				<a href="#newIncome" id="btnNewIncome"><input type="button" value="Nova Receita" class="botao-direita"/></a>
 			</div>
 		</div>
 	</div>

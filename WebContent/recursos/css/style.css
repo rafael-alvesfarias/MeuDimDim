@@ -14,8 +14,8 @@ div{
 
 body{
 	height: 100%;
-	background-image: url(../imagens/bg.jpg);
-	background-repeat: repeat-x;
+	background: linear-gradient(#FFF 30px, #EEE 80px, #ddd 95px, #FFF 250px);
+	background-repeat: no-repeat;
 }
 
 .box{
@@ -106,8 +106,8 @@ th{
 
 .titulo{
 	font-weight: 600;
-	font-size: 20px;
-	color: #5FCF80;
+	font-size: 16px;
+	color: #555;
 	/*text-shadow: -1px 1px 0 #4c9021;*/
 }
 
@@ -192,17 +192,17 @@ form table, form td, form tr{
 
 .cabecalho{
 	height: 67px;
-	padding-left: 50px;
+	padding-left: 30px;
 	padding-top: 10px;
-	color: white;
+	color: #555;
 }
 
 .cabecalho h1, span{
+	font-weight:900;
 	font-size: 32px;
 }
 
 .cabecalho span{
-	font-weight:900;
 	color: #65944A;
 }
 
@@ -269,6 +269,7 @@ form table, form td, form tr{
 }
 
 .topMenu {
+	border-top: 2px solid #fff;
 	background-image: linear-gradient(#EEE , #DDD);
 	padding: 0;
 	height: 38px;

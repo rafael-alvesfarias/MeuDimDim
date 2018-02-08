@@ -182,7 +182,7 @@
 					</tbody>
 				</table>
 			<div class="botoes">
-				<a href="#novaDespesa" id="botaoNovaDespesa"><input type="button" value="Nova Despesa" class="botao-esquerda"/></a>
+				<a href="#novaDespesa" id="botaoNovaDespesa"><input type="button" value="Nova Despesa" class="botao-direita"/></a>
 			</div>
 		</div>
 	</div>
