@@ -11,33 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
-import br.com.mdd.domain.model.VariableExpense;
 import br.com.mdd.persistence.dao.CategoryDAO;
 import br.com.mdd.persistence.dao.ExpenseDAO;
-import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel;
-import br.com.mdd.presentation.view.model.ExpenseViewModel;
+import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel;
+import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
 
 @Controller
-public class AnualExpensesController {
+public class AnnualExpensesController {
 	
 	private Set<FixedExpense> despesasFixas;
 	
 	private Set<Expense> despesasVariaveis;
 	
 	private Set<Category> categorias;
-	
-	private ExpenseViewModel despesa;
 	
 	@Autowired
 	private ExpenseDAO expensesDAO;
@@ -48,23 +44,30 @@ public class AnualExpensesController {
 	@Autowired
 	private CategoryDAO categoryDAO;
 	
-	@RequestMapping("/despesasAnuais")
+	@RequestMapping("/expenses/annual")
 	public String despesasAnuais(Model model){
-		despesasFixas = getDespesasFixas();
-		despesasVariaveis = getDespesasVariaveis();
-		categorias = getCategorias();
-		despesa = new ExpenseViewModel();
-		despesa.setCategorias(categorias);
-		model.addAttribute("despesa", despesa);
+		despesasFixas = getFixedExpenses();
+		despesasVariaveis = getVariableExpenses();
+		categorias = getCategories();
+		ExpenseViewModel expenseForm = new ExpenseViewModel();
+		expenseForm.setCategories(categorias);
+		model.addAttribute("expense", expenseForm);
 		
 		gerarOrcamentoAnual(model);
 		
-		return "/despesas/despesasAnuais";
+		return "/budgets/annualExpenses";
 	}
 
 	private void gerarOrcamentoAnual(Model model) {
-		Budget<FixedExpense> orcamentoDespesasFixas = new Budget<FixedExpense>(despesasFixas).annual().withPrediction().generate();
-		Budget<Expense> orcamentoDespesasVariaveis = new Budget<Expense>(despesasVariaveis).annual().generate();
+		Budget<FixedExpense> orcamentoDespesasFixas = new BudgetBuilder<FixedExpense>(despesasFixas)
+				.annual()
+				.withPrediction()
+				.build()
+				.generate();
+		Budget<Expense> orcamentoDespesasVariaveis = new BudgetBuilder<Expense>(despesasVariaveis)
+				.annual()
+				.build()
+				.generate();
 		AnualExpensesBudgetViewModel<FixedExpense> orcamentoDespesasFixasViewModel;
 		AnualExpensesBudgetViewModel<Expense> orcamentoDespesasVariaveisViewModel = new AnualExpensesBudgetViewModel<Expense>(orcamentoDespesasVariaveis);
 		@SuppressWarnings("unchecked")
@@ -78,23 +81,6 @@ public class AnualExpensesController {
 		model.addAttribute("orcamentoDespesasVariaveis", orcamentoDespesasVariaveisViewModel);
 	}
 	
-	@RequestMapping(value = "/despesa", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "despesa") ExpenseViewModel despesa, Model model) {
-		Expense d = null;
-		if(despesa.getDespesaFixa()) {
-			d = new FixedExpense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
-		} else {
-			d = new VariableExpense(despesa.getDescricao(), despesa.getValor(), despesa.getDataLancamento());
-		}
-		d.setId(despesa.getId());
-		
-		d.setPaid(despesa.getPago());
-		d.setCategory(getCategoria(despesa.getCategoria()));
-		expensesDAO.save(d);
-		
-		return despesasAnuais(model);
-	}
-	
 	@Transactional(readOnly=true)
 	@RequestMapping("/editarDespesa/{id}")
 	public String editarDespesa(Model model, @PathVariable Integer id){
@@ -103,12 +89,12 @@ public class AnualExpensesController {
 		
 		gerarOrcamentoAnual(model);
 		
-		despesa = ExpenseViewModel.fromExpense(expense);
-		despesa.setCategorias(categorias);
+		ExpenseViewModel expenseForm = ExpenseViewModel.fromExpense(expense);
+		expenseForm.setCategories(categorias);
 		
-		model.addAttribute("despesa", despesa);
+		model.addAttribute("expense", expenseForm);
 		
-		return "/despesas/despesasAnuais";
+		return "/expenses/expense";
 	}
 	
 	@Transactional
@@ -131,28 +117,19 @@ public class AnualExpensesController {
 		return despesasAnuais(model);
 	}
 	
-	private Category getCategoria(String nome) {
-		for (Category categoria : categorias) {
-			if (categoria.getName().equals(nome)) {
-				return categoria;
-			}
-		}
-		return null;
-	}
-	
-	private Set<FixedExpense> getDespesasFixas(){
+	private Set<FixedExpense> getFixedExpenses(){
 		Set<FixedExpense> despesas = new TreeSet<FixedExpense>(expensesDAO.findAllFixedExpenses());
 		
 		return despesas;	
 	}
 	
-	private Set<Expense> getDespesasVariaveis(){
+	private Set<Expense> getVariableExpenses(){
 		Set<Expense> despesas = new TreeSet<Expense>(expensesDAO.findAllVariableExpenses());
 		
 		return despesas;	
 	}
 	
-	private Set<Category> getCategorias() {
+	private Set<Category> getCategories() {
 		Set<Category> categorias = new TreeSet<>(categoryDAO.findAllCategoriesByType(CategoryType.EXPENSE));
 		
 		return categorias;

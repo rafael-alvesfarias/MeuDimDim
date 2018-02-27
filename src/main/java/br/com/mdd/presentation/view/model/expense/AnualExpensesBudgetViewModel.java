@@ -1,4 +1,4 @@
-package br.com.mdd.presentation.view.model;
+package br.com.mdd.presentation.view.model.expense;
 
 import java.math.BigDecimal;
 import java.text.Collator;

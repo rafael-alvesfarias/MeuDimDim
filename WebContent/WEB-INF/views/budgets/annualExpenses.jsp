@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
 	<meta charset="UTF-8">
@@ -12,10 +13,6 @@
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script type="text/javascript">
 		$(document).ready(function(){
-			$("#botaoNovaDespesa").click(function(){
-				limparPopup();
-			});
-			
 			$(".cellControl").click(function() {
 				var cellMenu = $(this).next(".cellMenu");
 				var hidden = cellMenu.is(":hidden");
@@ -42,13 +39,14 @@
 	</script>
 </head>
 <body>
+	<spring:url value="/expense" var="urlNewExpense" htmlEscape="true"></spring:url>
 	<spring:url value="/editarDespesa" var="urlEditar" htmlEscape="true"></spring:url>
 	<spring:url value="/excluirDespesa" var="urlExcluir" htmlEscape="true"></spring:url>
 	<spring:url value="/despesasMensais" var="urlDespesasMensais" htmlEscape="true"></spring:url>
 	<c:import url="../header.jsp"/>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
-		<div class="painel">
+		<div class="painel-large">
 			<h3 class="tituloPainel">Despesas Anuais</h3>
 			<!-- DESPESAS FIXAS -->
 				<table class="editableCells">
@@ -182,13 +180,11 @@
 					</tbody>
 				</table>
 			<div class="botoes">
-				<a href="#novaDespesa" id="botaoNovaDespesa"><input type="button" value="Nova Despesa" class="botao-direita"/></a>
+				<a href="${urlNewExpense}" id="btnNewExpense"><input type="button" value="Nova Despesa" class="botao-direita"/></a>
 			</div>
 		</div>
 	</div>
 	
-	<c:import url="popupDespesa.jsp"/>
-
 	<c:import url="../footer.jsp"/>
 </body>
 </html>

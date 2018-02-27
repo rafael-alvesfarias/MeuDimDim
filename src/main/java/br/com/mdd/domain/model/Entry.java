@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Locale;
 
+import javax.management.RuntimeErrorException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,7 +19,7 @@ import org.joda.time.LocalDate;
 @Entity
 @Table(name = "entry")
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
-public abstract class Entry implements Comparable<Entry> {
+public abstract class Entry implements Comparable<Entry>, Cloneable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -31,6 +32,8 @@ public abstract class Entry implements Comparable<Entry> {
 	@Column
 	private BigDecimal value;
 
+	//Due date significa data vencimento
+	//TODO Procurar o siginificado de data de lançamento
 	@Column
 	private LocalDate dueDate;
 
@@ -119,6 +122,16 @@ public abstract class Entry implements Comparable<Entry> {
 		collator.setStrength(Collator.PRIMARY);
 
 		return collator.compare(this.getName(), o.getName());
+	}
+	
+	@Override
+	public Entry clone() {
+		try {
+			Entry e = (Entry) super.clone();
+			return e;
+		} catch (CloneNotSupportedException ex) {
+			throw new RuntimeException(ex);
+		}
 	}
 
 }

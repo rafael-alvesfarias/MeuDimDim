@@ -41,13 +41,14 @@
 	</script>
 </head>
 <body>
+	<spring:url value="/newIncome" var="urlNewIncome" htmlEscape="true"></spring:url>
 	<spring:url value="/updateIncome" var="urlUpdate" htmlEscape="true"></spring:url>
 	<spring:url value="/deleteIncome" var="urlDelete" htmlEscape="true"></spring:url>
 	<spring:url value="/incomes/monthly" var="urlMonthlyIncomes" htmlEscape="true"></spring:url>
 	<c:import url="../header.jsp"/>
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Receitas</h2>
-		<div class="painel">
+		<div class="painel-large">
 			<h3 class="tituloPainel">Receitas Anuais</h3>
 			<!-- DESPESAS FIXAS -->
 			<table class="editableCells">
@@ -75,29 +76,29 @@
 				<tfoot>
 					<tr>
 						<th>TOTAL</th>
-						<c:forEach var="total" items="${incomesBudget.totals}">
+						<c:forEach var="total" items="${incomesBudget.totalIncomes}">
 							<td>R$ ${total}</td>
 						</c:forEach>
 					</tr>
 				</tfoot>
 				<tbody>
-					<c:forEach var="incomesSet" items="${incomesBudget.annualIncomes}" varStatus="status">
+					<c:forEach var="incomeGroup" items="${incomesBudget.incomeGroups}" varStatus="status">
 						<tr>
-							<th style="min-width: 121px;">${incomesSet.name}</th>
+							<th style="min-width: 121px;">${incomeGroup.name}</th>
 							<c:forEach var="month" begin="1" end="12">
 								<c:choose>
-									<c:when test="${incomesSet.incomes[month] != null}">
+									<c:when test="${incomeGroup.incomes[month] != null}">
 										<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
 											<div>
-												R$ ${incomesSet.incomes[month].value}
+												R$ ${incomeGroup.incomes[month].value}
 											</div>
 											<div class="cellControl">
 												<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
 											</div>
 											<div class="cellMenu">
 												<ul>
-													<li><a href="${urlUpdate}/${incomesSet.incomes[month].id}">Editar</a></li>
-													<li><a href="${urlDelete}/${incomesSet.incomes[month].id}?month=${month}">Excluir</a></li>
+													<li><a href="${urlUpdate}/${incomeGroup.incomes[month].id}">Editar</a></li>
+													<li><a href="${urlDelete}/${incomeGroup.incomes[month].id}?month=${month}">Excluir</a></li>
 												</ul>
 											</div>
 										</td>
@@ -115,13 +116,11 @@
 				</tbody>
 			</table>
 			<div class="botoes">
-				<a href="#newIncome" id="btnNewIncome"><input type="button" value="Nova Receita" class="botao-direita"/></a>
+				<a href="${urlNewIncome}" id="btnNewIncome"><input type="button" value="Nova Receita" class="botao-direita"/></a>
 			</div>
 		</div>
 	</div>
 	
-	<c:import url="popupIncome.jsp"/>
-
 	<c:import url="../footer.jsp"/>
 </body>
 </html>

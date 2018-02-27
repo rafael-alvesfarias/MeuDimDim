@@ -1,4 +1,4 @@
-package br.com.mdd.presentation.view.model.income;
+package br.com.mdd.presentation.view.model;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -9,24 +9,25 @@ import java.util.TreeSet;
 
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.Income;
+import br.com.mdd.presentation.view.model.income.IncomeGroup;
+import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
-public class AnnualIncomesBudgetViewModel {
+public class AnnualSummaryBudgetViewModel {
 
 	private Set<IncomeGroup> incomeGroups;
-	private List<BigDecimal> totalIncomeGroup;
+	private List<BigDecimal> totalIncomes;
 	private Budget<Income> budget;
 
-	public AnnualIncomesBudgetViewModel(Budget<Income> budget) {
+	public AnnualSummaryBudgetViewModel(Budget<Income> budget) {
 		this(budget, null);
 	}
 
-	public AnnualIncomesBudgetViewModel(Budget<Income> budget, Map<Integer, Integer> exclusionsMap) {
+	public AnnualSummaryBudgetViewModel(Budget<Income> budget, Map<Integer, Integer> exclusionsMap) {
 		this.budget = budget;
 		montar(exclusionsMap);
 	}
 
 	private void montar(Map<Integer, Integer> exclusionsMap) {
-		//TODO Budgets de Budgets?
 		this.incomeGroups = new TreeSet<IncomeGroup>();
 		for (Income income : budget.getEntries()) {
 			IncomeGroup incomeGroup = null;
@@ -49,27 +50,31 @@ public class AnnualIncomesBudgetViewModel {
 			}
 		}
 		
-		totalIncomeGroup = new ArrayList<BigDecimal>();
+		totalIncomes = new ArrayList<BigDecimal>();
 		
 		BigDecimal totalGeral = BigDecimal.ZERO;
-		for(int i = 1; i <= 12; i++){
+		for (int i = 1; i <= 12; i++) {
 			BigDecimal total = BigDecimal.ZERO;
 			for (IncomeGroup conjunto : incomeGroups) {
-				if(conjunto.getIncomes().get(i) != null){
+				if(conjunto.getIncomes().get(i) != null) {
 					total = total.add(conjunto.getIncomes().get(i).getValue());
 				}
 			}
-			totalIncomeGroup.add(total);
+			totalIncomes.add(total);
 			totalGeral = totalGeral.add(total);
 		}
-		totalIncomeGroup.add(totalGeral);
-	};
+		totalIncomes.add(totalGeral);
+	}
 	
-	public Set<IncomeGroup> getIncomeGroups() {
+	public Set<IncomeGroup> getAnnualIncomes() {
 		return incomeGroups;
+	}
+
+	public void setAnnualIncomes(Set<IncomeGroup> annualIncomes) {
+		this.incomeGroups = annualIncomes;
 	}
 	
 	public List<BigDecimal> getTotalIncomes() {
-		return totalIncomeGroup;
+		return totalIncomes;
 	}
 }

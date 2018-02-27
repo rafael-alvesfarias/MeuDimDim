@@ -9,15 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
-import br.com.mdd.domain.model.Expense;
-import br.com.mdd.domain.model.FixedExpense;
-import br.com.mdd.domain.model.VariableExpense;
 import br.com.mdd.persistence.dao.CategoryDAO;
-import br.com.mdd.persistence.dao.ExpenseDAO;
 
 @Repository
 public class CategoryHibernateDAO extends GenericHibernateDAO<Category> implements CategoryDAO {
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public List<Category> findAllCategoriesByType(CategoryType type) {

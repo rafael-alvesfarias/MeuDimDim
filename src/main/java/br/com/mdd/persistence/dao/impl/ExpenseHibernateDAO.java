@@ -12,8 +12,9 @@ import br.com.mdd.domain.model.VariableExpense;
 import br.com.mdd.persistence.dao.ExpenseDAO;
 
 @Repository
-public class ExpenseHibernateDAO extends GenericHibernateDAO<Expense> implements ExpenseDAO {
+public class ExpenseHibernateDAO extends EntryHibernateDAO<Expense> implements ExpenseDAO {
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public List<FixedExpense> findAllFixedExpenses() {
@@ -21,11 +22,11 @@ public class ExpenseHibernateDAO extends GenericHibernateDAO<Expense> implements
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public List<Expense> findAllVariableExpenses() {
 		return getSession().createCriteria(VariableExpense.class)
 				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
 	}
-
 }

@@ -62,5 +62,12 @@ public abstract class Expense extends Entry {
 	public void setUser(User user) {
 		this.user = user;
 	}
+	
+	@Override
+	public Expense clone() {
+		Expense e = (Expense) super.clone();
+		e.category = (Category) category.clone();
+		return e;
+	}
 
 }

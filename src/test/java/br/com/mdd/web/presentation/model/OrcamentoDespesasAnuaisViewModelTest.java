@@ -13,8 +13,8 @@ import org.junit.Test;
 
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
-import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel;
-import br.com.mdd.presentation.view.model.AnualExpensesBudgetViewModel.ConjuntoDespesas;
+import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel;
+import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel.ConjuntoDespesas;
 import br.com.mdd.domain.model.Budget;
 
 public class OrcamentoDespesasAnuaisViewModelTest {

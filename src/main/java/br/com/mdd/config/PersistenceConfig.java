@@ -19,6 +19,7 @@ import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.Income;
+import br.com.mdd.domain.model.Investment;
 import br.com.mdd.domain.model.User;
 import br.com.mdd.domain.model.VariableExpense;
 
@@ -52,7 +53,8 @@ public class PersistenceConfig {
 			.addAnnotatedClass(FixedExpense.class)
 			.addAnnotatedClass(Income.class)
 			.addAnnotatedClass(User.class)
-			.addAnnotatedClass(VariableExpense.class);
+			.addAnnotatedClass(VariableExpense.class)
+			.addAnnotatedClass(Investment.class);
 		
 		sessionBuilder.addProperties(getHibernateProperties());
 		

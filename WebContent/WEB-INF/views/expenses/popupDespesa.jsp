@@ -36,6 +36,7 @@
 		</c:choose>
 		<c:url var="salvar" value="/despesa"></c:url>
 		<form:form action="${salvar}" method="POST" commandName="despesa" id="formDespesa">
+			<form:errors path="valor" cssClass="error" />
 			<form:hidden path="id" id="idDespesa"/>
 			<table>
 				<tr>

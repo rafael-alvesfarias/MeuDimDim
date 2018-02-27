@@ -31,5 +31,11 @@ public class VariableExpense extends Expense {
 		return "DespesaVariavel [descrição=" + getName() + ", data de vencimento="
 				+ getDueDate() + ", valor=" + getValue() + "]";
 	}
+	
+	@Override
+	public VariableExpense clone() {
+		VariableExpense e = (VariableExpense) super.clone();
+		return e;
+	}
 
 }

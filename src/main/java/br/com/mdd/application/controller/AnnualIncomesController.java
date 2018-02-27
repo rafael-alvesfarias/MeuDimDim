@@ -1,6 +1,5 @@
 package br.com.mdd.application.controller;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -10,15 +9,11 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
@@ -56,11 +51,12 @@ public class AnnualIncomesController {
 		
 		generateAnnualBudget(model);
 		
-		return "/incomes/annualIncomes";
+		return "/budgets/annualIncomes";
 	}
 
 	private void generateAnnualBudget(Model model) {
-		Budget<Income> annualIncomesBudget = new Budget<Income>(incomes).annual().generate();
+		Budget<Income> annualIncomesBudget = new BudgetBuilder<>(incomes).annual().build();
+		annualIncomesBudget.generate();
 		AnnualIncomesBudgetViewModel incomesBudgetViewModel;
 		@SuppressWarnings("unchecked")
 		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
@@ -70,63 +66,6 @@ public class AnnualIncomesController {
 			incomesBudgetViewModel = new AnnualIncomesBudgetViewModel(annualIncomesBudget);
 		}
 		model.addAttribute("incomesBudget", incomesBudgetViewModel);
-	}
-	
-	@RequestMapping(value = "/income", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "income") IncomeViewModel income, Model model) {
-		Income i = new Income(income.getName(), income.getValue(), income.getDueDate());
-		i.setId(income.getId());
-		
-		i.setReceived(income.getReceived());
-		i.setCategory(getCategory(income.getCategory()));
-		incomesDAO.save(i);
-		
-		return annualIncomes(model);
-	}
-	
-	@Transactional(readOnly=true)
-	@RequestMapping("/updateIncome/{id}")
-	public String updateIncome(Model model, @PathVariable Integer id){
-		
-		Income i = incomesDAO.find(id, Income.class);
-		
-		generateAnnualBudget(model);
-		
-		income = IncomeViewModel.fromIncome(i);
-		income.setCategories(categories);
-		
-		model.addAttribute("income", income);
-		
-		return "/incomes/annualIncomes";
-	}
-	
-	@Transactional
-	@RequestMapping(value="/deleteIncome/{id}")
-	public String deleteIncome(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
-		Income income = incomesDAO.find(id, Income.class);
-		//Verifica se receita não gerada automaticamente
-		if (mes != null && mes > income.getDueDate().getMonthOfYear()) {
-			@SuppressWarnings("unchecked")
-			Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
-			if (exclusionsMap == null) {
-				exclusionsMap = new HashMap<Integer, Integer>();
-				session.setAttribute("exclusionsMap", exclusionsMap);
-			}
-			exclusionsMap.put(id, mes);
-		} else {
-			incomesDAO.remove(income);
-		}
-		
-		return annualIncomes(model);
-	}
-	
-	private Category getCategory(String nome) {
-		for (Category categoria : categories) {
-			if (categoria.getName().equals(nome)) {
-				return categoria;
-			}
-		}
-		return null;
 	}
 	
 	private Set<Income> getIncomes(){

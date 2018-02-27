@@ -51,5 +51,10 @@ public class FixedExpense extends Expense {
 				+ maturityDay + ", data de vencimento=" + getDueDate()
 				+ ", valor=" + getValue() + "]";
 	}
-
+	
+	@Override
+	public FixedExpense clone() {
+		FixedExpense e = (FixedExpense) super.clone();
+		return e;
+	}
 }

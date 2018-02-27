@@ -1,17 +1,19 @@
-package br.com.mdd.presentation.view.model.income;
+package br.com.mdd.presentation.view.model.expense;
 
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
+import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
 
 import br.com.mdd.domain.model.Category;
-import br.com.mdd.domain.model.Income;
+import br.com.mdd.domain.model.Expense;
+import br.com.mdd.domain.model.FixedExpense;
 
-public class IncomeViewModel {
+public class ExpenseViewModel {
 	
 	private Integer id;
 	
@@ -23,24 +25,38 @@ public class IncomeViewModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dueDate;
 	
-	private String category = new String();
+	private String category;
 	
-	private Boolean received;
+	private boolean fixedExpense;
+	
+	private boolean paid;
 	
 	private Set<Category> categories;
 	
-	public static final IncomeViewModel fromIncome(Income income) {
-		IncomeViewModel i = new IncomeViewModel();
-		if (income.getCategory() != null) {
-			i.setCategory(income.getCategory().getName());
-		}
-		i.setDueDate(income.getDueDate().toDate());
-		i.setName(income.getName());
-		i.setId(income.getId());
-		i.setReceived(income.getReceived());
-		i.setValue(income.getValue());
+	private String error;
+	
+	public static final ExpenseViewModel fromExpense(Expense expense) {
+		ExpenseViewModel e = new ExpenseViewModel();
+		e.setCategory(expense.getCategory().getName());
+		e.setDueDate(expense.getDueDate().toDate());
+		e.setName(expense.getName());
+		e.setId(expense.getId());
 		
-		return i;
+		e.setValue(expense.getValue());
+		
+		if (Boolean.TRUE.equals(expense.getPaid())) {
+			e.setPaid(true);
+		} else {
+			e.setPaid(false);
+		}
+		
+		if(expense instanceof FixedExpense) {
+			e.setFixedExpense(true);			
+		} else {
+			e.setFixedExpense(false);
+		}
+		
+		return e;
 	}
 
 	public Integer getId() {
@@ -75,6 +91,22 @@ public class IncomeViewModel {
 		this.category = category;
 	}
 
+	public boolean isFixedExpense() {
+		return fixedExpense;
+	}
+
+	public void setFixedExpense(boolean fixedExpense) {
+		this.fixedExpense = fixedExpense;
+	}
+
+	public boolean isPaid() {
+		return paid;
+	}
+
+	public void setPaid(boolean paid) {
+		this.paid = paid;
+	}
+
 	public Set<Category> getCategories() {
 		return categories;
 	}
@@ -83,19 +115,20 @@ public class IncomeViewModel {
 		this.categories = categories;
 	}
 
-	public Boolean getReceived() {
-		return received;
-	}
-
-	public void setReceived(Boolean received) {
-		this.received = received;
-	}
-	
 	public BigDecimal getValue() {
 		return value;
 	}
-	
+
 	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
+
+	public String getError() {
+		return error;
+	}
+
+	public void setError(String error) {
+		this.error = error;
+	}
+
 }

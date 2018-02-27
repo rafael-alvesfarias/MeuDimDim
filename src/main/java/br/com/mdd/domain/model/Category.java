@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "category")
-public class Category implements Comparable<Category> {
+public class Category implements Comparable<Category>, Cloneable {
 	
 	public enum CategoryType {
 		INCOME, EXPENSE, SAVINGS
@@ -101,6 +101,15 @@ public class Category implements Comparable<Category> {
 	@Override
 	public int compareTo(Category o) {
 		return name.compareTo(o.name);
+	}
+	
+	@Override
+	protected Object clone() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			throw new RuntimeException(e);
+		}
 	}
 
 }
