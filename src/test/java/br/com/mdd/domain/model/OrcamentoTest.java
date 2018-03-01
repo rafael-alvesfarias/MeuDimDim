@@ -21,10 +21,12 @@ public class OrcamentoTest {
 
 	@Test
 	public void testGerarOrcamentoAnualDespesasFixas() {
+		int currentYear = LocalDate.now().getYear();
+		int nextYear = currentYear + 1;
 		Set<FixedExpense> despesasFixas = new HashSet<FixedExpense>();
-		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 9));
-		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 2, 9));
-		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2020, 1, 9));
+		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(currentYear, 1, 9));
+		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(currentYear, 2, 9));
+		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(nextYear, 1, 9));
 		despesasFixas.add(agua);
 		despesasFixas.add(luz);
 		despesasFixas.add(telefone);
@@ -32,7 +34,7 @@ public class OrcamentoTest {
 		FixedExpense luzEmJaneiro = new FixedExpense(luz.getName(), luz.getValue(), luz.getDueDate().minusMonths(1));
 		FixedExpense luzEmDezembro = new FixedExpense(luz.getName(), luz.getValue(), luz.getDueDate().plusMonths(10));
 		
-		Budget<FixedExpense> orcamentoAnual = new Budget<FixedExpense>(despesasFixas).annual().withPrediction().generate();
+		Budget<FixedExpense> orcamentoAnual = new BudgetBuilder<FixedExpense>(despesasFixas).annual().withPrediction().build().generate();
 		
 		assertEquals(23, orcamentoAnual.getEntries().size());
 		assertTrue(orcamentoAnual.getEntries().contains(aguaEmMaio));
@@ -52,7 +54,7 @@ public class OrcamentoTest {
 		despesasFixas.add(luz);
 		despesasFixas.add(telefone);
 		
-		Budget<FixedExpense> orcamentoMensal = new Budget<FixedExpense>(despesasFixas).monthly().generate();
+		Budget<FixedExpense> orcamentoMensal = new BudgetBuilder<FixedExpense>(despesasFixas).monthly().build().generate();
 		
 		assertEquals(1, orcamentoMensal.getEntries().size());
 		assertTrue(orcamentoMensal.getEntries().contains(agua));
@@ -62,38 +64,27 @@ public class OrcamentoTest {
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testCriaObjetoOrcamentoComConjuntoDeDespesasNulo(){
-		new Budget<Expense>(null);
+		new BudgetBuilder<Expense>(null).build();
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testOrcamentoComPeriodoNulo(){
 		Set<Expense> despesas = new HashSet<Expense>();
-		Budget<Expense> orcamento = new Budget<Expense>(despesas);
+		BudgetBuilder<Expense> orcamento = new BudgetBuilder<Expense>(despesas);
 		
 		try{
-			orcamento.withPeriod(null, new LocalDate()).generate();
+			orcamento.withPeriod(null, new LocalDate()).build().generate();
 		}catch(IllegalArgumentException e){
-			orcamento.withPeriod(new LocalDate(), null).generate();
+			orcamento.withPeriod(new LocalDate(), null).build().generate();
 		}
 	}
 	
 	@Test(expected = IllegalArgumentException.class)
 	public void testOrcamentoComPeriodoInvalido(){
 		Set<Expense> despesas = new HashSet<Expense>();
-		Budget<Expense> orcamento = new Budget<Expense>(despesas);
+		BudgetBuilder<Expense> orcamento = new BudgetBuilder<Expense>(despesas);
 		
 		orcamento.withPeriod(LocalDate.now(), LocalDate.now().minusDays(1));
-	}
-	
-	@Test
-	public void testGerarOrcamentoSemInformarPeriodo(){
-		Set<Expense> despesas = new HashSet<Expense>();
-		despesas.add(new FixedExpense("teste", BigDecimal.ZERO, LocalDate.now()));
-		Budget<Expense> orcamento = new Budget<Expense>(despesas);
-		
-		orcamento.generate();
-		
-		assertEquals(orcamento.getEntries().size(), 0);
 	}
 
 }

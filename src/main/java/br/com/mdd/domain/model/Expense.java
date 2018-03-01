@@ -66,7 +66,9 @@ public abstract class Expense extends Entry {
 	@Override
 	public Expense clone() {
 		Expense e = (Expense) super.clone();
-		e.category = (Category) category.clone();
+		if (category != null) {
+			e.category = (Category) category.clone();
+		}
 		return e;
 	}
 

@@ -49,8 +49,8 @@ public class BudgetBuilder<E extends Entry> {
 
 	public BudgetBuilder<E> annual() {
 		LocalDate hoje = LocalDate.now();
-		this.dateFrom = hoje.withMonthOfYear(1).withDayOfMonth(hoje.dayOfMonth().getMinimumValue());
-		this.dateTo = hoje.withMonthOfYear(12).withDayOfMonth(hoje.dayOfMonth().getMaximumValue());
+		this.dateFrom = new LocalDate(hoje.getYear(), 1, 1);
+		this.dateTo = new LocalDate(hoje.getYear(), 12, 31);
 
 		return this;
 	}

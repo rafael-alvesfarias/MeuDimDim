@@ -16,6 +16,7 @@ import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel.ConjuntoDespesas;
 import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.BudgetBuilder;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
 
@@ -29,14 +30,15 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeJaneiro() {
+		int year = LocalDate.now().getYear();
 		Set<FixedExpense> despesas = new HashSet<FixedExpense>();
-		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
-		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 1, 12));
-		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 1, 20));
+		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(year, 1, 10));
+		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(year, 1, 12));
+		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(year, 1, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget<FixedExpense> orcamento = new Budget<FixedExpense>(despesas).annual().withPrediction().generate();
+		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build().generate();
 		
 		AnualExpensesBudgetViewModel<FixedExpense> tabela = new AnualExpensesBudgetViewModel<FixedExpense>(orcamento);
 		
@@ -67,14 +69,15 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 	
 	@Test
 	public void testGeraTabelaOrcamentoAnualComDespesasFixasDeMesesVariados() {
+		int year = LocalDate.now().getYear();
 		Set<FixedExpense> despesas = new HashSet<FixedExpense>();
-		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(2016, 1, 10));
-		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(2016, 5, 12));
-		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(2016, 9, 20));
+		FixedExpense agua = new FixedExpense("Água", new BigDecimal("45.98"), new LocalDate(year, 1, 10));
+		FixedExpense luz = new FixedExpense("Luz", new BigDecimal("98.73"), new LocalDate(year, 5, 12));
+		FixedExpense telefone = new FixedExpense("Telefone", new BigDecimal("55.3"), new LocalDate(year, 9, 20));
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget<FixedExpense> orcamento = new Budget<FixedExpense>(despesas).annual().withPrediction().generate();
+		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build().generate();
 		
 		AnualExpensesBudgetViewModel<FixedExpense> tabela = new AnualExpensesBudgetViewModel<FixedExpense>(orcamento);
 		
