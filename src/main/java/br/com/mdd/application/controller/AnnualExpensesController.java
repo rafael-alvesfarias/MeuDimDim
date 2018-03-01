@@ -1,12 +1,16 @@
 package br.com.mdd.application.controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
+import org.joda.time.LocalDate;
+import org.joda.time.Months;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,17 +23,21 @@ import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
+import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.persistence.dao.CategoryDAO;
 import br.com.mdd.persistence.dao.ExpenseDAO;
+import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
 
 @Controller
 public class AnnualExpensesController {
 	
-	private Set<FixedExpense> despesasFixas;
+	private static final String NUMBER_MONTHS_DEFAULT = "3";
+	
+	private Set<Entry> despesasFixas;
 	
 	private Set<Expense> despesasVariaveis;
 	
@@ -45,40 +53,38 @@ public class AnnualExpensesController {
 	private CategoryDAO categoryDAO;
 	
 	@RequestMapping("/expenses/annual")
-	public String despesasAnuais(Model model){
+	public String despesasAnuais(Model model, 
+			@RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths){
 		despesasFixas = getFixedExpenses();
 		despesasVariaveis = getVariableExpenses();
 		categorias = getCategories();
 		ExpenseViewModel expenseForm = new ExpenseViewModel();
 		expenseForm.setCategories(categorias);
-		model.addAttribute("expense", expenseForm);
 		
-		gerarOrcamentoAnual(model);
+		model.addAttribute("expense", expenseForm);
+		model.addAttribute("fixedExpensesBudgets", this.generateBudget(Integer.valueOf(numberMonths), despesasFixas));
 		
 		return "/budgets/annualExpenses";
 	}
-
-	private void gerarOrcamentoAnual(Model model) {
-		Budget<FixedExpense> orcamentoDespesasFixas = new BudgetBuilder<FixedExpense>(despesasFixas)
-				.annual()
+	
+	private List<BudgetViewModel> generateBudget(int numberMonths, Set<Entry> entries) {
+		List<BudgetViewModel> budgets = new ArrayList<>();
+		LocalDate dateFrom = LocalDate.now().withDayOfMonth(1);
+		LocalDate dateTo = dateFrom.plusMonths(numberMonths);
+		Budget<Entry> budget = new BudgetBuilder<Entry>(entries)
+				.withPeriod(dateFrom, dateTo)
 				.withPrediction()
 				.build()
 				.generate();
-		Budget<Expense> orcamentoDespesasVariaveis = new BudgetBuilder<Expense>(despesasVariaveis)
-				.annual()
-				.build()
-				.generate();
-		AnualExpensesBudgetViewModel<FixedExpense> orcamentoDespesasFixasViewModel;
-		AnualExpensesBudgetViewModel<Expense> orcamentoDespesasVariaveisViewModel = new AnualExpensesBudgetViewModel<Expense>(orcamentoDespesasVariaveis);
-		@SuppressWarnings("unchecked")
-		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
-		if (exclusionsMap != null) {
-			orcamentoDespesasFixasViewModel = new AnualExpensesBudgetViewModel<FixedExpense>(orcamentoDespesasFixas, exclusionsMap);
-		} else {
-			orcamentoDespesasFixasViewModel = new AnualExpensesBudgetViewModel<FixedExpense>(orcamentoDespesasFixas);
+		LocalDate dateIt = dateFrom;
+		for (int i = 0; i < numberMonths; i++) {
+			dateIt = dateIt.plusMonths(1);
+			int month = dateIt.getMonthOfYear();
+			String monthStr = dateIt.toString("MMMM");
+			Budget<Entry> b = budget.subBudget(monthStr, month).generate();
+			budgets.add(BudgetViewModel.fromBudget(b));
 		}
-		model.addAttribute("orcamentoDespesasFixas", orcamentoDespesasFixasViewModel);
-		model.addAttribute("orcamentoDespesasVariaveis", orcamentoDespesasVariaveisViewModel);
+		return budgets;
 	}
 	
 	@Transactional(readOnly=true)
@@ -86,8 +92,6 @@ public class AnnualExpensesController {
 	public String editarDespesa(Model model, @PathVariable Integer id){
 		
 		Expense expense = expensesDAO.find(id, Expense.class);
-		
-		gerarOrcamentoAnual(model);
 		
 		ExpenseViewModel expenseForm = ExpenseViewModel.fromExpense(expense);
 		expenseForm.setCategories(categorias);
@@ -114,13 +118,13 @@ public class AnnualExpensesController {
 			expensesDAO.remove(expense);
 		}
 		
-		return despesasAnuais(model);
+		return despesasAnuais(model, 3);
 	}
 	
-	private Set<FixedExpense> getFixedExpenses(){
-		Set<FixedExpense> despesas = new TreeSet<FixedExpense>(expensesDAO.findAllFixedExpenses());
+	private Set<Entry> getFixedExpenses(){
+		Set<Entry> despesas = new TreeSet<Entry>(expensesDAO.findAllFixedExpenses());
 		
-		return despesas;	
+		return despesas;
 	}
 	
 	private Set<Expense> getVariableExpenses(){
