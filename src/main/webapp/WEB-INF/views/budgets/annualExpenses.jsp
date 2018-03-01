@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>Despesas</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/recursos/css/style.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script type="text/javascript">
@@ -91,7 +91,7 @@
 													R$ ${conuntoDespesas.despesas[mes].value}
 												</div>
 												<div class="cellControl">
-													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
+													<img src="<c:url value='/resources/imagens/down-arrow.png'/>"/>
 												</div>
 												<div class="cellMenu">
 													<ul>
@@ -157,7 +157,7 @@
 													R$ ${conuntoDespesas.despesas[mes].value}
 												</div>
 												<div class="cellControl">
-													<img src="<c:url value='/recursos/imagens/down-arrow.png'/>"/>
+													<img src="<c:url value='/resources/imagens/down-arrow.png'/>"/>
 												</div>
 												<div class="cellMenu">
 													<ul>

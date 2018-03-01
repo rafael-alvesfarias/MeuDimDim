@@ -8,7 +8,7 @@
 	<meta charset="UTF-8">
 	<title>Cadastro de Receita</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-	<link rel="stylesheet" type="text/css" href="<c:url value='/recursos/css/style.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script type="text/javascript">

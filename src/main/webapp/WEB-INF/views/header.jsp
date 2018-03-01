@@ -5,7 +5,7 @@
 <spring:url value="/expenses/annual" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/newInvestment" var="urlInvestments" htmlEscape="true"></spring:url>
 <div class="cabecalho">
-	<a href="${urlHome}"><img src="<c:url value='/recursos/imagens/logo.png'/>"/></a>
+	<a href="${urlHome}"><img src="<c:url value='/resources/imagens/logo.png'/>"/></a>
 	<h1>meu<span>dimdim</span></h1>
 	<h2>rumo à independência financeira</h2>
 </div>
