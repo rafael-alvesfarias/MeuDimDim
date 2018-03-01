@@ -1,0 +1,24 @@
+==================================**PENDING**============================================
+MDD-1) Criar tela de login
+	Pesquisar a melhor maneira de login (Google, Facebook, Spring Security)
+	
+MDD-2) Criar validações de entrada de dados
+	Pesquisar componente de formatação e máscara de dados para as páginas HTML;
+	Criar validators server-side para os formulários com mensagens de erro
+	personalizadas
+	
+MDD-3) Reformular as paginas iniciais de despesa e receita
+	Ao inves de sempre mostrar todos os lançamentos do ano, por padrão mostrar os
+	lançamentos do próximo trimestre e criar componente que permita alterar o 
+	período
+	
+MDD-4) Criar página inicial de investimentos
+
+MDD-5) Criar mecanismo de marcar despesa como paga
+
+MDD-6) Criar mecanismo de gerenciamento de cartão de crédito e fatura
+
+MDD-7) Criar mecanismo gerenciamento de contas bancárias
+
+
+==================================**DONE**===============================================
