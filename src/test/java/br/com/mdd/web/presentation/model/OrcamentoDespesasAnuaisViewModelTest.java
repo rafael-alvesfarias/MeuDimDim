@@ -38,7 +38,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build().generate();
+		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build();
 		
 		AnualExpensesBudgetViewModel<FixedExpense> tabela = new AnualExpensesBudgetViewModel<FixedExpense>(orcamento);
 		
@@ -77,7 +77,7 @@ public class OrcamentoDespesasAnuaisViewModelTest {
 		despesas.add(agua);
 		despesas.add(luz);
 		despesas.add(telefone);
-		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build().generate();
+		Budget<FixedExpense> orcamento = new BudgetBuilder<FixedExpense>(despesas).annual().withPrediction().build();
 		
 		AnualExpensesBudgetViewModel<FixedExpense> tabela = new AnualExpensesBudgetViewModel<FixedExpense>(orcamento);
 		

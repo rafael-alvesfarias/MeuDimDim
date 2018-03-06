@@ -1,6 +1,7 @@
 package br.com.mdd.domain.model;
 
 import java.math.BigDecimal;
+import java.time.Month;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
@@ -39,7 +40,8 @@ public final class Budget<E extends Entry> {
 		this.entries = entries;
 		this.dateFrom = dateFrom;
 		this.dateTo = dateTo;
-		this.predictEntries = predictEntries;
+		this.predictEntries = predictEntries;	
+		this.generate();
 	}
 	
 	public Budget(String name, Set<E> entries, LocalDate dateFrom, LocalDate dateTo) {
@@ -50,8 +52,8 @@ public final class Budget<E extends Entry> {
 		return new Budget<E>(name, entries, dateFrom, dateTo, predictEntries);
 	}
 	
-	public Budget<E> subBudget(String name, int month) {
-		LocalDate dateFrom = this.dateFrom.withMonthOfYear(month);
+	public Budget<E> subBudget(String name, Month month) {
+		LocalDate dateFrom = this.dateFrom.withMonthOfYear(month.getValue());
 		LocalDate dateTo = dateFrom.withDayOfMonth(dateFrom.dayOfMonth().getMaximumValue());
 		return this.subBudget(name, dateFrom, dateTo);
 	}
@@ -90,7 +92,7 @@ public final class Budget<E extends Entry> {
 		this.entries = predictedEntries;
 	}
 
-	public Budget<E> generate() {
+	private Budget<E> generate() {
 		if (dateFrom == null || dateTo == null){
 			entries = new HashSet<E>();
 			return this;

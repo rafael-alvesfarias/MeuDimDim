@@ -34,7 +34,7 @@ public class OrcamentoTest {
 		FixedExpense luzEmJaneiro = new FixedExpense(luz.getName(), luz.getValue(), luz.getDueDate().minusMonths(1));
 		FixedExpense luzEmDezembro = new FixedExpense(luz.getName(), luz.getValue(), luz.getDueDate().plusMonths(10));
 		
-		Budget<FixedExpense> orcamentoAnual = new BudgetBuilder<FixedExpense>(despesasFixas).annual().withPrediction().build().generate();
+		Budget<FixedExpense> orcamentoAnual = new BudgetBuilder<FixedExpense>(despesasFixas).annual().withPrediction().build();
 		
 		assertEquals(23, orcamentoAnual.getEntries().size());
 		assertTrue(orcamentoAnual.getEntries().contains(aguaEmMaio));
@@ -54,7 +54,7 @@ public class OrcamentoTest {
 		despesasFixas.add(luz);
 		despesasFixas.add(telefone);
 		
-		Budget<FixedExpense> orcamentoMensal = new BudgetBuilder<FixedExpense>(despesasFixas).monthly().build().generate();
+		Budget<FixedExpense> orcamentoMensal = new BudgetBuilder<FixedExpense>(despesasFixas).monthly().build();
 		
 		assertEquals(1, orcamentoMensal.getEntries().size());
 		assertTrue(orcamentoMensal.getEntries().contains(agua));
@@ -73,9 +73,9 @@ public class OrcamentoTest {
 		BudgetBuilder<Expense> orcamento = new BudgetBuilder<Expense>(despesas);
 		
 		try{
-			orcamento.withPeriod(null, new LocalDate()).build().generate();
+			orcamento.withPeriod(null, new LocalDate()).build();
 		}catch(IllegalArgumentException e){
-			orcamento.withPeriod(new LocalDate(), null).build().generate();
+			orcamento.withPeriod(new LocalDate(), null).build();
 		}
 	}
 	

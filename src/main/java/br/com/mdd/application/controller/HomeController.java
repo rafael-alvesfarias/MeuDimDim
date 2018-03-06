@@ -74,7 +74,7 @@ public class HomeController {
 				.monthly()
 				.build();
 		
-		List<IncomeViewModel> incomes = incomesBudget.generate()
+		List<IncomeViewModel> incomes = incomesBudget
 				.getEntries()
 					.stream().map(i -> {
 						return IncomeViewModel.fromIncome(i);
@@ -88,7 +88,7 @@ public class HomeController {
 				.withPrediction()
 				.build();
 		
-		List<ExpenseViewModel> expenses = expensesBudget.generate()
+		List<ExpenseViewModel> expenses = expensesBudget
 				.getEntries()
 					.stream().map(e -> {
 						return ExpenseViewModel.fromExpense(e);
@@ -101,7 +101,7 @@ public class HomeController {
 				.monthly()
 				.build();
 		
-		List<InvestmentViewModel> investments = investmentBudget.generate()
+		List<InvestmentViewModel> investments = investmentBudget
 				.getEntries()
 					.stream().map(i -> {
 						return InvestmentViewModel.fromInvestment(i);

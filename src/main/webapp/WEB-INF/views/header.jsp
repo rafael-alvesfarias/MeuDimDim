@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <spring:url value="/home" var="urlHome" htmlEscape="true"></spring:url>
 <spring:url value="/incomes/annual" var="urlIncomes" htmlEscape="true"></spring:url>
-<spring:url value="/expenses/annual" var="urlExpenses" htmlEscape="true"></spring:url>
+<spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/newInvestment" var="urlInvestments" htmlEscape="true"></spring:url>
 <div class="cabecalho">
 	<a href="${urlHome}"><img src="<c:url value='/resources/imagens/logo.png'/>"/></a>

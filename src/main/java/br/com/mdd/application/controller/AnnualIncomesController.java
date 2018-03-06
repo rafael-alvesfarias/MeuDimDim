@@ -56,7 +56,6 @@ public class AnnualIncomesController {
 
 	private void generateAnnualBudget(Model model) {
 		Budget<Income> annualIncomesBudget = new BudgetBuilder<>(incomes).annual().build();
-		annualIncomesBudget.generate();
 		AnnualIncomesBudgetViewModel incomesBudgetViewModel;
 		@SuppressWarnings("unchecked")
 		Map<Integer, Integer> exclusionsMap = (Map<Integer, Integer>) session.getAttribute("exclusionsMap");
