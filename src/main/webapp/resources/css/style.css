@@ -79,6 +79,14 @@ th{
 	color: #63a62f;
 }
 
+.total {
+	background-color: #FFFACD;
+}
+
+.total td {
+	font-weight: 600;
+}
+
 .group {
 	margin-top: 10px;
 	padding-top: 10px;

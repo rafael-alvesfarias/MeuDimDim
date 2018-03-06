@@ -80,7 +80,7 @@ public class AnnualExpensesController {
 		for (int i = 0; i < numberMonths; i++) {
 			dateIt = dateIt.plusMonths(1);
 			int month = dateIt.getMonthOfYear();
-			String monthStr = dateIt.toString("MMMM");
+			String monthStr = dateIt.toString("MMMM/yyyy");
 			Budget<Entry> b = budget.subBudget(monthStr, month).generate();
 			budgets.add(BudgetViewModel.fromBudget(b));
 		}

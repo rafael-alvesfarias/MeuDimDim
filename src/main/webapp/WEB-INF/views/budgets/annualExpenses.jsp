@@ -51,61 +51,112 @@
 	<c:import url="../header.jsp" />
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
-		<div class="painel-medium">
-			<h3 class="tituloPainel">Despesas Fixas</h3>
-			<!-- DESPESAS FIXAS -->
-			<c:forEach var="budget" items="${fixedExpensesBudgets}">
+		<div class="div-5">
+			<div class="painel-medium">
+				<h3 class="tituloPainel">Despesas Fixas</h3>
+				<!-- DESPESAS FIXAS -->
 				<table class="editableCells">
-					<thead>
-						<tr>
-							<th colspan="14" class="tableTitle">Despesas de ${budget.name}</th>
-						</tr>
-						<tr>
-							<th>Vencimento</th>
-							<th>Descrição</th>
-							<th>Valor</th>
-						</tr>
-					</thead>
-					<tfoot>
-						<tr>
+				<c:forEach var="budget" items="${fixedExpensesBudgets}">
+						<thead>
+							<tr>
+								<th colspan="14" class="tableTitle">${budget.name}</th>
+							</tr>
+							<tr>
+								<th>Vencimento</th>
+								<th>Descrição</th>
+								<th>Valor</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="entry" items="${budget.entries}"
+								varStatus="status">
+								<tr>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										<fmt:formatDate pattern="dd/MM/yyyy" value="${entry.dueDate}" />
+									</td>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										<div>${entry.name}</div>
+										<div class="cellControl">
+											<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
+										</div>
+										<div class="cellMenu">
+											<ul>
+												<li><a
+													href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
+												<li><a
+													href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}?mes=${mes}">Excluir</a></li>
+											</ul>
+										</div>
+									</td>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										R$ ${entry.value}
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tr class="total">
 							<td colspan="2"><b>TOTAL</b></td>
 							<td>R$ ${budget.total}</td>
 						</tr>
-					</tfoot>
-					<tbody>
-						<c:forEach var="entry" items="${budget.entries}"
-							varStatus="status">
-							<tr>
-								<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-									<fmt:formatDate pattern="dd/MM/yyyy" value="${entry.dueDate}" />
-								</td>
-								<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-									<div>${entry.name}</div>
-									<div class="cellControl">
-										<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
-									</div>
-									<div class="cellMenu">
-										<ul>
-											<li><a
-												href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
-											<li><a
-												href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}?mes=${mes}">Excluir</a></li>
-										</ul>
-									</div>
-								</td>
-								<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-									R$ ${entry.value}
-								</td>
-							</tr>
-						</c:forEach>
-					</tbody>
+				</c:forEach>
 				</table>
-			</c:forEach>
-			<!-- DESPESAS VARIÁVEIS -->
-			<div class="botoes">
-				<a href="${urlNewExpense}" id="btnNewExpense"><input
-					type="button" value="Nova Despesa" class="botao-direita" /></a>
 			</div>
+		</div>
+		<!-- DESPESAS VARIÁVEIS -->
+		<div class="div-5">
+			<div class="painel-medium">
+				<h3 class="tituloPainel">Despesas Varáveis</h3>
+				<!-- DESPESAS FIXAS -->
+				<table class="editableCells">
+				<c:forEach var="budget" items="${fixedExpensesBudgets}">
+						<thead>
+							<tr>
+								<th colspan="14" class="tableTitle">${budget.name}</th>
+							</tr>
+							<tr>
+								<th>Vencimento</th>
+								<th>Descrição</th>
+								<th>Valor</th>
+							</tr>
+						</thead>
+						<tbody>
+							<c:forEach var="entry" items="${budget.entries}"
+								varStatus="status">
+								<tr>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										<fmt:formatDate pattern="dd/MM/yyyy" value="${entry.dueDate}" />
+									</td>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										<div>${entry.name}</div>
+										<div class="cellControl">
+											<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
+										</div>
+										<div class="cellMenu">
+											<ul>
+												<li><a
+													href="${urlEditar}/${conuntoDespesas.despesas[mes].id}">Editar</a></li>
+												<li><a
+													href="${urlExcluir}/${conuntoDespesas.despesas[mes].id}?mes=${mes}">Excluir</a></li>
+											</ul>
+										</div>
+									</td>
+									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
+										R$ ${entry.value}
+									</td>
+								</tr>
+							</c:forEach>
+						</tbody>
+						<tr class="total">
+							<td colspan="2">TOTAL</td>
+							<td>R$ ${budget.total}</td>
+						</tr>
+				</c:forEach>
+				</table>
+			</div>
+		</div>
+		<div class="botoes, div-10">
+			<a href="${urlNewExpense}" id="btnNewExpense"><input
+				type="button" value="Nova Despesa" class="botao-direita" /></a>
 		</div>
 	</div>
 
