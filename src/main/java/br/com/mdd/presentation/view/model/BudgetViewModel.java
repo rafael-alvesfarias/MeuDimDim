@@ -16,7 +16,7 @@ public class BudgetViewModel {
 	
 	private List<EntryViewModel> entries;
 	
-	private static BudgetViewModel fromBudget(Budget<Entry> budget) {
+	public static BudgetViewModel fromBudget(Budget<Entry> budget) {
 		BudgetViewModel b = new BudgetViewModel();
 		if (budget != null) {
 			b.setName(budget.getName());

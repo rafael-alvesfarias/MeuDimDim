@@ -37,7 +37,9 @@ public class ExpenseViewModel {
 	
 	public static final ExpenseViewModel fromExpense(Expense expense) {
 		ExpenseViewModel e = new ExpenseViewModel();
-		e.setCategory(expense.getCategory().getName());
+		if (expense.getCategory() != null) {
+			e.setCategory(expense.getCategory().getName());
+		}
 		e.setDueDate(expense.getDueDate().toDate());
 		e.setName(expense.getName());
 		e.setId(expense.getId());
