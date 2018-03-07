@@ -4,6 +4,21 @@
 <spring:url value="/incomes/annual" var="urlIncomes" htmlEscape="true"></spring:url>
 <spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/newInvestment" var="urlInvestments" htmlEscape="true"></spring:url>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$(".inputMoney").inputmask("currency", {groupSeparator: ".", prefix: "R$ ", radixPoint: ","});
+		$(".inputDecimal").inputmask("numeric", {
+			radixPoint: ",",
+			groupSeparator: ".",
+            placeholder: "0",
+            autoGroup: true,
+            digits: 2,
+            digitsOptional: false,
+            clearMaskOnLostFocus: false
+        });
+		$(".inputDate").inputmask("99/99/9999");
+	});
+</script>
 <div class="cabecalho">
 	<a href="${urlHome}"><img src="<c:url value='/resources/imagens/logo.png'/>"/></a>
 	<h1>meu<span>dimdim</span></h1>

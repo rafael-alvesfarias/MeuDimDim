@@ -12,12 +12,13 @@ import br.com.mdd.presentation.view.model.EntryViewModel;
 
 public class InvestmentViewModel extends EntryViewModel {
 
-	@NumberFormat(style = Style.CURRENCY)
+	@NumberFormat(style = Style.NUMBER)
 	private BigDecimal returnRate;
 
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date withdrawlDate;
 	
+	@NumberFormat(style = Style.NUMBER)
 	private BigDecimal taxRate;
 	
 	public static InvestmentViewModel fromInvestment(Investment i) {

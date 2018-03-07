@@ -23,23 +23,23 @@
 				</tr>
 				<tr>
 					<td><label for="valor">Valor</label></td>
-					<td><form:input id="value" path="value" size="12"/></td>
+					<td><form:input cssClass="inputMoney" id="value" path="value" size="12"/></td>
 				</tr>
 				<tr>
-					<td><label for="data">Data de lançamento</label></td>
-					<td><form:input id="dueDate" path="dueDate" size="10"/></td>
+					<td><label for="dueDate">Data de lançamento</label></td>
+					<td><form:input cssClass="inputDate" id="dueDate" path="dueDate" size="10"/></td>
 				</tr>
 				<tr>
-					<td><label for="data">Data de retirada</label></td>
-					<td><form:input id="withdrawlDate" path="withdrawlDate" size="10"/></td>
+					<td><label for="withdrawlDate">Data de retirada</label></td>
+					<td><form:input cssClass="inputDate" id="withdrawlDate" path="withdrawlDate" size="10"/></td>
 				</tr>
 				<tr>
-					<td><label for="data">Taxa de rendimento (% a.a.)</label></td>
-					<td><form:input id="withdrawlDate" path="withdrawlDate" size="12"/></td>
+					<td><label for="returnRate">Taxa de rendimento (% a.a.)</label></td>
+					<td><form:input cssClass="inputDecimal" id="returnRate" path="returnRate" size="12"/></td>
 				</tr>
 				<tr>
-					<td><label for="data">Imposto sobre rendimento (%)</label></td>
-					<td><form:input id="taxRate" path="taxRate" size="12"/></td>
+					<td><label for="taxRate">Imposto sobre rendimento (%)</label></td>
+					<td><form:input cssClass="inputDecimal" id="taxRate" path="taxRate" size="12"/></td>
 				</tr>
 			</table>
 			<div class="group">

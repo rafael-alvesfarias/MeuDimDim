@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
 	<script type="text/javascript">
 		function clearForm() {
 			$("#formIncome input[type=text]").each(function(a, b) {

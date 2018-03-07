@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
 
-import org.joda.time.LocalDate;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
 import org.springframework.format.annotation.NumberFormat.Style;
@@ -132,5 +131,4 @@ public class ExpenseViewModel {
 	public void setError(String error) {
 		this.error = error;
 	}
-
 }

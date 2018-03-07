@@ -11,6 +11,7 @@
 	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
 	<script type="text/javascript">
 		function clearForm() {
 			$("#formIncome input[type=text]").each(function(a, b) {
@@ -31,7 +32,7 @@
 <body>
 	<c:import url="../header.jsp"/>
 	<div class="box">
-		<h2 class="titulo line-separator-bottom">Despesas</h2>
+		<h2 class="titulo line-separator-bottom">Receitas</h2>
 		<div class="div-5">
 			<div class="painel-medium" title="Nova Despesa">
 				<c:choose>	
@@ -52,11 +53,11 @@
 						</tr>
 						<tr>
 							<td><label for="valor">Valor</label></td>
-							<td><form:input id="value" path="value" size="12"/></td>
+							<td><form:input cssClass="inputMoney" id="value" path="value" size="12"/></td>
 						</tr>
 						<tr>
 							<td><label for="data">Data de vencimento</label></td>
-							<td><form:input id="dueDate" path="dueDate" size="10"/></td>
+							<td><form:input cssClass="inputDate" id="dueDate" path="dueDate" size="10"/></td>
 						</tr>
 						<tr>
 							<td><label for=category>Categoria</label></td>
