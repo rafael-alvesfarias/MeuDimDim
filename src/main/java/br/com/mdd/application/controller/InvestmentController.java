@@ -1,7 +1,12 @@
 package br.com.mdd.application.controller;
 
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +22,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.BudgetBuilder;
+import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Investment;
 import br.com.mdd.persistence.dao.GenericDAO;
+import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.investment.InvestmentViewModel;
 
 @Controller
 public class InvestmentController {
+	
+	private static final String NUMBER_MONTHS_DEFAULT = "3";
 	
 	private InvestmentViewModel investment;
 	
@@ -33,18 +44,32 @@ public class InvestmentController {
 	@Autowired
 	private HttpSession session;
 	
+	@RequestMapping("/investments")
+	public String expensesHome(Model model, @RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths){
+		Set<Entry> investments = getInvestments();
+		model.addAttribute("investmentBudgets", this.generateBudgets(Integer.valueOf(numberMonths), investments));
+		
+		return "/investments/investmentHome";
+	}
+	
 	@RequestMapping(value = "/newInvestment", method = RequestMethod.GET)
 	public String newInvestment(Model model){
 		investment = new InvestmentViewModel();
 		model.addAttribute("investment", investment);
 		
-		return "/investments/newInvestment";
+		return "/investments/investment";
 	}
 
 	@RequestMapping(value = "/investment", method = RequestMethod.POST)
-	public String saveIncome(@ModelAttribute(value = "investment") InvestmentViewModel investment, Model model) {
+	public String saveInvestment(@ModelAttribute(value = "investment") InvestmentViewModel investment, Model model) {
 		Investment i = new Investment(investment.getName(), investment.getValue(), new LocalDate(investment.getDueDate()), investment.getReturnRate());
 		i.setId(investment.getId());
+		if (investment.getWithdrawlDate() != null) {
+			i.setWithdrawlDate(new LocalDate(investment.getWithdrawlDate()));
+		}
+		if (investment.getTaxRate() != null) {
+			i.setTaxRate(investment.getTaxRate());
+		}
 		
 		investmentDAO.save(i);
 		
@@ -52,7 +77,7 @@ public class InvestmentController {
 	}
 	
 	@Transactional(readOnly=true)
-	@RequestMapping("/updateInvestment/{id}")
+	@RequestMapping("/editInvestment/{id}")
 	public String updateInvestment(Model model, @PathVariable Integer id){
 		
 		Investment i = investmentDAO.find(id, Investment.class);
@@ -61,7 +86,7 @@ public class InvestmentController {
 		
 		model.addAttribute("investment", investment);
 		
-		return "/investments/editInvestment";
+		return "/investments/investment";
 	}
 	
 	@Transactional
@@ -81,6 +106,32 @@ public class InvestmentController {
 			investmentDAO.remove(investment);
 		}
 		
-		return "/home";
+		return "/investments/investmentHome";
+	}
+	
+	private List<BudgetViewModel> generateBudgets(int numberMonths, Set<Entry> entries) {
+		List<BudgetViewModel> budgets = new ArrayList<>();
+		LocalDate dateFrom = LocalDate.now().withDayOfMonth(1);
+		LocalDate dateTo = dateFrom.plusMonths(numberMonths);
+		Budget<Entry> budget = new BudgetBuilder<Entry>(entries)
+				.withPeriod(dateFrom, dateTo)
+				.build();
+		for (int i = 0; i < numberMonths; i++) {
+			budgets.add(this.generateBudget(dateFrom.plusMonths(i), budget));
+		}
+		return budgets;
+	}
+	
+	private BudgetViewModel generateBudget(LocalDate dateIt, Budget<Entry> budget) {
+		Month month = Month.of(dateIt.getMonthOfYear());
+		String monthStr = dateIt.toString("MMMM/yyyy");
+		Budget<Entry> b = budget.subBudget(monthStr, month);
+		return BudgetViewModel.fromBudget(b);
+	}
+	
+	private Set<Entry> getInvestments(){
+		Set<Entry> investments = new TreeSet<Entry>(investmentDAO.findAll(Investment.class));
+		
+		return investments;
 	}
 }

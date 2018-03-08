@@ -34,7 +34,7 @@
 </head>
 <body>
 	<c:import url="../header.jsp" />
-	<c:url value="/expenses/budget?type=annual" var="urlExpenses" />
+	<c:url value="/expenses" var="urlExpenses" />
 	<div class="box">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="div-5">
