@@ -1,5 +1,6 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <spring:url value="/home" var="urlHome" htmlEscape="true"></spring:url>
 <spring:url value="/incomes/annual" var="urlIncomes" htmlEscape="true"></spring:url>
 <spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
@@ -31,4 +32,10 @@
 		<li><a href="${urlExpenses}">Despesas</a></li>
 		<li><a href="${urlInvestments}">Investimentos</a></li>
 	</ul>
+	<div class="login">
+		<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
+		<sec:authorize access="isAuthenticated()">
+			Olá, <span><sec:authentication property="principal.username"/></span>
+		</sec:authorize>
+	</div>
 </div>
