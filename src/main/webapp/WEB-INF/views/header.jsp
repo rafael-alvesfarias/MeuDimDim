@@ -39,3 +39,4 @@
 		</sec:authorize>
 	</div>
 </div>
+<div class="clearfix"></div>

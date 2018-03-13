@@ -46,8 +46,9 @@
 	<spring:url value="/newInvestment" var="urlNew" htmlEscape="true"></spring:url>
 	<spring:url value="/editInvestment" var="urlEditar" htmlEscape="true"></spring:url>
 	<spring:url value="/deleteInvestment" var="urlExcluir" htmlEscape="true"></spring:url>
-	<c:import url="../header.jsp" />
 	<div class="box">
+		<c:import url="../header.jsp" />
+		<div class="main">
 		<h2 class="titulo line-separator-bottom">Investimentos</h2>
 		<div class="div-5">
 			<div class="painel-medium">
@@ -102,6 +103,7 @@
 			<a href="${urlNew}" id="btnNew"><input
 				type="button" value="Novo Investimento" class="botao-direita" /></a>
 		</div>
+	</div>
 	</div>
 
 	<c:import url="../footer.jsp" />

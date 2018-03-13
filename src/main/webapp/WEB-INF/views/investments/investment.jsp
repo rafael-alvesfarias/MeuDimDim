@@ -30,9 +30,10 @@
 	</script>
 </head>
 <body>
-	<c:import url="../header.jsp"/>
 	<c:url value="/investments" var="urlInvestments" />
 	<div class="box">
+		<c:import url="../header.jsp"/>
+		<div class="main">
 		<h2 class="titulo line-separator-bottom">Investimentos</h2>
 		<div class="div-5">
 			<div class="painel-medium">
@@ -83,6 +84,7 @@
 				</form:form>
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 </html>

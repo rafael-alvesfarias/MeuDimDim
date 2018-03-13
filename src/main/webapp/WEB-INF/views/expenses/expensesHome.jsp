@@ -47,8 +47,9 @@
 	<spring:url value="/editExpense" var="urlEditar" htmlEscape="true"></spring:url>
 	<spring:url value="/deleteExpense" var="urlExcluir" htmlEscape="true"></spring:url>
 	<spring:url value="/despesasMensais" var="urlDespesasMensais" htmlEscape="true"></spring:url>
-	<c:import url="../header.jsp" />
 	<div class="box">
+		<c:import url="../header.jsp" />
+		<div class="main">
 		<h2 class="titulo line-separator-bottom">Despesas</h2>
 		<div class="div-5">
 			<div class="painel-medium">
@@ -156,7 +157,7 @@
 				type="button" value="Nova Despesa" class="botao-direita" /></a>
 		</div>
 	</div>
-
+	</div>
 	<c:import url="../footer.jsp" />
 </body>
 </html>
