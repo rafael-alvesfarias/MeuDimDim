@@ -1,4 +1,4 @@
-package br.com.mdd.persistence.dao.impl;
+package br.com.mdd.persistence.dao;
 
 import java.util.List;
 
@@ -8,11 +8,11 @@ import org.joda.time.LocalDate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import br.com.mdd.application.repository.EntryRepository;
 import br.com.mdd.domain.model.Entry;
-import br.com.mdd.persistence.dao.EntryDAO;
 
 @Repository("entryDAO")
-public class EntryHibernateDAO<E extends Entry> extends GenericHibernateDAO<E> implements EntryDAO<E> {
+public class EntryHibernateDAO<E extends Entry> extends GenericHibernateDAO<E> implements EntryRepository<E> {
 	
 	@SuppressWarnings("unchecked")
 	@Override

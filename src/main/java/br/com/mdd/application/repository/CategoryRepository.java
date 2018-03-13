@@ -1,11 +1,11 @@
-package br.com.mdd.persistence.dao;
+package br.com.mdd.application.repository;
 
 import java.util.List;
 
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
 
-public interface CategoryDAO {
+public interface CategoryRepository {
 	
 	public abstract List<Category> findAllCategoriesByType(CategoryType type);
 

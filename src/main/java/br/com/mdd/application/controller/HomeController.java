@@ -15,14 +15,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.mdd.application.repository.EntryRepository;
+import br.com.mdd.application.repository.ExpenseRepository;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.Income;
 import br.com.mdd.domain.model.Investment;
-import br.com.mdd.persistence.dao.EntryDAO;
-import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.presentation.view.model.EntryViewModel;
 import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
@@ -33,14 +33,14 @@ public class HomeController {
 	
 	@Autowired
 	@Qualifier("entryDAO")
-	private EntryDAO<Income> incomesDAO;
+	private EntryRepository<Income> incomesDAO;
 	
 	@Autowired
-	private ExpenseDAO expensesDAO;
+	private ExpenseRepository expensesDAO;
 	
 	@Autowired
 	@Qualifier("entryDAO")
-	private EntryDAO<Investment> investmentsDAO;
+	private EntryRepository<Investment> investmentsDAO;
 	
 	private Comparator<Entry> entryComparator;
 	

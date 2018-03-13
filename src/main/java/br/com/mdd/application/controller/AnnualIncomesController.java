@@ -12,13 +12,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import br.com.mdd.application.repository.CategoryRepository;
+import br.com.mdd.application.repository.GenericRepository;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
-import br.com.mdd.persistence.dao.CategoryDAO;
-import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.income.AnnualIncomesBudgetViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
@@ -35,11 +35,11 @@ public class AnnualIncomesController {
 	private HttpSession session;
 	
 	@Autowired
-	private CategoryDAO categoryDAO;
+	private CategoryRepository categoryDAO;
 	
 	@Autowired
 	@Qualifier("genericDAO")
-	private GenericDAO<Income> incomesDAO;
+	private GenericRepository<Income> incomesDAO;
 	
 	@RequestMapping("/incomes/annual")
 	public String annualIncomes(Model model){

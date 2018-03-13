@@ -1,11 +1,11 @@
-package br.com.mdd.persistence.dao;
+package br.com.mdd.application.repository;
 
 import java.util.List;
 
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 
-public interface ExpenseDAO extends EntryDAO<Expense> {
+public interface ExpenseRepository extends EntryRepository<Expense> {
 	
 	public abstract List<FixedExpense> findAllFixedExpenses();
 	

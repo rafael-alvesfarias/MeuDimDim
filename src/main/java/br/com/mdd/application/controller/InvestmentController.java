@@ -22,11 +22,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.application.repository.GenericRepository;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Investment;
-import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.investment.InvestmentViewModel;
 
@@ -39,7 +39,7 @@ public class InvestmentController {
 	
 	@Autowired
 	@Qualifier("genericDAO")
-	private GenericDAO<Investment> investmentDAO;
+	private GenericRepository<Investment> investmentDAO;
 	
 	@Autowired
 	private HttpSession session;

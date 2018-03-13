@@ -19,11 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.application.repository.CategoryRepository;
+import br.com.mdd.application.repository.GenericRepository;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
-import br.com.mdd.persistence.dao.CategoryDAO;
-import br.com.mdd.persistence.dao.GenericDAO;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
 @Controller
@@ -35,10 +35,10 @@ public class IncomesController {
 	
 	@Autowired
 	@Qualifier("genericDAO")
-	private GenericDAO<Income> incomesDAO;
+	private GenericRepository<Income> incomesDAO;
 	
 	@Autowired
-	private CategoryDAO categoryDAO;
+	private CategoryRepository categoryDAO;
 	
 	@Autowired
 	private HttpSession session;

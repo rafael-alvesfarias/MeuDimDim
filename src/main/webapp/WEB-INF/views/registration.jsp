@@ -8,7 +8,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Entrar no sistema</title>
+	<title>Registre-se no sistema</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
@@ -16,38 +16,44 @@
 	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
 </head>
 <body>
-	<c:url value="/login" var="urlLogin" />
 	<c:url value="/registration" var="urlRegistration" />
 	<div class="box">
 		<c:import url="header.jsp" />
 		<div class="main">
 		<div class="div-5">
-			<div class="painel-medium" title="Nova Despesa">
-				<h3 class="tituloPainel">Entrar</h3>
-				<c:url var="salvar" value="/expense"></c:url>
-				<form method="POST" action="${urlLogin}">
-					<form:errors path="username" cssClass="error" />
-					<form:errors path="value" cssClass="error" />
-					<form:errors path="dueDate" cssClass="error" />
-					<form:errors path="category" cssClass="error" />
+			<div class="painel-medium" title="Registre-se">
+				<h3 class="tituloPainel">Cadastro de usuário</h3>
+				<form:form method="POST" action="${urlRegistration}" modelAttribute="user">
 					<table>
 						<tr>
 							<td><label for="username">Usuário</label></td>
-							<td><input type="text" name="username" autofocus="autofocus"/></td>
+							<td>
+								<form:input type="text" path="username" autofocus="autofocus"/>
+								<form:errors path="username"></form:errors>
+							</td>
 						</tr>
 						<tr>
 							<td><label for="password">Senha</label></td>
-							<td><input type="password" name="password" /></td>
+							<td>
+								<form:input type="password" path="password" />
+								<form:errors path="password"></form:errors>
+							</td>
+						</tr>
+						<tr>
+							<td><label for="passwordConfirm">Confirmação da senha</label></td>
+							<td>
+								<form:input type="password" path="passwordConfirm" />
+								<form:errors path="passwordConfirm"></form:errors>
+							</td>
 						</tr>
 						<tr>
 							<td></td>
 						</tr>
 					</table>
 					<div class="botoes">
-						<input type="submit" value="Entrar"	class="botao-direita" />
-						<a href="${urlRegistration}"><input type="button" value="Registre-se" class="botao-direita" /></a> 
+						<input type="submit" value="Enviar"	class="botao-direita" />
 					</div>
-				</form>
+				</form:form>
 			</div>
 		</div>
 	</div>

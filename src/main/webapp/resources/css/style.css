@@ -2,7 +2,7 @@
 *{
 	margin: 0;
 	padding: 0;
-	font-family: 'helvetica', sans-serif;
+	font-family: 'arial', 'helvetica', 'sans-serif';
 	font-size: 13px;
 	line-height: 1.5;
 }
@@ -30,14 +30,13 @@
 
 body{
 	height: 100%;
-	background: linear-gradient(#FFF 60px, #EEE 127px, #FFF 128px, #EEE 129px, #ddd 174px, #EEE 175px, #FFF 250px);
+	background: linear-gradient(#FFF 30px, #EEE 97px, #FFF 98px, #EEE 99px, #ddd 144px, #EEE 145px, #FFF 220px);
 	background-repeat: no-repeat;
 }
 
 .box{
 	width: 920px;
 	margin: 0 auto;
-	padding-top:30px;
 }
 
 .main {
@@ -256,9 +255,9 @@ form table, form td, form tr{
 .cabecalho h2 {
 	font-size: 11px;
 	color: rgba(0,0,0,0.5);
-	position: absolute;
-	top: 80px;
-	left: 580px;
+	position: relative;
+	top: -8px;
+	left: 12px;
 	text-transform: none;
 }
 

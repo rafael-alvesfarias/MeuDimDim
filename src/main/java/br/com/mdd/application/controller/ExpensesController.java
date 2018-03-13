@@ -23,6 +23,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.application.repository.CategoryRepository;
+import br.com.mdd.application.repository.ExpenseRepository;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
@@ -31,8 +33,6 @@ import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.VariableExpense;
-import br.com.mdd.persistence.dao.CategoryDAO;
-import br.com.mdd.persistence.dao.ExpenseDAO;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
 
@@ -50,13 +50,13 @@ public class ExpensesController {
 	private ExpenseViewModel expense;
 	
 	@Autowired
-	private ExpenseDAO expensesDAO;
+	private ExpenseRepository expensesDAO;
 	
 	@Autowired
 	private HttpSession session;
 	
 	@Autowired
-	private CategoryDAO categoryDAO;
+	private CategoryRepository categoryDAO;
 	
 	@RequestMapping("/expenses")
 	public String expensesHome(Model model, 

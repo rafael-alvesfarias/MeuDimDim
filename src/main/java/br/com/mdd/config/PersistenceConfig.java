@@ -20,6 +20,7 @@ import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.domain.model.Income;
 import br.com.mdd.domain.model.Investment;
+import br.com.mdd.domain.model.Role;
 import br.com.mdd.domain.model.User;
 import br.com.mdd.domain.model.VariableExpense;
 
@@ -53,6 +54,7 @@ public class PersistenceConfig {
 					FixedExpense.class,
 					Income.class,
 					User.class,
+					Role.class,
 					VariableExpense.class,
 					Investment.class);
 		
