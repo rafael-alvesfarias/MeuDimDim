@@ -25,7 +25,6 @@ public class ExpenseHibernateDAO extends EntryHibernateDAO<Expense> implements E
 					.getResultList();
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
 	public List<VariableExpense> findVariableExpensesByUser(User user) {

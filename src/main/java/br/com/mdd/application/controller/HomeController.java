@@ -1,5 +1,6 @@
 package br.com.mdd.application.controller;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -7,6 +8,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
+
+import javax.transaction.Transactional;
 
 import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import br.com.mdd.application.repository.EntryRepository;
 import br.com.mdd.application.repository.ExpenseRepository;
+import br.com.mdd.application.service.UserService;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.Income;
 import br.com.mdd.domain.model.Investment;
+import br.com.mdd.domain.model.User;
 import br.com.mdd.presentation.view.model.EntryViewModel;
 import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
@@ -41,6 +46,9 @@ public class HomeController {
 	@Autowired
 	@Qualifier("entryDAO")
 	private EntryRepository<Investment> investmentsDAO;
+	
+	@Autowired
+	private UserService userService;
 	
 	private Comparator<Entry> entryComparator;
 	
@@ -63,14 +71,12 @@ public class HomeController {
 		};
 	}
 	
-	@RequestMapping("/")
-	public String index(Model model){
-		return home(model);
-	}
-	
-	@RequestMapping("/home")
-	public String home(Model model){
-		Budget<Income> incomesBudget = new BudgetBuilder<Income>(getIncomes())
+	@Transactional
+	@RequestMapping({"/", "/home"})
+	public String home(Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		
+		Budget<Income> incomesBudget = new BudgetBuilder<Income>(getIncomes(user))
 				.monthly()
 				.build();
 		
@@ -83,7 +89,7 @@ public class HomeController {
 		model.addAttribute("incomes", incomes);
 		model.addAttribute("totalIncomes", incomesBudget.getTotal());
 		
-		Budget<Expense> expensesBudget = new BudgetBuilder<Expense>(getExpenses())
+		Budget<Expense> expensesBudget = new BudgetBuilder<Expense>(getExpenses(user))
 				.monthly()
 				.withPrediction()
 				.build();
@@ -97,7 +103,7 @@ public class HomeController {
 		model.addAttribute("expenses", expenses);
 		model.addAttribute("totalExpenses", expensesBudget.getTotal());
 		
-		Budget<Investment> investmentBudget = new BudgetBuilder<Investment>(getInvestments())
+		Budget<Investment> investmentBudget = new BudgetBuilder<Investment>(getInvestments(user))
 				.monthly()
 				.build();
 		
@@ -110,7 +116,7 @@ public class HomeController {
 		model.addAttribute("investments", investments);
 		model.addAttribute("totalInvestments", investmentBudget.getTotal());
 		
-		Set<EntryViewModel> entries = getLastEntries()
+		Set<EntryViewModel> entries = getLastEntries(user)
 					.stream().map(e -> {
 						return EntryViewModel.fromEntry(e);
 					}).collect(Collectors.toSet());
@@ -120,30 +126,30 @@ public class HomeController {
 		return "/home";
 	}
 	
-	private Set<Income> getIncomes(){
-		Set<Income> incomes = new TreeSet<Income>(incomesDAO.findAll(Income.class));
+	private Set<Income> getIncomes(User user){
+		Set<Income> incomes = new TreeSet<Income>(incomesDAO.findByUser(user, Income.class));
 		
 		return incomes;	
 	}
 	
-	private Set<Expense> getExpenses(){
-		Set<Expense> expenses = new TreeSet<Expense>(expensesDAO.findAll(Expense.class));
+	private Set<Expense> getExpenses(User user){
+		Set<Expense> expenses = new TreeSet<Expense>(expensesDAO.findByUser(user, Expense.class));
 		
 		return expenses;	
 	}
 	
-	private Set<Investment> getInvestments(){
-		Set<Investment> investments = new TreeSet<Investment>(investmentsDAO.findAll(Investment.class));
+	private Set<Investment> getInvestments(User user){
+		Set<Investment> investments = new TreeSet<Investment>(investmentsDAO.findByUser(user, Investment.class));
 		
 		return investments;	
 	}
 	
-	private List<Entry> getLastEntries() {
+	private List<Entry> getLastEntries(User user) {
 		LocalDate today = LocalDate.now();
 		List<Entry> entries = new ArrayList<>();
-		entries.addAll(expensesDAO.findByPeriod(today.minusDays(3), today, Expense.class));
-		entries.addAll(incomesDAO.findByPeriod(today.minusDays(3), today, Income.class));
-		entries.addAll(investmentsDAO.findByPeriod(today.minusDays(3), today, Investment.class));
+		entries.addAll(expensesDAO.findByPeriodAndUser(today.minusDays(3), today, user, Expense.class));
+		entries.addAll(incomesDAO.findByPeriodAndUser(today.minusDays(3), today, user, Income.class));
+		entries.addAll(investmentsDAO.findByPeriodAndUser(today.minusDays(3), today, user, Investment.class));
 		
 		Collections.sort(entries, entryComparator);
 		
