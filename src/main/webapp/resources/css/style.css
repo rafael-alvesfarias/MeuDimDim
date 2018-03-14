@@ -13,29 +13,29 @@
 }
 
 .div-3 {
-	width: 270px;
+	width: 16em;
 }
 
 .div-5 {
-	width: 450px;
+	width: 39em;
 }
 
 .div-6 {
-	width: 540px;
+	width: 65em;
 }
 
 .div-10 {
-	width: 900px;
+	width: 80em;
 }
 
 body{
 	height: 100%;
-	background: linear-gradient(#FFF 30px, #EEE 97px, #FFF 98px, #EEE 99px, #ddd 144px, #EEE 145px, #FFF 220px);
+	background: linear-gradient(#FFF 10px, #EEE 77px, #FFF 78px, #EEE 79px, #ddd 124px, #EEE 125px, #FFF 200px);
 	background-repeat: no-repeat;
 }
 
 .box{
-	width: 920px;
+	width: 80em;
 	margin: 0 auto;
 }
 
@@ -238,14 +238,14 @@ form table, form td, form tr{
 
 .cabecalho{
 	height: 67px;
-	padding-top: 10px;
-	padding-bottom:20px;
+	padding-top: 5px;
+	padding-bottom:5px;
 	color: #555;
 }
 
 .cabecalho h1, span{
 	font-weight:900;
-	font-size: 32px;
+	font-size: 28px;
 }
 
 .cabecalho span{
