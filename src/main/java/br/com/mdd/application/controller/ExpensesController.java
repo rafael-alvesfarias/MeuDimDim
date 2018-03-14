@@ -1,5 +1,6 @@
 package br.com.mdd.application.controller;
 
+import java.security.Principal;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -25,6 +26,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.application.repository.CategoryRepository;
 import br.com.mdd.application.repository.ExpenseRepository;
+import br.com.mdd.application.service.UserService;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
@@ -32,6 +34,7 @@ import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.User;
 import br.com.mdd.domain.model.VariableExpense;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.ExpenseViewModel;
@@ -50,6 +53,9 @@ public class ExpensesController {
 	private ExpenseViewModel expense;
 	
 	@Autowired
+	private UserService userService;
+	
+	@Autowired
 	private ExpenseRepository expensesDAO;
 	
 	@Autowired
@@ -58,12 +64,16 @@ public class ExpensesController {
 	@Autowired
 	private CategoryRepository categoryDAO;
 	
+	@Transactional(readOnly=true)
 	@RequestMapping("/expenses")
-	public String expensesHome(Model model, 
-			@RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths){
-		fixedExpenses = getFixedExpenses();
-		variableExpenses = getVariableExpenses();
+	public String expensesHome(Model model, Principal principal ,
+			@RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths) {
+		User user = userService.findByUsername(principal.getName());
+		
+		fixedExpenses = getFixedExpenses(user);
+		variableExpenses = getVariableExpenses(user);
 		categories = getCategories();
+		
 		ExpenseViewModel expenseForm = new ExpenseViewModel();
 		expenseForm.setCategories(categories);
 		
@@ -115,25 +125,31 @@ public class ExpensesController {
 			expensesDAO.remove(expense);
 		}
 		
-		return expensesHome(model, 3);
+		return "redirect:/expenses";
 	}
 
+	@Transactional
 	@RequestMapping(value = "/expense", method = RequestMethod.POST)
-	public String salvar(@ModelAttribute(value = "expense") @Valid ExpenseViewModel expense
-			,BindingResult bindingResult , Model model) {
+	public String salvar(@ModelAttribute(value = "expense") @Valid ExpenseViewModel expense,
+			Principal principal, BindingResult bindingResult, Model model) {
 		if (bindingResult.hasErrors()) {
 			return "/expenses/expense";
 		}
+		
+		User user = userService.findByUsername(principal.getName());
+		
 		Expense d = null;
 		if(expense.isFixedExpense()) {
 			d = new FixedExpense(expense.getName(), expense.getValue(), new LocalDate(expense.getDueDate()));
 		} else {
 			d = new VariableExpense(expense.getName(), expense.getValue(), new LocalDate(expense.getDueDate()));
 		}
-		d.setId(expense.getId());
 		
+		d.setId(expense.getId());
 		d.setPaid(expense.isPaid());
 		d.setCategory(getCategory(expense.getCategory()));
+		d.setUser(user);
+		
 		expensesDAO.save(d);
 		
 		return expense(model);
@@ -171,14 +187,14 @@ public class ExpensesController {
 		return null;
 	}
 	
-	private Set<Entry> getFixedExpenses(){
-		Set<Entry> despesas = new TreeSet<Entry>(expensesDAO.findAllFixedExpenses());
+	private Set<Entry> getFixedExpenses(User user){
+		Set<Entry> despesas = new TreeSet<Entry>(expensesDAO.findFixedExpensesByUser(user));
 		
 		return despesas;
 	}
 	
-	private Set<Entry> getVariableExpenses(){
-		Set<Entry> despesas = new TreeSet<Entry>(expensesDAO.findAllVariableExpenses());
+	private Set<Entry> getVariableExpenses(User user){
+		Set<Entry> despesas = new TreeSet<Entry>(expensesDAO.findVariableExpensesByUser(user));
 		
 		return despesas;	
 	}

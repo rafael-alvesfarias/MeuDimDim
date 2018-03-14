@@ -9,24 +9,30 @@ import org.springframework.transaction.annotation.Transactional;
 import br.com.mdd.application.repository.ExpenseRepository;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.domain.model.User;
 import br.com.mdd.domain.model.VariableExpense;
 
 @Repository
 public class ExpenseHibernateDAO extends EntryHibernateDAO<Expense> implements ExpenseRepository {
 	
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<FixedExpense> findAllFixedExpenses() {
-		return getSession().createCriteria(FixedExpense.class)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	public List<FixedExpense> findFixedExpensesByUser(User user) {
+		String query = "select e FROM FixedExpense e WHERE e.user = :user";
+			return getSession()
+					.createQuery(query, FixedExpense.class)
+					.setParameter("user", user)
+					.getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<Expense> findAllVariableExpenses() {
-		return getSession().createCriteria(VariableExpense.class)
-				.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY).list();
+	public List<VariableExpense> findVariableExpensesByUser(User user) {
+		String query = "select e FROM VariableExpense e WHERE e.user = :user";
+		return getSession()
+				.createQuery(query, VariableExpense.class)
+				.setParameter("user", user)
+				.getResultList();
 	}
 }

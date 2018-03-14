@@ -26,10 +26,7 @@
 				<h3 class="tituloPainel">Entrar</h3>
 				<c:url var="salvar" value="/expense"></c:url>
 				<form method="POST" action="${urlLogin}">
-					<form:errors path="username" cssClass="error" />
-					<form:errors path="value" cssClass="error" />
-					<form:errors path="dueDate" cssClass="error" />
-					<form:errors path="category" cssClass="error" />
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
 					<table>
 						<tr>
 							<td><label for="username">Usuário</label></td>

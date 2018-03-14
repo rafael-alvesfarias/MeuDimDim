@@ -42,8 +42,9 @@ public class UserController {
 			return "registration";
 		}
 		
+		String password = user.getPassword();
 		userService.save(user);
-		securityService.autologin(user.getUsername(), user.getPassword());
+		securityService.autologin(user.getUsername(), password);
 		
 		return "redirect:/home";
 	}

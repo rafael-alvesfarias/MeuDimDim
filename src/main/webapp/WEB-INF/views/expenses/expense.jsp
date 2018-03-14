@@ -49,8 +49,7 @@
 					</c:otherwise>
 				</c:choose>
 				<c:url var="salvar" value="/expense"></c:url>
-				<form:form action="${salvar}" method="POST" commandName="expense"
-					id="formExpense">
+				<form:form action="${salvar}" method="POST" modelAttribute="expense" id="formExpense">
 					<form:errors path="name" cssClass="error" />
 					<form:errors path="value" cssClass="error" />
 					<form:errors path="dueDate" cssClass="error" />
