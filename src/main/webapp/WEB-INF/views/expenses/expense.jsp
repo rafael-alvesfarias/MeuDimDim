@@ -7,10 +7,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Despesa</title>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/style.css'/>">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script src="/resources/script/jquery.inputmask.bundle.js"></script>
@@ -37,15 +36,15 @@
 	<div class="box">
 		<c:import url="../header.jsp" />
 		<div class="main">
-		<h2 class="titulo line-separator-bottom">Despesas</h2>
+		<h2 class="titulo">Despesas</h2>
 		<div class="div-5">
-			<div class="painel-medium" title="Nova Despesa">
+			<div class="panel" title="Nova Despesa">
 				<c:choose>
 					<c:when test="${expense.id != null}">
-						<h3 class="tituloPainel">Editar Despesa</h3>
+						<h3 class="panelTitle">Editar Despesa</h3>
 					</c:when>
 					<c:otherwise>
-						<h3 class="tituloPainel">Nova Despesa</h3>
+						<h3 class="panelTitle">Nova Despesa</h3>
 					</c:otherwise>
 				</c:choose>
 				<c:url var="salvar" value="/expense"></c:url>

@@ -8,12 +8,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Receitas</title>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/style.css'/>">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/incomes.css'/>">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -28,11 +25,11 @@
 	<div class="box">
 		<c:import url="header.jsp" />
 		<div class="main">
-		<h2 class="titulo line-separator-bottom">Home</h2>
+		<h2 class="titulo">Home</h2>
 		<!-- Lançamentos do mês -->
 		<div class="div-5">
-			<div class="painel-medium">
-				<h3 class="tituloPainel">Lançamentos do Mês</h3>
+			<div class="panel">
+				<h3 class="panelTitle">Lançamentos do Mês</h3>
 				<!-- Receitas -->
 				<table class="editableCells">
 					<thead>
@@ -144,8 +141,8 @@
 		</div>
 		<!-- Últimos lançamentos -->
 		<div class="div-5">
-			<div class="painel-medium">
-				<h3 class="tituloPainel">Últimos Lançamentos</h3>
+			<div class="panel">
+				<h3 class="panelTitle">Últimos Lançamentos</h3>
 				<!-- Despesas -->
 				<table class="editableCells">
 					<thead>

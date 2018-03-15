@@ -7,6 +7,21 @@
 	line-height: 1.5;
 }
 
+body{
+	height: 100%;
+	background: linear-gradient(#EEE 40px, #FFF 111px, #ddd 111.5px, #FFF 112px);
+	background-repeat: no-repeat;
+}
+
+.box {
+	width: 80em;
+	margin: 0 auto;
+}
+
+.main {
+	margin-top: 20px;
+}
+
 .div-3, .div-5, .div-6, .div-10 {
 	margin: 5px;
 	float:left;
@@ -26,21 +41,6 @@
 
 .div-10 {
 	width: 80em;
-}
-
-body{
-	height: 100%;
-	background: linear-gradient(#FFF 10px, #EEE 77px, #FFF 78px, #EEE 79px, #ddd 124px, #EEE 125px, #FFF 200px);
-	background-repeat: no-repeat;
-}
-
-.box{
-	width: 80em;
-	margin: 0 auto;
-}
-
-.main {
-	margin-top: 20px;
 }
 
 a {
@@ -141,18 +141,30 @@ th{
 h1 {
 	font-size: 18px;
 	color: #555;
-	/*text-shadow: -1px 1px 0 #4c9021;*/
 }
 
 h2 {
 	font-weight: 600;
-	color: #5FCF80;
+	color: #555;
 	font-weight: 600;
 	font-size: 16px;
-	padding-bottom: 10px;
+	padding-top: 10px;
+	padding-left: 10px;
 }
 
-.painel-small h3, .painel-medium h3, .painel-large h3{
+.panel {
+	border: 1px solid;
+	margin-top: 20px;
+	padding: 20px;
+	padding-top: 30px;
+	border-radius: 4px;
+	box-shadow: 3px 3px 3px #888888;
+	border-color: #CCCCCC;
+	background-color: #FFFFFF;
+	background-image: linear-gradient(#7fbf4d 14px, #63a62f 28px, white 1px);
+}
+
+.panelTitle {
 	font-weight: 600;
 	font-size: 14px;
 	color: #FFF;
@@ -162,110 +174,17 @@ h2 {
 	text-shadow: 0 -1px 0 #4c9021;
 }
 
-.painel-small, .painel-medium, .painel-large{
-	border: 1px solid;
-	margin-top: 20px;
-	border-radius: 4px;
-	box-shadow: 3px 3px 3px #888888;
-	border-color: #CCCCCC;
-	background-color: #FFFFFF;
-	background-image: linear-gradient(#7fbf4d 14px, #63a62f 28px, white 1px);
-}
-
-.painel-large {
-	padding: 5px;
-	padding-top: 30px;
-}
-
-.painel-medium {
-	padding: 20px;
-	padding-top: 30px;
-}
-
-.painel-small {
-	padding: 20px;
-	padding-top: 30px;
-}
-
 
 form table, form td, form tr{
 	border-collapse: collapse;
 	border: none;
 }
 
-.modalDialog{
-	position: fixed;
-	font-family: Arial, Helvetica, sans-serif;
-	top: 0;
-	right: 0;
-	bottom: 0;
-	left: 0;
-	background: rgba(0,0,0,0.8);
-	z-index: 99999;
-	opacity:0;
-	-webkit-transition: opacity 400ms ease-in;
-	-moz-transition: opacity 400ms ease-in;
-	transition: opacity 400ms ease-in;
-	pointer-events: none;
-}
-
-.modalDialog:target {
-	opacity:1;
-	pointer-events: auto;
-}
-
-.modalDialog > div {
-	width: 600px;
-	padding: 20px;
-	padding-top: 30px;
-	margin: 20px;
-	width: 400px;
-	position: relative;
-	margin: 10% auto;
-	border: 1px solid;
-	border-radius: 4px;
-	box-shadow: 3px 3px 3px #000000;
-	border-color: #FFF;
-	background-color: #FFF;
-	background-image: linear-gradient(#7fbf4d 13px, #63a62f 26px, white 1px);
-}
-
-.cabecalho img{
-	padding-right: 8px;
-	width: 60px;
-	float: left;
-}
-
-.cabecalho{
-	height: 67px;
-	padding-top: 5px;
-	padding-bottom:5px;
-	color: #555;
-}
-
-.cabecalho h1, span{
-	font-weight:900;
-	font-size: 28px;
-}
-
-.cabecalho span{
-	color: #65944A;
-}
-
-.cabecalho h2 {
-	font-size: 11px;
-	color: rgba(0,0,0,0.5);
-	position: relative;
-	top: -8px;
-	left: 12px;
-	text-transform: none;
-}
-
-.linha-impar{
+.linha-impar {
 	background-color: #EEE;
 }
 
-.tableTitle{
+.tableTitle {
 	background-color: #DFE7FF;
 	color: #778899;
 }
@@ -274,7 +193,6 @@ form table, form td, form tr{
 	float: left;
 	margin: 0;
 	padding: 0;
-
 }
 
 .cellControl{
@@ -315,57 +233,46 @@ form table, form td, form tr{
 	background:#DFE7FF;
 }
 
-.topMenu {
-	border-top: 2px solid #fff;
-	padding: 0;
-	height: 44px;
-	color: #333;
-}
-
-.topMenu a {
-	font-size: 16px;
-}
-
-.topMenu ul {
-	list-style: none;
-
-}
-
-.topMenu li {
-	padding: 10px;
-	margin-right: 20px;
-	float: left;
-}
-
-.topMenu li:hover {
-	background-image: linear-gradient(#DDD , #CCC);
-	border-bottom: 1px solid #63a62f;
-}
-
-.login {
-	float: right;
-	padding-left: 20px;
-	padding-right: 20px;
-	margin-top: 8px;
-	font-size: 16px;
-	border-left: 2px solid #D5D5D5;
-	color: #778899;
-}
-
-.login img {
-	padding-right: 12px;
-	width: 22px;
-	float: left;
-}
-
-.login span {
-	font-size: 18px;
-	font-weight: 600;
-}
-
 .error {
 	color: #ff0000;
 	font-style: italic;
 	font-weight: bold;
 	font-size: 11px;
+}
+
+.modalDialog {
+	position: fixed;
+	font-family: Arial, Helvetica, sans-serif;
+	top: 0;
+	right: 0;
+	bottom: 0;
+	left: 0;
+	background: rgba(0,0,0,0.8);
+	z-index: 99999;
+	opacity:1;
+	-webkit-transition: opacity 400ms ease-in;
+	-moz-transition: opacity 400ms ease-in;
+	transition: opacity 400ms ease-in;
+	pointer-events: auto;
+}
+
+.modalDialog:target {
+	opacity:1;
+	pointer-events: auto;
+}
+
+.modalDialog > div {
+	width: 600px;
+	padding: 20px;
+	padding-top: 30px;
+	margin: 20px;
+	width: 400px;
+	position: relative;
+	margin: 10% auto;
+	border: 1px solid;
+	border-radius: 4px;
+	box-shadow: 3px 3px 3px #000000;
+	border-color: #FFF;
+	background-color: #FFF;
+	background-image: linear-gradient(#7fbf4d 13px, #63a62f 26px, white 1px);
 }

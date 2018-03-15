@@ -9,10 +9,9 @@
 <head>
 <meta charset="UTF-8">
 <title>Despesas</title>
-<link rel="stylesheet"
-	href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css"
-	href="<c:url value='/resources/css/style.css'/>">
+<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
+<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 <script src="//code.jquery.com/jquery-1.10.2.js"></script>
 <script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 <script type="text/javascript">
@@ -49,10 +48,10 @@
 	<div class="box">
 		<c:import url="../header.jsp" />
 		<div class="main">
-		<h2 class="titulo line-separator-bottom">Investimentos</h2>
+		<h2 class="titulo">Investimentos</h2>
 		<div class="div-5">
-			<div class="painel-medium">
-				<h3 class="tituloPainel">Lançamentos Futuros</h3>
+			<div class="panel">
+				<h3 class="panelTitle">Lançamentos Futuros</h3>
 				<!-- DESPESAS FIXAS -->
 				<table class="editableCells">
 				<c:forEach var="budget" items="${investmentBudgets}">

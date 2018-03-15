@@ -8,6 +8,7 @@
 	<meta charset="UTF-8">
 	<title>Cadastro de Receita</title>
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
 	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
@@ -34,15 +35,15 @@
 	<div class="box">
 		<c:import url="../header.jsp"/>
 		<div class="main">
-		<h2 class="titulo line-separator-bottom">Investimentos</h2>
+		<h2 class="titulo">Investimentos</h2>
 		<div class="div-5">
-			<div class="painel-medium">
+			<div class="panel">
 				<c:choose>	
 					<c:when test="${investment.id != null}">
-						<h3 class="tituloPainel">Editar Investimento</h3>
+						<h3 class="panelTitle">Editar Investimento</h3>
 					</c:when>
 					<c:otherwise>
-						<h3 class="tituloPainel">Novo Investimento</h3>
+						<h3 class="panelTitle">Novo Investimento</h3>
 					</c:otherwise>	
 				</c:choose>
 				<c:url var="salvar" value="/investment"></c:url>
