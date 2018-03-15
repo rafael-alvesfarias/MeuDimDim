@@ -1,25 +1,34 @@
-.cabecalho img {
+.header {
+	width: 80em;
+	margin: 0 auto;
+	height: 60px; 
+	padding-top: 5px;
+	color: #555;
+	border-bottom: 1px solid #0000002b;
+}
+
+.logo {
+	width: 20.5%;
+	height: 44px;
+	float: left;
+}
+
+.logo img {
 	padding-right: 8px;
 	width: 42px;
 	float: left;
 }
 
-.cabecalho {
-	height: 60PX;
-	padding-top: 5px;
-	color: #555;
-}
-
-.cabecalho h1, span {
+.logo h1, .logo span {
 	font-weight:900;
-	font-size: 22px;
+	font-size: 24px;
 }
 
-.cabecalho span {
+.logo span {
 	color: #65944A;
 }
 
-.cabecalho h2 {
+.logo h2 {
 	font-size: 10px;
 	color: rgba(0,0,0,0.5);
 	position: relative;
@@ -28,28 +37,32 @@
 	text-transform: none;
 }
 
-.topMenu {
+.menu {
+	width: 79%;
+	height: 60px;
 	padding: 0;
-	height: 44px;
 	color: #555;
-}
-
-.topMenu a {
-	font-size: 16px;
-}
-
-.topMenu ul {
-	list-style: none;
-
-}
-
-.topMenu li {
-	padding: 10px;
-	margin-right: 20px;
 	float: left;
 }
 
-.topMenu li:hover {
+.menu a {
+	font-size: 16px;
+}
+
+.menu ul {
+	list-style: none;
+}
+
+.menu li {
+	height: 60px;
+	padding-left:20px;
+	margin-left: 5px;
+	padding-right: 20px;
+	line-height: 60px;
+	float: left;
+}
+
+.menu li:hover {
 	background: rgba(0,0,0,0.02);
 	border-bottom: 2px solid #63a62f;
 	color: #63a62f;

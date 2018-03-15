@@ -22,9 +22,10 @@
 <body>
 	<spring:url value="/budget?type=summary&period=monthly"
 		var="urlMonthlySummary" htmlEscape="true" />
-	<div class="box">
+	<div class="header">
 		<c:import url="header.jsp" />
-		<div class="main">
+	</div>
+	<div class="main">
 		<h2 class="titulo">Home</h2>
 		<!-- Lançamentos do mês -->
 		<div class="div-5">
@@ -174,8 +175,9 @@
 				</table>
 			</div>
 		</div>
-		</div>
 	</div>
-	<c:import url="footer.jsp" />
+	<div class="footer">
+		<c:import url="footer.jsp" />
+	</div>
 </body>
 </html>

@@ -20,23 +20,23 @@
 		$(".inputDate").inputmask("99/99/9999");
 	});
 </script>
-<div class="cabecalho">
+<div class="logo">
 	<a href="${urlHome}"><img src="<c:url value='/resources/imagens/logo.png'/>"/></a>
 	<h1>meu<span>dimdim</span></h1>
 	<h2>rumo à independência financeira</h2>
 </div>
-<div class="topMenu">
-	<ul>
-		<li><a href="${urlHome}">Home</a></li>
-		<li><a href="${urlIncomes}">Receitas</a></li>
-		<li><a href="${urlExpenses}">Despesas</a></li>
-		<li><a href="${urlInvestments}">Investimentos</a></li>
-	</ul>
-	<div class="login">
-		<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
-		<sec:authorize access="isAuthenticated()">
-			Olá, <span><sec:authentication property="principal.username"/></span>
-		</sec:authorize>
+<div class="menu">
+<ul>
+	<li><a href="${urlHome}">Home</a></li>
+	<li><a href="${urlIncomes}">Receitas</a></li>
+	<li><a href="${urlExpenses}">Despesas</a></li>
+	<li><a href="${urlInvestments}">Investimentos</a></li>
+</ul>
+<div class="login">
+	<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
+	<sec:authorize access="isAuthenticated()">
+		Olá, <span><sec:authentication property="principal.username"/></span>
+	</sec:authorize>
 	</div>
 </div>
 <div class="clearfix"></div>
