@@ -5,19 +5,24 @@
 <spring:url value="/incomes" var="urlIncomes" htmlEscape="true"></spring:url>
 <spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/investments" var="urlInvestments" htmlEscape="true"></spring:url>
+<spring:url value="/logout" var="urlLogout" htmlEscape="true"></spring:url>
 <script type="text/javascript">
 	$(document).ready(function() {
-		$(".inputMoney").inputmask("currency", {groupSeparator: ".", prefix: "R$ ", radixPoint: ","});
-		$(".inputDecimal").inputmask("numeric", {
-			radixPoint: ",",
-			groupSeparator: ".",
-            placeholder: "0",
-            autoGroup: true,
-            digits: 2,
-            digitsOptional: false,
-            clearMaskOnLostFocus: false
-        });
-		$(".inputDate").inputmask("99/99/9999");
+		$(".loginControl").click(function() {
+			var cellMenu = $(this).next(".loginMenu");
+			var hidden = cellMenu.is(":hidden");
+			$(".loginMenu").each(function() {
+				$(this).hide();
+			});
+			if (hidden) {
+				cellMenu.show();
+			} else {
+				cellMenu.hide();
+			}
+		});
+		$("logout").click(function(){
+			$
+		});
 	});
 </script>
 <div class="logo">
@@ -26,17 +31,29 @@
 	<h2>rumo à independência financeira</h2>
 </div>
 <div class="menu">
-<ul>
-	<li><a href="${urlHome}">Home</a></li>
-	<li><a href="${urlIncomes}">Receitas</a></li>
-	<li><a href="${urlExpenses}">Despesas</a></li>
-	<li><a href="${urlInvestments}">Investimentos</a></li>
-</ul>
-<div class="login">
-	<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
-	<sec:authorize access="isAuthenticated()">
-		Olá, <span><sec:authentication property="principal.username"/></span>
-	</sec:authorize>
+	<div class="navMenu">
+		<ul>
+			<li><a href="${urlHome}">Home</a></li>
+			<li><a href="${urlIncomes}">Receitas</a></li>
+			<li><a href="${urlExpenses}">Despesas</a></li>
+			<li><a href="${urlInvestments}">Investimentos</a></li>
+		</ul>
+	</div>
+	<div class="login">
+		<div class="loginInfo">
+			<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
+			<sec:authorize access="isAuthenticated()">
+				Olá, <span><sec:authentication property="principal.username"/></span>
+			</sec:authorize>
+		</div>
+		<div class="loginControl">
+			<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
+		</div>
+		<div class="loginMenu">
+			<ul>
+				<li><a href="<c:url value="/logout" />">Sair</a></li>
+			</ul>
+		</div>
 	</div>
 </div>
 <div class="clearfix"></div>

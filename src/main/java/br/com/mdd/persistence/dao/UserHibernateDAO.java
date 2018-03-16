@@ -10,6 +10,7 @@ import br.com.mdd.domain.model.User;
 @Repository
 public class UserHibernateDAO extends GenericHibernateDAO<User> implements UserRepository {
 
+	
 	@Override
 	public User findByUsername(String username) {
 		String query = "select u from User u where u.username = :username";

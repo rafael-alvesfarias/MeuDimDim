@@ -1,5 +1,6 @@
 package br.com.mdd.application.controller;
 
+import java.security.Principal;
 import java.time.Month;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,7 +15,6 @@ import org.joda.time.LocalDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.com.mdd.application.repository.GenericRepository;
+import br.com.mdd.application.repository.EntryRepository;
+import br.com.mdd.application.service.UserService;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Investment;
+import br.com.mdd.domain.model.User;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.investment.InvestmentViewModel;
 
@@ -38,15 +40,20 @@ public class InvestmentController {
 	private InvestmentViewModel investment;
 	
 	@Autowired
-	@Qualifier("genericDAO")
-	private GenericRepository<Investment> investmentDAO;
+	@Qualifier("entryDAO")
+	private EntryRepository<Investment> investmentDAO;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private HttpSession session;
 	
 	@RequestMapping("/investments")
-	public String expensesHome(Model model, @RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths){
-		Set<Entry> investments = getInvestments();
+	public String investmentHome(Model model, @RequestParam(required = false, defaultValue = NUMBER_MONTHS_DEFAULT) int numberMonths,
+			Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		Set<Entry> investments = getInvestments(user);
 		model.addAttribute("investmentBudgets", this.generateBudgets(Integer.valueOf(numberMonths), investments));
 		
 		return "/investments/investmentHome";
@@ -61,7 +68,8 @@ public class InvestmentController {
 	}
 
 	@RequestMapping(value = "/investment", method = RequestMethod.POST)
-	public String saveInvestment(@ModelAttribute(value = "investment") InvestmentViewModel investment, Model model) {
+	public String saveInvestment(@ModelAttribute(value = "investment") InvestmentViewModel investment, Principal principal, Model model) {
+		User user = userService.findByUsername(principal.getName());
 		Investment i = new Investment(investment.getName(), investment.getValue(), new LocalDate(investment.getDueDate()), investment.getReturnRate());
 		i.setId(investment.getId());
 		if (investment.getWithdrawlDate() != null) {
@@ -70,13 +78,13 @@ public class InvestmentController {
 		if (investment.getTaxRate() != null) {
 			i.setTaxRate(investment.getTaxRate());
 		}
+		i.setUser(user);
 		
 		investmentDAO.save(i);
 		
 		return newInvestment(model);
 	}
 	
-	@Transactional(readOnly=true)
 	@RequestMapping("/editInvestment/{id}")
 	public String updateInvestment(Model model, @PathVariable Integer id){
 		
@@ -89,7 +97,6 @@ public class InvestmentController {
 		return "/investments/investment";
 	}
 	
-	@Transactional
 	@RequestMapping(value="/deleteInvestment/{id}")
 	public String deleteInvestment(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
 		Investment investment = investmentDAO.find(id, Investment.class);
@@ -129,8 +136,8 @@ public class InvestmentController {
 		return BudgetViewModel.fromBudget(b);
 	}
 	
-	private Set<Entry> getInvestments(){
-		Set<Entry> investments = new TreeSet<Entry>(investmentDAO.findAll(Investment.class));
+	private Set<Entry> getInvestments(User user){
+		Set<Entry> investments = new TreeSet<Entry>(investmentDAO.findByUser(user, Investment.class));
 		
 		return investments;
 	}

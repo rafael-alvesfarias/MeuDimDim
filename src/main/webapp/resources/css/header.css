@@ -37,23 +37,23 @@
 	text-transform: none;
 }
 
-.menu {
-	width: 79%;
+.navMenu {
+	width: 60%;
 	height: 60px;
 	padding: 0;
 	color: #555;
 	float: left;
 }
 
-.menu a {
+.navMenu a {
 	font-size: 16px;
 }
 
-.menu ul {
+.navMenu ul {
 	list-style: none;
 }
 
-.menu li {
+.navMenu li {
 	height: 60px;
 	padding-left:20px;
 	margin-left: 5px;
@@ -62,30 +62,73 @@
 	float: left;
 }
 
-.menu li:hover {
+.navMenu li:hover {
 	background: rgba(0,0,0,0.02);
 	border-bottom: 2px solid #63a62f;
 	color: #63a62f;
 }
 
 .login {
+	height: 28px;
+	width: 14.9%;
 	float: right;
-	padding-left: 20px;
-	padding-right: 20px;
-	margin-top: 8px;
+	padding: 16px;
 	font-size: 14px;
-	border-left: 2px solid #D5D5D5;
 	color: #295480;
 }
 
 .login img {
-	margin-top: 2px;
 	padding-right: 12px;
 	width: 18px;
-	float: left;
 }
 
 .login span {
 	font-size: 16px;
 	font-weight: 600;
+}
+
+.loginInfo, .loginControl {
+	float: left;
+}
+
+.loginControl {
+	padding: 5px;
+    width:16px;
+    height:100%;
+}
+
+.loginControl img {
+	width: 10px;
+	height: 10px;
+} 
+
+.loginControl:HOVER {
+	cursor: pointer;
+}
+
+.loginMenu {
+	float: right;
+	display: none;
+	position:relative; top:0px; z-index:999;
+	width: 100%;
+}
+
+.loginMenu ul {
+	list-style:none;
+	-moz-box-shadow:0 0 5px #999; -webkit-box-shadow:0 0 5px #999; box-shadow:0 0 5px #999;
+}
+
+.loginMenu ul li {
+	padding: 10px;
+	padding-left: 60px;
+	background:#fefefe;
+}
+
+.loginMenu ul li:hover {
+	background:#DFE7FF;
+}
+
+.loginMenu a {
+	font-size: 14px;
+		color: #295480;
 }

@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mdd.application.repository.GenericRepository;
 
+@Transactional(readOnly = true)
 @Repository(value = "genericDAO")
 public class GenericHibernateDAO<T> implements GenericRepository<T> {
 	
@@ -19,27 +20,24 @@ public class GenericHibernateDAO<T> implements GenericRepository<T> {
 	private SessionFactory sessionFactory;
 	
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void save(T t) {
 		sessionFactory.getCurrentSession().saveOrUpdate(t);
 	}
 
 	@Override
-	@Transactional
+	@Transactional(readOnly = false)
 	public void remove(T t) {
 		sessionFactory.getCurrentSession().delete(t);
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public T find(Serializable id, Class<T> clazz) {
 		return (T) sessionFactory.getCurrentSession().get(clazz, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@Transactional
 	public List<T> findAll(Class<T> clazz) {
 		List<T> list = sessionFactory.getCurrentSession().
 			createCriteria(clazz)
