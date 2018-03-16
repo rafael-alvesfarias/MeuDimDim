@@ -1,6 +1,10 @@
 package br.com.mdd.application.controller;
 
+import java.security.Principal;
+import java.time.Month;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
@@ -20,10 +24,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import br.com.mdd.application.repository.CategoryRepository;
-import br.com.mdd.application.repository.GenericRepository;
+import br.com.mdd.application.repository.EntryRepository;
+import br.com.mdd.application.service.UserService;
+import br.com.mdd.domain.model.Budget;
+import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
+import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
+import br.com.mdd.domain.model.User;
+import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
 @Controller
@@ -34,14 +44,29 @@ public class IncomesController {
 	private IncomeViewModel income;
 	
 	@Autowired
-	@Qualifier("genericDAO")
-	private GenericRepository<Income> incomesDAO;
+	private UserService userService;
+	
+	@Autowired
+	@Qualifier("entryDAO")
+	private EntryRepository<Income> incomeRepository;
 	
 	@Autowired
 	private CategoryRepository categoryDAO;
 	
 	@Autowired
 	private HttpSession session;
+	
+	@Transactional(readOnly=true)
+	@RequestMapping("/incomes")
+	public String incomesHome(Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		
+		Set<Entry> incomes = getIncomes(user);
+		
+		model.addAttribute("incomeBudgets", this.generateBudgets(3, incomes));
+		
+		return "/incomes/incomesHome";
+	}
 	
 	@RequestMapping(value = "/newIncome", method = RequestMethod.GET)
 	public String newIncome(Model model){
@@ -53,23 +78,26 @@ public class IncomesController {
 		return "/incomes/income";
 	}
 
+	@Transactional
 	@RequestMapping(value = "/income", method = RequestMethod.POST)
-	public String saveIncome(@ModelAttribute(value = "income") IncomeViewModel income, Model model) {
-		Income i = new Income(income.getName(), income.getValue(), new LocalDate(income.getDueDate()));
-		i.setId(income.getId());
+	public String saveIncome(@ModelAttribute(value = "income") IncomeViewModel income, Principal principal, Model model) {
+		User user = userService.findByUsername(principal.getName());
 		
+		Income i = new Income(income.getName(), income.getValue(), new LocalDate(income.getDueDate()));
+		i.setId(income.getId());	
 		i.setReceived(income.getReceived());
 		i.setCategory(getCategory(income.getCategory()));
-		incomesDAO.save(i);
+		i.setUser(user);
+		incomeRepository.save(i);
 		
 		return newIncome(model);
 	}
 	
 	@Transactional(readOnly=true)
-	@RequestMapping("/updateIncome/{id}")
+	@RequestMapping("/editIncome/{id}")
 	public String updateIncome(Model model, @PathVariable Integer id){
 		
-		Income i = incomesDAO.find(id, Income.class);
+		Income i = incomeRepository.find(id, Income.class);
 		
 		//generateAnnualBudget(model);
 		
@@ -84,7 +112,7 @@ public class IncomesController {
 	@Transactional
 	@RequestMapping(value="/deleteIncome/{id}")
 	public String deleteIncome(Model model, @PathVariable Integer id, @RequestParam(required=false) Integer mes) {
-		Income income = incomesDAO.find(id, Income.class);
+		Income income = incomeRepository.find(id, Income.class);
 		//Verifica se receita não gerada automaticamente
 		if (mes != null && mes > income.getDueDate().getMonthOfYear()) {
 			@SuppressWarnings("unchecked")
@@ -95,7 +123,7 @@ public class IncomesController {
 			}
 			exclusionsMap.put(id, mes);
 		} else {
-			incomesDAO.remove(income);
+			incomeRepository.remove(income);
 		}
 		
 		return "/home";
@@ -114,6 +142,32 @@ public class IncomesController {
 		Set<Category> categorias = new TreeSet<>(categoryDAO.findAllCategoriesByType(CategoryType.INCOME));
 		
 		return categorias;
+	}
+	
+	private List<BudgetViewModel> generateBudgets(int numberMonths, Set<Entry> entries) {
+		List<BudgetViewModel> budgets = new ArrayList<>();
+		LocalDate dateFrom = LocalDate.now().withDayOfMonth(1);
+		LocalDate dateTo = dateFrom.plusMonths(numberMonths);
+		Budget<Entry> budget = new BudgetBuilder<Entry>(entries)
+				.withPeriod(dateFrom, dateTo)
+				.build();
+		for (int i = 0; i < numberMonths; i++) {
+			budgets.add(this.generateBudget(dateFrom.plusMonths(i), budget));
+		}
+		return budgets;
+	}
+	
+	private BudgetViewModel generateBudget(LocalDate dateIt, Budget<Entry> budget) {
+		Month month = Month.of(dateIt.getMonthOfYear());
+		String monthStr = dateIt.toString("MMMM/yyyy");
+		Budget<Entry> b = budget.subBudget(monthStr, month);
+		return BudgetViewModel.fromBudget(b);
+	}
+	
+	private Set<Entry> getIncomes(User user){
+		Set<Entry> despesas = new TreeSet<Entry>(incomeRepository.findByUser(user, Income.class));
+		
+		return despesas;
 	}
 
 }
