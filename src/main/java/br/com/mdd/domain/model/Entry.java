@@ -83,9 +83,9 @@ public abstract class Entry implements Comparable<Entry>, Cloneable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((this.getDueDate() == null) ? 0 : this.getDueDate().hashCode());
-		result = prime * result + ((this.getName() == null) ? 0 : this.getName().hashCode());
-		result = prime * result + ((this.getValue() == null) ? 0 : this.getValue().hashCode());
+		result = prime * result + ((dueDate == null) ? 0 : dueDate.hashCode());
+		result = prime * result + ((name == null) ? 0 : name.hashCode());
+		result = prime * result + ((value == null) ? 0 : value.hashCode());
 		return result;
 	}
 
@@ -97,21 +97,21 @@ public abstract class Entry implements Comparable<Entry>, Cloneable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Expense other = (Expense) obj;
-		if (this.getDueDate() == null) {
-			if (other.getDueDate() != null)
+		Entry other = (Entry) obj;
+		if (dueDate == null) {
+			if (other.dueDate != null)
 				return false;
-		} else if (!this.getDueDate().equals(other.getDueDate()))
+		} else if (!dueDate.equals(other.dueDate))
 			return false;
-		if (this.getName() == null) {
-			if (other.getName() != null)
+		if (name == null) {
+			if (other.name != null)
 				return false;
-		} else if (!this.getName().equals(other.getName()))
+		} else if (!name.equals(other.name))
 			return false;
-		if (this.getValue() == null) {
-			if (other.getValue() != null)
+		if (value == null) {
+			if (other.value != null)
 				return false;
-		} else if (!this.getValue().equals(other.getValue()))
+		} else if (!value.equals(other.value))
 			return false;
 		return true;
 	}

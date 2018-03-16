@@ -5,37 +5,21 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <html>
 <head>
-<meta charset="UTF-8">
-<title>Despesa</title>
-<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
-<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
-<script src="//code.jquery.com/jquery-1.10.2.js"></script>
-<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
-<script src="/resources/script/jquery.inputmask.bundle.js"></script>
-
-<script type="text/javascript">
-	function clearForm() {
-		$("#formExpense input[type=text]").each(function(a, b) {
-			$(b).val("");
-		});
-		$("#formExpense input[type=hidden]").each(function(a, b) {
-			$(b).val("");
-		});
-		$("#formExpense select").each(function(a, b) {
-			$(b).children("option").eq(0).prop("selected", true);
-		});
-		$("#formExpense input[type=checkbox]").each(function(a, b) {
-			$(b).prop("checked", false);
-		});
-	}
-</script>
+	<meta charset="UTF-8">
+	<title>Despesa</title>
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
+	<link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
+	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
+	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
+	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
 </head>
 <body>
 	<c:url value="/expenses" var="urlExpenses" />
-	<div class="box">
+	<div class="header">
 		<c:import url="../header.jsp" />
-		<div class="main">
+	</div>
+	<div class="main">
 		<h2 class="titulo">Despesas</h2>
 		<div class="div-5">
 			<div class="panel" title="Nova Despesa">
@@ -69,17 +53,17 @@
 						</tr>
 						<tr>
 							<td><label for="category">Categoria</label></td>
-							<td><form:select path="category" id="category">
-									<form:options items="${expense.categories}" itemValue="name"
-										itemLabel="description" />
-								</form:select></td>
+							<td>
+								<form:select path="category" id="category">
+									<form:options items="${expense.categories}" itemValue="name" itemLabel="description" />
+								</form:select>
+							</td>
 						</tr>
 						<tr>
 							<td></td>
 						</tr>
 						<tr>
-							<td colspan="2"><form:checkbox path="fixedExpense" />
-								Despesa Fixa</td>
+							<td colspan="2"><form:checkbox path="fixedExpense" />Despesa Fixa</td>
 						</tr>
 						<tr>
 							<td colspan="2"><form:checkbox path="paid" /> Está pago</td>
@@ -93,6 +77,7 @@
 			</div>
 		</div>
 	</div>
+	<div class="footer">
 	</div>
 </body>
 </html>

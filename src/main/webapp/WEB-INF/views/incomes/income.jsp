@@ -31,8 +31,10 @@
 	</script>
 </head>
 <body>
-	<c:import url="../header.jsp"/>
-	<div class="box">
+	<div class="header">
+		<c:import url="../header.jsp"/>
+	</div>
+	<div class="main">
 		<h2 class="titulo">Receitas</h2>
 		<div class="div-5">
 			<div class="panel" title="Nova Despesa">
@@ -45,7 +47,7 @@
 					</c:otherwise>	
 				</c:choose>
 				<c:url var="salvar" value="/income"></c:url>
-				<form:form action="${salvar}" method="POST" commandName="income" id="formIncome">
+				<form:form action="${salvar}" method="POST" modelAttribute="income" id="formIncome">
 					<form:hidden path="id" id="id"/>
 					<table>
 						<tr>
@@ -82,6 +84,8 @@
 				</form:form>
 			</div>
 		</div>
+	</div>
+	<div class="footer">
 	</div>
 </body>
 </html>

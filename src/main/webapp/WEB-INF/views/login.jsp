@@ -24,19 +24,8 @@
 			<c:url var="salvar" value="/expense"></c:url>
 			<form method="POST" action="${urlLogin}">
 				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-				<table>
-					<tr>
-						<td><label for="username">Usuário</label></td>
-						<td><input type="text" name="username" autofocus="autofocus"/></td>
-					</tr>
-					<tr>
-						<td><label for="password">Senha</label></td>
-						<td><input type="password" name="password" /></td>
-					</tr>
-					<tr>
-						<td></td>
-					</tr>
-				</table>
+				<input type="text" name="username" placeholder="usuário" autofocus="autofocus"/>
+				<input type="password" name="password" placeholder="senha"/>
 				<input type="submit" value="Entrar"	class="botao-direita" />
 				<a href="${urlRegistration}"><input type="button" value="Registre-se" class="botao-direita" /></a> 
 			</form>

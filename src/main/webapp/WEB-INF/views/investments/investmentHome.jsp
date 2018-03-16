@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Despesas</title>
+<title>Investimentos</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
@@ -45,9 +45,10 @@
 	<spring:url value="/newInvestment" var="urlNew" htmlEscape="true"></spring:url>
 	<spring:url value="/editInvestment" var="urlEditar" htmlEscape="true"></spring:url>
 	<spring:url value="/deleteInvestment" var="urlExcluir" htmlEscape="true"></spring:url>
-	<div class="box">
+	<div class="header">
 		<c:import url="../header.jsp" />
-		<div class="main">
+	</div>
+	<div class="main">
 		<h2 class="titulo">Investimentos</h2>
 		<div class="div-5">
 			<div class="panel">
@@ -103,8 +104,8 @@
 				type="button" value="Novo Investimento" class="botao-direita" /></a>
 		</div>
 	</div>
+	<div class="footer">
+		<c:import url="../footer.jsp" />
 	</div>
-
-	<c:import url="../footer.jsp" />
 </body>
 </html>

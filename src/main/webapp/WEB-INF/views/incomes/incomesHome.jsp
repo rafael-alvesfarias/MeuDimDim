@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Despesas</title>
+<title>Receitas</title>
 <link rel="stylesheet" href="//code.jquery.com/ui/1.11.2/themes/smoothness/jquery-ui.css">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/header.css'/>">
 <link rel="stylesheet" type="text/css" href="<c:url value='/resources/css/style.css'/>">
@@ -42,27 +42,26 @@
 </script>
 </head>
 <body>
-	<spring:url value="/newExpense" var="urlNewExpense" htmlEscape="true"></spring:url>
-	<spring:url value="/editExpense" var="urlEditar" htmlEscape="true"></spring:url>
-	<spring:url value="/deleteExpense" var="urlExcluir" htmlEscape="true"></spring:url>
-	<spring:url value="/despesasMensais" var="urlDespesasMensais" htmlEscape="true"></spring:url>
+	<spring:url value="/newIncome" var="urlNew" htmlEscape="true"></spring:url>
+	<spring:url value="/editIncome" var="urlEditar" htmlEscape="true"></spring:url>
+	<spring:url value="/deleteInvcome" var="urlExcluir" htmlEscape="true"></spring:url>
 	<div class="header">
 		<c:import url="../header.jsp" />
 	</div>
 	<div class="main">
-		<h2 class="titulo">Despesas</h2>
+		<h2 class="titulo">Receitas</h2>
 		<div class="div-5">
 			<div class="panel">
-				<h3 class="panelTitle">Despesas Fixas</h3>
+				<h3 class="panelTitle">Lançamentos Futuros</h3>
 				<!-- DESPESAS FIXAS -->
 				<table class="editableCells">
-				<c:forEach var="budget" items="${fixedExpensesBudgets}">
+				<c:forEach var="budget" items="${incomeBudgets}">
 						<thead>
 							<tr>
 								<th colspan="14" class="tableTitle">${budget.name}</th>
 							</tr>
 							<tr>
-								<th>Vencimento</th>
+								<th>Data</th>
 								<th>Descrição</th>
 								<th>Valor</th>
 							</tr>
@@ -100,61 +99,8 @@
 				</table>
 			</div>
 		</div>
-		<!-- DESPESAS VARIÁVEIS -->
-		<div class="div-5">
-			<div class="panel">
-				<h3 class="panelTitle">Despesas Variáveis</h3>
-				<!-- DESPESAS FIXAS -->
-				<table class="editableCells">
-				<c:forEach var="budget" items="${variableExpensesBudgets}">
-						<thead>
-							<tr>
-								<th colspan="14" class="tableTitle">${budget.name}</th>
-							</tr>
-							<tr>
-								<th>Vencimento</th>
-								<th>Descrição</th>
-								<th>Valor</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="entry" items="${budget.entries}"
-								varStatus="status">
-								<tr>
-									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-										<fmt:formatDate pattern="dd/MM/yyyy" value="${entry.dueDate}" />
-									</td>
-									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-										<div>${entry.name}</div>
-										<div class="cellControl">
-											<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
-										</div>
-										<div class="cellMenu">
-											<ul>
-												<li><a
-													href="${urlEditar}/${entry.id}">Editar</a></li>
-												<li><a
-													href="${urlExcluir}/${entry.id}?mes=${mes}">Excluir</a></li>
-											</ul>
-										</div>
-									</td>
-									<td class="${(status.index+1)%2 == 0 ? 'linha-par': 'linha-impar'}">
-										R$ ${entry.value}
-									</td>
-								</tr>
-							</c:forEach>
-						</tbody>
-						<tr class="total">
-							<td colspan="2">TOTAL</td>
-							<td>R$ ${budget.total}</td>
-						</tr>
-				</c:forEach>
-				</table>
-			</div>
-		</div>
 		<div class="botoes div-10">
-			<a href="${urlNewExpense}" id="btnNewExpense"><input
-				type="button" value="Nova Despesa" class="botao-direita" /></a>
+			<a href="${urlNew}" id="btnNew"><input type="button" value="Nova Receita" class="botao-direita" /></a>
 		</div>
 	</div>
 	<div class="footer">

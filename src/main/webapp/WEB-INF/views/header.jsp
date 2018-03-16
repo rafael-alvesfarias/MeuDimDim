@@ -2,7 +2,7 @@
 <%@taglib uri="http://www.springframework.org/tags" prefix="spring"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <spring:url value="/home" var="urlHome" htmlEscape="true"></spring:url>
-<spring:url value="/incomes/annual" var="urlIncomes" htmlEscape="true"></spring:url>
+<spring:url value="/incomes" var="urlIncomes" htmlEscape="true"></spring:url>
 <spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/investments" var="urlInvestments" htmlEscape="true"></spring:url>
 <script type="text/javascript">
