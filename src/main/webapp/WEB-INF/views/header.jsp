@@ -20,9 +20,6 @@
 				cellMenu.hide();
 			}
 		});
-		$("logout").click(function(){
-			$
-		});
 	});
 </script>
 <div class="logo">
