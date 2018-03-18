@@ -14,20 +14,19 @@
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
 	<script type="text/javascript">
-		function clearForm() {
-			$("#formIncome input[type=text]").each(function(a, b) {
-				$(b).val("");
-			});
-			$("#formIncome input[type=hidden]").each(function(a, b) {
-				$(b).val("");
-			});
-			$("#formIncome select").each(function(a, b) {
-				$(b).children("option").eq(0).prop("selected", true);
-			});
-			$("#formIncome input[type=checkbox]").each(function(a, b) {
-				$(b).prop("checked", false);
-			});
-		}
+		$(document).ready(function() {
+			$(".inputMoney").inputmask("currency", {groupSeparator: ".", prefix: "R$ ", radixPoint: ","});
+			$(".inputDecimal").inputmask("numeric", {
+				radixPoint: ",",
+				groupSeparator: ".",
+	            placeholder: "0",
+	            autoGroup: true,
+	            digits: 2,
+	            digitsOptional: false,
+	            clearMaskOnLostFocus: false
+	        });
+			$(".inputDate").inputmask("99/99/9999");
+		});
 	</script>
 </head>
 <body>

@@ -13,6 +13,21 @@
 	<script src="//code.jquery.com/jquery-1.10.2.js"></script>
 	<script src="//code.jquery.com/ui/1.11.2/jquery-ui.js"></script>
 	<script src="/resources/script/jquery.inputmask.bundle.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function() {
+			$(".inputMoney").inputmask("currency", {groupSeparator: ".", prefix: "R$ ", radixPoint: ","});
+			$(".inputDecimal").inputmask("numeric", {
+				radixPoint: ",",
+				groupSeparator: ".",
+	            placeholder: "0",
+	            autoGroup: true,
+	            digits: 2,
+	            digitsOptional: false,
+	            clearMaskOnLostFocus: false
+	        });
+			$(".inputDate").inputmask("99/99/9999");
+		});
+	</script>
 </head>
 <body>
 	<c:url value="/expenses" var="urlExpenses" />
