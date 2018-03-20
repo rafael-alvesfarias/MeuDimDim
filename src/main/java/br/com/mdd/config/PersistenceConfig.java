@@ -15,6 +15,7 @@ import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBuilder;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import br.com.mdd.domain.model.Account;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
@@ -56,7 +57,8 @@ public class PersistenceConfig {
 					User.class,
 					Role.class,
 					VariableExpense.class,
-					Investment.class);
+					Investment.class,
+					Account.class);
 		
 		sessionBuilder.addProperties(getHibernateProperties());
 		

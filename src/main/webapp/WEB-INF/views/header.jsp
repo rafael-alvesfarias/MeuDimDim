@@ -5,6 +5,7 @@
 <spring:url value="/incomes" var="urlIncomes" htmlEscape="true"></spring:url>
 <spring:url value="/expenses" var="urlExpenses" htmlEscape="true"></spring:url>
 <spring:url value="/investments" var="urlInvestments" htmlEscape="true"></spring:url>
+<spring:url value="/accounts" var="urlAccounts" htmlEscape="true"></spring:url>
 <spring:url value="/logout" var="urlLogout" htmlEscape="true"></spring:url>
 <script type="text/javascript">
 	$(document).ready(function() {
@@ -34,6 +35,7 @@
 			<li><a href="${urlIncomes}">Receitas</a></li>
 			<li><a href="${urlExpenses}">Despesas</a></li>
 			<li><a href="${urlInvestments}">Investimentos</a></li>
+			<li><a href="${urlAccounts}">Contas</a></li>
 		</ul>
 	</div>
 	<div class="login">
