@@ -38,7 +38,7 @@
 		<c:import url="../header.jsp" />
 	</div>
 	<div class="main">
-		<h2 class="titulo">Despesas</h2>
+		<h2 class="titulo">Contas</h2>
 		<div class="div-5">
 			<div class="panel" title="Conta">
 				<c:choose>
@@ -81,18 +81,18 @@
 							<c:otherwise>
 								<tr>
 									<td><label for="value">Saldo</label></td>
-									<td><form:label id="balance" path="balance" size="12" /></td>
+									<td><form:label id="balance" path="balance" size="12">${account.balance}</form:label></td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
 					</table>
 					<div class="botoes">
-						<input type="submit" value="Salvar"	class="botao-direita" />
+						<input type="submit" value="Salvar"	class="botao-direita btn-done" />
 						<c:if test="${account.id != null}">
 							<a href="${urlDeposit}"><input type="button" value="Depósito" class="botao-direita" /></a> 
 							<a href="${urlWithdraw}"><input type="button" value="Saque" class="botao-direita" /></a>
 						</c:if> 
-						<a href="${urlAccounts}"><input type="button" value="Cancelar" class="botao-direita" /></a> 
+						<a href="${urlAccounts}"><input type="button" value="Cancelar" class="botao-direita btn-cancel" /></a> 
 					</div>
 				</form:form>
 			</div>

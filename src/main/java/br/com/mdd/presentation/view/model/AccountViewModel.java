@@ -32,6 +32,7 @@ public class AccountViewModel {
 		AccountViewModel a = new AccountViewModel();
 		a.setId(account.getId());
 		a.setInstitutionName(account.getInstitutionName());
+		a.setNumber(account.getNumber());
 		a.setType(account.getType());
 		a.setBalance(account.getBalance());
 		
