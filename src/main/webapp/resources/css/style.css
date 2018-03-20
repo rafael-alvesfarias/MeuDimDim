@@ -9,8 +9,7 @@
 
 body{
 	height: 100%;
-	background: linear-gradient(#EEE 1px, #FFF 52px, #FFF 52px);
-	background-repeat: no-repeat;
+	background-color: #f7f7f7;
 }
 
 .main {
@@ -154,7 +153,8 @@ h2 {
 	margin-top: 20px;
 	padding: 20px;
 	padding-top: 30px;
-	box-shadow: 3px 3px 3px #888888;
+	box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0
+		rgba(0, 0, 0, 0.24);
 	border-color: #CCCCCC;
 	background-color: #FFFFFF;
 	background: linear-gradient(#76b852 14px, #8DC26F 28px, white 1px);
