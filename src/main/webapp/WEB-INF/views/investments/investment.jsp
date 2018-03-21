@@ -78,9 +78,9 @@
 					<div class="group">
 			
 					</div>
-					<div class="botoes">
-						<a href="${urlInvestments}"><input type="button" value="Cancelar" class="botao-direita"/></a>
-						<input type="submit" value="Salvar" class="botao-direita"/>
+					<div class="btn-group">
+						<a href="${urlInvestments}"><input type="button" value="Cancelar" class="btn-cancel"/></a>
+						<input type="submit" value="Salvar" class="btn-submit"/>
 					</div>
 				</form:form>
 			</div>

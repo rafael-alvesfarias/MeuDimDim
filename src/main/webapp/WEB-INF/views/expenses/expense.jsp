@@ -84,9 +84,9 @@
 							<td colspan="2"><form:checkbox path="paid" /> Está pago</td>
 						</tr>
 					</table>
-					<div class="botoes">
-						<input type="submit" value="Salvar"	class="botao-direita" />
-						<a href="${urlExpenses}"><input type="button" value="Cancelar" class="botao-direita" /></a> 
+					<div class="btn-group">
+						<input type="submit" value="Salvar"	class="btn-submit" />
+						<a href="${urlExpenses}"><input type="button" value="Cancelar" class="btn-cancel" /></a> 
 					</div>
 				</form:form>
 			</div>

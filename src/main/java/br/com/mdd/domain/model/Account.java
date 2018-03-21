@@ -53,15 +53,6 @@ public class Account {
 		this.type = type;
 	}
 
-
-	public void deposit(BigDecimal amount) {
-		this.balance.add(balance);
-	}
-	
-	public void withdraw(BigDecimal amount) {
-		this.balance.subtract(amount);
-	}
-
 	public Integer getId() {
 		return id;
 	}
@@ -90,7 +81,7 @@ public class Account {
 		return balance;
 	}
 
-	protected void setBalance(BigDecimal balance) {
+	public void setBalance(BigDecimal balance) {
 		this.balance = balance;
 	}
 

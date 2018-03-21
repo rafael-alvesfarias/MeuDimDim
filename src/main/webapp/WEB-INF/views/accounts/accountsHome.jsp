@@ -89,9 +89,10 @@
 				</table>
 			</div>
 		</div>
-		<div class="botoes div-10">
-			<a href="${urlNew}" id="btnNewAccount"><input
-				type="button" value="Nova Conta" class="botao-direita" /></a>
+		<div class="btn-group div-10 line-separator-top">
+			<a href="${urlNew}" id="btnNewAccount">
+				<input type="button" value="Nova Conta" class="btn" />
+			</a>
 		</div>
 	</div>
 	<div class="footer">

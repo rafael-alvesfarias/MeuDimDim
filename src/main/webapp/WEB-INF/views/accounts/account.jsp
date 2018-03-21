@@ -26,6 +26,9 @@
 	            clearMaskOnLostFocus: false
 	        });
 			$(".inputDate").inputmask("99/99/9999");
+			$("#btnUpdateBalance").click(function() {
+				$("#balance").prop("disabled", false);
+			});
 		});
 	</script>
 </head>
@@ -81,18 +84,17 @@
 							<c:otherwise>
 								<tr>
 									<td><label for="value">Saldo</label></td>
-									<td><form:label id="balance" path="balance" size="12">${account.balance}</form:label></td>
+									<td><form:input cssClass="inputMoney" id="balance" path="balance" size="12" disabled="true"/></td>
 								</tr>
 							</c:otherwise>
 						</c:choose>
 					</table>
-					<div class="botoes">
-						<input type="submit" value="Salvar"	class="botao-direita btn-done" />
-						<c:if test="${account.id != null}">
-							<a href="${urlDeposit}"><input type="button" value="Depósito" class="botao-direita" /></a> 
-							<a href="${urlWithdraw}"><input type="button" value="Saque" class="botao-direita" /></a>
-						</c:if> 
-						<a href="${urlAccounts}"><input type="button" value="Cancelar" class="botao-direita btn-cancel" /></a> 
+					<div class="btn-group line-separator-top"> 
+						<input type="button" id="btnUpdateBalance" value="Atualizar saldo" class="btn" />
+					</div>
+					<div class="btn-group"> 
+						<input type="submit" value="Salvar"	class="btn-submit" />
+						<a href="${urlAccounts}"><input type="button" value="Cancelar" class="btn-cancel" /></a> 
 					</div>
 				</form:form>
 			</div>

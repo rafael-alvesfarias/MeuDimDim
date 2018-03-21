@@ -152,9 +152,9 @@
 				</table>
 			</div>
 		</div>
-		<div class="botoes div-10">
+		<div class="btn-group div-10 line-separator-top">
 			<a href="${urlNewExpense}" id="btnNewExpense"><input
-				type="button" value="Nova Despesa" class="botao-direita" /></a>
+				type="button" value="Nova Despesa" class="btn" /></a>
 		</div>
 	</div>
 	<div class="footer">

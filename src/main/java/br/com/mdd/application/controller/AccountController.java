@@ -63,7 +63,7 @@ public class AccountController {
 		
 		BigDecimal balance = null;
 		if (account.getId() != null) {
-			balance = accountRepository.find(account.getId(), Account.class).getBalance();
+			balance = account.getBalance();
 		} else {
 			balance = account.getStartBalance();
 		}
