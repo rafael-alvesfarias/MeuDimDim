@@ -1,13 +1,9 @@
-.header *{
-	box-sizing: border-box;
-}
-
 .header {
 	width: 100%;
 	margin: 0 auto;
 	height: 75px; 
 	background: linear-gradient(#EEE 1px, #FFF 52px, #FFF 52px);
-	border-bottom: 2px solid rgba(0, 0, 0, 0.01);;
+	border-bottom: 2px solid rgba(0, 0, 0, 0.01);
 }
 
 .logo {
@@ -81,16 +77,26 @@
 	color: #295480;
 }
 
-.login img {
-	padding-left: 10px;
-	padding-right: 10px;
-	width: 40px;
-}
-
 .login span {
 	font-size: 16px;
 	font-weight: 600;
 	line-height: 60px;
+}
+
+.loginInfo {
+	height: 75px;
+
+}
+
+.loginInfo div {
+	height: 75px;
+	line-height: 75px;
+	float: left;
+}
+
+.loginInfo img {
+    width: 75px;
+    padding: 25px;
 }
 
 .loginInfo, .loginControl {
@@ -98,13 +104,13 @@
 }
 
 .loginControl {
-	padding-top: 18px;
-    width:16px;
     height:100%;
 }
 
 .loginControl img {
-	width: 30px;
+	width: 75px;
+	height: 75px;
+	padding: 27px;
 } 
 
 .loginControl:HOVER {
@@ -135,5 +141,146 @@
 
 .loginMenu a {
 	font-size: 14px;
-		color: #295480;
+	color: #295480;
+}
+
+@media only screen and (max-width: 1024px) {
+	.logo {
+		margin: 0 auto;
+	}
+
+	.navMenu {
+		width: 57%;
+	}
+
+	.login {
+		width: 25%;
+	}
+	.logo img {
+		padding: 5px;
+		width: 50px;
+		position: relative;
+		top: 10px;
+	}
+
+	.logo h1, .logo span {
+		font-size: 20px;
+		line-height: 75px;
+	}
+
+	.logo h2 {
+		display: none;
+	}
+}
+
+@media only screen and (max-width: 800px) {
+	.header {
+		height: 80px;
+	}
+
+	.logo {
+		height: 40px;
+		width: 75%;
+		margin: 0 auto;
+	}
+
+	.logo img {
+		top: 0;
+	}
+
+	.logo h1, .logo span {
+		font-size: 16px;
+		line-height: 40px;
+	}
+
+	.logo img {
+		padding: 5px;
+		width: 40px;
+	}
+
+	.navMenu {
+		height: 40px;
+		width: 100%;
+	}
+
+	.navMenu a {
+		font-size: 15px;
+		line-height: 40px;
+	}
+
+	.navMenu ul {
+		height: 40px;
+	}
+
+	.navMenu li {
+		height: 40px;
+		padding-left:5px;
+		padding-right: 5px;
+		line-height: 40px;
+	}
+
+	.login {
+		width: 25%;
+	}
+
+	.login img {
+		padding-left: 5px;
+		padding-right: 5px;
+		width: 24px;
+	}
+
+	.loginInfo {
+		height: 40px;
+		font-size: 12px;
+	}
+
+	.login span {
+		font-size: 12px;
+		line-height: 40px;
+	}
+
+	.login {
+		height: 40px;
+	}
+
+	.login div {
+		height: 40px;
+		line-height: 40px;
+	}
+
+	.loginInfo img {
+		width: 40px;
+		padding: 10px;
+	}
+
+	.loginControl img {
+		width: 40px;
+		height: 40px;
+		padding: 12px;
+	} 
+}
+
+@media only screen and (max-width: 600px) {
+
+	.header {
+		height: 80px;
+	}
+
+	.logo {
+		width: 60%;
+		margin: 0 auto;
+	}
+
+	.navMenu {
+		width: 100%;
+	}
+
+	.navMenu a {
+		font-size: 12px;
+		line-height: 40px;
+	}
+
+	.login {
+		width: 40%;
+	}
 }

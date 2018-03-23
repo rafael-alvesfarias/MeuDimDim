@@ -5,6 +5,21 @@
 	font-family: 'arial', 'helvetica', 'sans-serif';
 	font-size: 13px;
 	line-height: 1.5;
+	box-sizing: border-box;
+}
+
+h1 {
+	font-size: 18px;
+	color: #555;
+}
+
+h2 {
+	font-weight: 600;
+	color: #555;
+	font-weight: 600;
+	font-size: 16px;
+	padding-top: 10px;
+	padding-left: 10px;
 }
 
 body{
@@ -13,30 +28,30 @@ body{
 }
 
 .main {
-	width: 80em;
+	width: 960px;
 	margin: 0 auto;
 	margin-top: 20px;
 }
 
 .div-3, .div-5, .div-6, .div-10 {
-	margin: 5px;
+	padding: 5px;
 	float:left;
 }
 
 .div-3 {
-	width: 16em;
+	width: 30%;
 }
 
 .div-5 {
-	width: 39em;
+	width: 50%;
 }
 
 .div-6 {
-	width: 65em;
+	width: 60%;
 }
 
 .div-10 {
-	width: 80em;
+	width: 100%;
 }
 
 a {
@@ -85,14 +100,6 @@ th{
 	margin-top: 10px;
 	padding-top: 10px;
 	padding-bottom: 0px;
-}
-
-.botoes{
-	margin:15px;
-	margin-top: 20px;
-	padding-top: 15px;
-	padding-bottom: 0px;
-	overflow: hidden;
 }
 
 .line-separator-top {
@@ -154,20 +161,6 @@ th{
 	float: right;
 }
 
-h1 {
-	font-size: 18px;
-	color: #555;
-}
-
-h2 {
-	font-weight: 600;
-	color: #555;
-	font-weight: 600;
-	font-size: 16px;
-	padding-top: 10px;
-	padding-left: 10px;
-}
-
 .panel {
 	border: 1px solid;
 	margin-top: 20px;
@@ -192,7 +185,6 @@ h2 {
 
 
 form table, form td, form tr{
-	border-collapse: collapse;
 	border: none;
 }
 
@@ -291,4 +283,16 @@ form table, form td, form tr{
 	border-color: #FFF;
 	background-color: #FFF;
 	background-image: linear-gradient(#7fbf4d 13px, #63a62f 26px, white 1px);
+}
+
+@media only screen and (max-width: 1024px) {
+	.main {
+		width: 100%;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.div-3, .div-5, .div-6, .div-10 {
+		width: 100%;
+	}
 }

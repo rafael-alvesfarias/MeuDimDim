@@ -28,31 +28,31 @@
 	<h1>meu<span>dimdim</span></h1>
 	<h2>rumo à independência financeira</h2>
 </div>
-<div class="menu">
-	<div class="navMenu">
-		<ul>
-			<li><a href="${urlHome}">Home</a></li>
-			<li><a href="${urlIncomes}">Receitas</a></li>
-			<li><a href="${urlExpenses}">Despesas</a></li>
-			<li><a href="${urlInvestments}">Investimentos</a></li>
-			<li><a href="${urlAccounts}">Contas</a></li>
-		</ul>
-	</div>
-	<div class="login">
-		<div class="loginInfo">
-			<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
+<div class="login">
+	<div class="loginInfo">
+		<a href=""><img src="<c:url value='/resources/imagens/login.png'/>"/></a>
+		<div>
 			<sec:authorize access="isAuthenticated()">
 				Olá, <span><sec:authentication property="principal.username"/></span>
 			</sec:authorize>
 		</div>
-		<div class="loginControl">
-			<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
-		</div>
-		<div class="loginMenu">
-			<ul>
-				<li><a href="<c:url value="/logout" />">Sair</a></li>
-			</ul>
-		</div>
 	</div>
+	<div class="loginControl">
+		<img src="<c:url value='/resources/imagens/down-arrow.png'/>" />
+	</div>
+	<div class="loginMenu">
+		<ul>
+			<li><a href="<c:url value="/logout" />">Sair</a></li>
+		</ul>
+	</div>
+</div>
+<div class="navMenu">
+	<ul>
+		<li><a href="${urlHome}">Home</a></li>
+		<li><a href="${urlIncomes}">Receitas</a></li>
+		<li><a href="${urlExpenses}">Despesas</a></li>
+		<li><a href="${urlInvestments}">Investimentos</a></li>
+		<li><a href="${urlAccounts}">Contas</a></li>
+	</ul>
 </div>
 <div class="clearfix"></div>
