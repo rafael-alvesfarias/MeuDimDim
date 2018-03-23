@@ -91,7 +91,7 @@
 .loginInfo div {
 	height: 75px;
 	line-height: 75px;
-	float: left;
+	float: right;
 }
 
 .loginInfo img {
@@ -173,7 +173,7 @@
 	}
 }
 
-@media only screen and (max-width: 800px) {
+@media only screen and (max-width: 850px) {
 	.header {
 		height: 80px;
 	}
