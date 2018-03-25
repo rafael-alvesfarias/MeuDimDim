@@ -54,6 +54,7 @@
 					<form:errors path="dueDate" cssClass="error" />
 					<form:errors path="category" cssClass="error" />
 					<form:hidden path="id" id="idDespesa" />
+					<form:hidden path="entryDate" id="entryDate" />
 					<table>
 						<tr>
 							<td><label for="name">Descrição</label></td>
@@ -66,6 +67,14 @@
 						<tr>
 							<td><label for="dueDate">Data de vencimento</label></td>
 							<td><form:input cssClass="inputDate" id="dueDate" path="dueDate" size="10" /></td>
+						</tr>
+						<tr>
+							<td><label for="account">Conta</label></td>
+							<td>
+								<form:select path="account" id="account">
+									<form:options items="${expense.accounts}" itemValue="id" itemLabel="institutionName" />
+								</form:select>
+							</td>
 						</tr>
 						<tr>
 							<td><label for="category">Categoria</label></td>

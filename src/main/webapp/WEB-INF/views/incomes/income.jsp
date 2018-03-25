@@ -49,6 +49,7 @@
 				<c:url var="salvar" value="/income"></c:url>
 				<form:form action="${salvar}" method="POST" modelAttribute="income" id="formIncome">
 					<form:hidden path="id" id="id"/>
+					<form:hidden path="entryDate" id="entryDate" />
 					<table>
 						<tr>
 							<td><label for="descricao">Descrição</label></td>
@@ -61,6 +62,14 @@
 						<tr>
 							<td><label for="data">Data de vencimento</label></td>
 							<td><form:input cssClass="inputDate" id="dueDate" path="dueDate" size="10"/></td>
+						</tr>
+						<tr>
+							<td><label for="account">Conta</label></td>
+							<td>
+								<form:select path="account" id="account">
+									<form:options items="${income.accounts}" itemValue="id" itemLabel="institutionName" />
+								</form:select>
+							</td>
 						</tr>
 						<tr>
 							<td><label for=category>Categoria</label></td>

@@ -3,11 +3,13 @@ package br.com.mdd.application.controller;
 import java.security.Principal;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -22,13 +24,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.application.repository.AccountRepository;
 import br.com.mdd.application.repository.EntryRepository;
+import br.com.mdd.application.service.EntryService;
 import br.com.mdd.application.service.UserService;
+import br.com.mdd.domain.model.Account;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Investment;
 import br.com.mdd.domain.model.User;
+import br.com.mdd.presentation.view.model.AccountViewModel;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.investment.InvestmentViewModel;
 
@@ -37,14 +43,19 @@ public class InvestmentController {
 	
 	private static final String NUMBER_MONTHS_DEFAULT = "3";
 	
-	private InvestmentViewModel investment;
-	
 	@Autowired
 	@Qualifier("entryDAO")
 	private EntryRepository<Investment> investmentDAO;
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EntryService entryService;
+	
+	@Autowired
+	@Qualifier("accountDAO")
+	private AccountRepository accountRepository;
 	
 	@Autowired
 	private HttpSession session;
@@ -60,8 +71,13 @@ public class InvestmentController {
 	}
 	
 	@RequestMapping(value = "/newInvestment", method = RequestMethod.GET)
-	public String newInvestment(Model model){
-		investment = new InvestmentViewModel();
+	public String newInvestment(Model model, Principal principal){
+		User user = userService.findByUsername(principal.getName());
+		InvestmentViewModel investment = new InvestmentViewModel();
+		Collection<AccountViewModel> accounts = getAccounts(user).stream()
+				.map(a -> AccountViewModel.fromAccount(a))
+				.collect(Collectors.toList());
+		investment.setAccounts(accounts);
 		model.addAttribute("investment", investment);
 		
 		return "/investments/investment";
@@ -72,26 +88,36 @@ public class InvestmentController {
 		User user = userService.findByUsername(principal.getName());
 		Investment i = new Investment(investment.getName(), investment.getValue(), new LocalDate(investment.getDueDate()), investment.getReturnRate());
 		i.setId(investment.getId());
+		if (investment.getEntryDate() != null) {
+			i.setEntryDate(new LocalDate(investment.getEntryDate()));
+		}
 		if (investment.getWithdrawlDate() != null) {
 			i.setWithdrawlDate(new LocalDate(investment.getWithdrawlDate()));
 		}
 		if (investment.getTaxRate() != null) {
 			i.setTaxRate(investment.getTaxRate());
 		}
+		i.setAccount(getAccount(investment.getAccount()));
 		i.setUser(user);
 		
-		investmentDAO.save(i);
+		if (investment.isPosted() && investment.getEntryDate() == null) {
+			entryService.postEntry(i, i.getAccount());
+		} else {
+			investmentDAO.save(i);
+		}
 		
-		return newInvestment(model);
+		return "redirect:/newInvestment";
 	}
 	
 	@RequestMapping("/editInvestment/{id}")
-	public String updateInvestment(Model model, @PathVariable Integer id){
-		
+	public String updateInvestment(Model model, Principal principal, @PathVariable Integer id) {
+		User user = userService.findByUsername(principal.getName());
 		Investment i = investmentDAO.find(id, Investment.class);
-		
-		investment = InvestmentViewModel.fromInvestment(i);
-		
+		InvestmentViewModel investment = InvestmentViewModel.fromInvestment(i);
+		Collection<AccountViewModel> accounts = getAccounts(user).stream()
+				.map(a -> AccountViewModel.fromAccount(a))
+				.collect(Collectors.toList());
+		investment.setAccounts(accounts);
 		model.addAttribute("investment", investment);
 		
 		return "/investments/investment";
@@ -140,5 +166,15 @@ public class InvestmentController {
 		Set<Entry> investments = new TreeSet<Entry>(investmentDAO.findByUser(user, Investment.class));
 		
 		return investments;
+	}
+	
+	private Collection<Account> getAccounts(User user){
+		Collection<Account> investments = new ArrayList<Account>(accountRepository.findByUser(user));
+		
+		return investments;
+	}
+	
+	private Account getAccount(Integer id) {
+		return accountRepository.find(id, Account.class);
 	}
 }

@@ -1,8 +1,8 @@
 package br.com.mdd.presentation.view.model.income;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -10,6 +10,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
 
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Income;
+import br.com.mdd.presentation.view.model.AccountViewModel;
 
 public class IncomeViewModel {
 	
@@ -23,22 +24,35 @@ public class IncomeViewModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dueDate;
 	
-	private String category = new String();
+	@DateTimeFormat(pattern = "dd/MMyyyy")
+	private Date entryDate;
 	
-	private Boolean received;
+	private Integer category;
 	
-	private Set<Category> categories;
+	private Integer account;
+	
+	private boolean received;
+	
+	private Collection<Category> categories;
+	
+	private Collection<AccountViewModel> accounts;
 	
 	public static final IncomeViewModel fromIncome(Income income) {
 		IncomeViewModel i = new IncomeViewModel();
 		if (income.getCategory() != null) {
-			i.setCategory(income.getCategory().getName());
+			i.setCategory(income.getCategory().getId());
 		}
 		i.setDueDate(income.getDueDate().toDate());
+		if (income.getEntryDate() != null) {
+			i.setEntryDate(income.getEntryDate().toDate());
+		}
 		i.setName(income.getName());
 		i.setId(income.getId());
-		i.setReceived(income.getReceived());
+		i.setReceived(income.isReceived());
 		i.setValue(income.getValue());
+		if (income.getAccount() != null) {
+			i.setAccount(income.getAccount().getId());
+		}
 		
 		return i;
 	}
@@ -67,30 +81,30 @@ public class IncomeViewModel {
 		this.dueDate = dueDate;
 	}
 
-	public String getCategory() {
+	public Integer getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer category) {
 		this.category = category;
 	}
 
-	public Set<Category> getCategories() {
+	public Collection<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Set<Category> categories) {
+	public void setCategories(Collection<Category> categories) {
 		this.categories = categories;
 	}
-
-	public Boolean getReceived() {
+	
+	public boolean isReceived() {
 		return received;
 	}
 
-	public void setReceived(Boolean received) {
+	public void setReceived(boolean received) {
 		this.received = received;
 	}
-	
+
 	public BigDecimal getValue() {
 		return value;
 	}
@@ -98,4 +112,30 @@ public class IncomeViewModel {
 	public void setValue(BigDecimal value) {
 		this.value = value;
 	}
+
+	public Date getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public Integer getAccount() {
+		return account;
+	}
+
+	public void setAccount(Integer account) {
+		this.account = account;
+	}
+
+	public Collection<AccountViewModel> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Collection<AccountViewModel> accounts) {
+		this.accounts = accounts;
+	}
+	
+	
 }

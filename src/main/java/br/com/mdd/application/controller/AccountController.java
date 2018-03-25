@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import br.com.mdd.application.repository.GenericRepository;
+import br.com.mdd.application.repository.AccountRepository;
 import br.com.mdd.application.service.UserService;
 import br.com.mdd.domain.model.Account;
 import br.com.mdd.domain.model.User;
@@ -25,8 +25,8 @@ import br.com.mdd.presentation.view.model.AccountViewModel;
 public class AccountController {
 	
 	@Autowired
-	@Qualifier("genericDAO")
-	private GenericRepository<Account> accountRepository;
+	@Qualifier("accountDAO")
+	private AccountRepository accountRepository;
 	
 	@Autowired
 	private UserService userService;
@@ -68,7 +68,7 @@ public class AccountController {
 			balance = account.getStartBalance();
 		}
 		
-		Account a = new Account(account.getInstitutionName(), account.getNumber(), balance, account.getType()); 
+		Account a = new Account(account.getInstitutionName(), balance, account.getType()); 
 		a.setId(account.getId());
 		a.setUser(user);
 		
@@ -98,9 +98,7 @@ public class AccountController {
 	}
 	
 	private List<Account> getAccounts(User user){
-		//Set<Entry> investments = new TreeSet<Entry>(investmentDAO.findByUser(user, Investment.class));
-		//TODO findByUser
-		List<Account> accounts = accountRepository.findAll(Account.class);
+		List<Account> accounts = accountRepository.findByUser(user);
 		
 		return accounts;
 	}

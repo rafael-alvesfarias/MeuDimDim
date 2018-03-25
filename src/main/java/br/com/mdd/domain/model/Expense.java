@@ -21,18 +21,20 @@ public abstract class Expense extends Entry {
 	@ManyToOne
 	private Category category;
 	
-	@Column
-	private Boolean paid;
-	
-	@ManyToOne
-	private User user;
-	
 	Expense() {
 		//Construtor necessário para framework
 	}
 
 	public Expense(String name, BigDecimal value, LocalDate maturityDate) {
-		super(name, value, maturityDate);
+		super(name, value, maturityDate, -1);
+	}
+	
+	public void pay(Account a) {
+		super.post(a);
+	}
+	
+	public boolean isPaid() {
+		return super.isPosted();
 	}
 
 	public Expense(String descricao, BigDecimal valor) {
@@ -47,22 +49,6 @@ public abstract class Expense extends Entry {
 		this.category = category;
 	}
 
-	public Boolean getPaid() {
-		return paid;
-	}
-
-	public void setPaid(Boolean paid) {
-		this.paid = paid;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
 	@Override
 	public Expense clone() {
 		Expense e = (Expense) super.clone();

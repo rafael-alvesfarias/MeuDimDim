@@ -1,8 +1,8 @@
 package br.com.mdd.presentation.view.model.expense;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
-import java.util.Set;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.NumberFormat;
@@ -11,6 +11,7 @@ import org.springframework.format.annotation.NumberFormat.Style;
 import br.com.mdd.domain.model.Category;
 import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
+import br.com.mdd.presentation.view.model.AccountViewModel;
 
 public class ExpenseViewModel {
 	
@@ -24,32 +25,41 @@ public class ExpenseViewModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dueDate;
 	
-	private String category;
+	@DateTimeFormat(pattern = "dd/MMyyyy")
+	private Date entryDate;
+	
+	private Integer category;
+	
+	private Integer account;
 	
 	private boolean fixedExpense;
 	
 	private boolean paid;
 	
-	private Set<Category> categories;
+	private Collection<Category> categories;
+	
+	private Collection<AccountViewModel> accounts;
 	
 	private String error;
 	
 	public static final ExpenseViewModel fromExpense(Expense expense) {
 		ExpenseViewModel e = new ExpenseViewModel();
 		if (expense.getCategory() != null) {
-			e.setCategory(expense.getCategory().getName());
+			e.setCategory(expense.getCategory().getId());
 		}
 		e.setDueDate(expense.getDueDate().toDate());
+		if (expense.getEntryDate() != null) {
+			e.setEntryDate(expense.getEntryDate().toDate());
+		}
 		e.setName(expense.getName());
 		e.setId(expense.getId());
 		
 		e.setValue(expense.getValue());
-		
-		if (Boolean.TRUE.equals(expense.getPaid())) {
-			e.setPaid(true);
-		} else {
-			e.setPaid(false);
+		if (expense.getAccount() != null) {
+			e.setAccount(expense.getAccount().getId());
 		}
+		
+		e.setPaid(expense.isPaid());
 		
 		if(expense instanceof FixedExpense) {
 			e.setFixedExpense(true);			
@@ -84,11 +94,11 @@ public class ExpenseViewModel {
 		this.dueDate = dueDate;
 	}
 
-	public String getCategory() {
+	public Integer getCategory() {
 		return category;
 	}
 
-	public void setCategory(String category) {
+	public void setCategory(Integer category) {
 		this.category = category;
 	}
 
@@ -108,11 +118,11 @@ public class ExpenseViewModel {
 		this.paid = paid;
 	}
 
-	public Set<Category> getCategories() {
+	public Collection<Category> getCategories() {
 		return categories;
 	}
 
-	public void setCategories(Set<Category> categories) {
+	public void setCategories(Collection<Category> categories) {
 		this.categories = categories;
 	}
 
@@ -130,5 +140,29 @@ public class ExpenseViewModel {
 
 	public void setError(String error) {
 		this.error = error;
+	}
+
+	public Integer getAccount() {
+		return account;
+	}
+
+	public void setAccount(Integer account) {
+		this.account = account;
+	}
+	
+	public Collection<AccountViewModel> getAccounts() {
+		return accounts;
+	}
+	
+	public void setAccounts(Collection<AccountViewModel> accounts) {
+		this.accounts = accounts;
+	}
+	
+	public Date getEntryDate() {
+		return entryDate;
+	}
+	
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
 	}
 }

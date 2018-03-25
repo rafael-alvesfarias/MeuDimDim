@@ -45,7 +45,7 @@
 <body>
 	<spring:url value="/newIncome" var="urlNew" htmlEscape="true"></spring:url>
 	<spring:url value="/editIncome" var="urlEditar" htmlEscape="true"></spring:url>
-	<spring:url value="/deleteInvcome" var="urlExcluir" htmlEscape="true"></spring:url>
+	<spring:url value="/deleteIncome" var="urlExcluir" htmlEscape="true"></spring:url>
 	<div class="header">
 		<c:import url="../header.jsp" />
 	</div>

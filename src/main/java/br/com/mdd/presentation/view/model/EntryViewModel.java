@@ -1,6 +1,7 @@
 package br.com.mdd.presentation.view.model;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -24,15 +25,32 @@ public class EntryViewModel {
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date dueDate;
 	
+	@DateTimeFormat(pattern = "dd/MM/yyyy")
+	private Date entryDate;
+	
 	private String type;
+	
+	private boolean posted;
+	
+	private Integer account;
+	
+	private Collection<AccountViewModel> accounts;
 	
 	public static final EntryViewModel fromEntry(Entry entry) {
 		EntryViewModel e = new EntryViewModel();
-		e.setDueDate(entry.getDueDate().toDate());
+		if (entry.getDueDate() != null) {
+			e.setDueDate(entry.getDueDate().toDate());
+		}
 		e.setName(entry.getName());
 		e.setId(entry.getId());
 		e.setValue(entry.getValue());
-		
+		if (entry.getEntryDate() != null) {
+			e.setEntryDate(entry.getEntryDate().toDate());
+		}
+		e.setPosted(entry.isPosted());
+		if (entry.getAccount() != null) {
+			e.setAccount(entry.getAccount().getId());
+		}
 		if (entry instanceof Expense) {
 			e.setType("despesa");
 		} else if (entry instanceof Income) {
@@ -82,5 +100,37 @@ public class EntryViewModel {
 
 	public void setType(String type) {
 		this.type = type;
+	}
+
+	public Date getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(Date entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public boolean isPosted() {
+		return posted;
+	}
+
+	public void setPosted(boolean posted) {
+		this.posted = posted;
+	}
+
+	public Integer getAccount() {
+		return account;
+	}
+
+	public void setAccount(Integer account) {
+		this.account = account;
+	}
+
+	public Collection<AccountViewModel> getAccounts() {
+		return accounts;
+	}
+
+	public void setAccounts(Collection<AccountViewModel> accounts) {
+		this.accounts = accounts;
 	}
 }

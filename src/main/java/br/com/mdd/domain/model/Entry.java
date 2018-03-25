@@ -4,7 +4,6 @@ import java.math.BigDecimal;
 import java.text.Collator;
 import java.util.Locale;
 
-import javax.management.RuntimeErrorException;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
@@ -33,18 +33,47 @@ public abstract class Entry implements Comparable<Entry>, Cloneable {
 	private BigDecimal value;
 
 	//Due date significa data vencimento
-	//TODO Procurar o siginificado de data de lançamento
 	@Column
 	private LocalDate dueDate;
-
+	
+	//Data do lançamento
+	@Column
+	private LocalDate entryDate;
+	
+	private final int factor;
+	
+	@ManyToOne
+	private User user;
+	
+	@ManyToOne
+	private Account account;
+	
 	Entry() {
 		// this constructor shoudn't be used
+		this.factor = 1;
+	}
+	
+	public void post(Account account) {
+		this.setEntryDate(new LocalDate());
+		this.setAccount(account);
+		if (this.getFactor() == 1) {
+			account.deposit(this.getValue());
+		} else if (this.getFactor() == -1) {
+			account.withdraw(this.getValue());
+		} else {
+			throw new IllegalStateException("factor should be 1 or -1");
+		}
+	}
+	
+	public boolean isPosted() {
+		return this.entryDate != null;
 	}
 
-	public Entry(String name, BigDecimal value, LocalDate dueDate) {
+	public Entry(String name, BigDecimal value, LocalDate dueDate, int factor) {
 		this.name = name;
 		this.value = value;
 		this.dueDate = dueDate;
+		this.factor = factor;
 	}
 
 	public String getName() {
@@ -77,6 +106,34 @@ public abstract class Entry implements Comparable<Entry>, Cloneable {
 
 	public void setId(Integer id) {
 		this.id = id;
+	}
+	
+	public LocalDate getEntryDate() {
+		return entryDate;
+	}
+
+	public void setEntryDate(LocalDate entryDate) {
+		this.entryDate = entryDate;
+	}
+
+	public int getFactor() {
+		return factor;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public Account getAccount() {
+		return account;
+	}
+
+	public void setAccount(Account account) {
+		this.account = account;
 	}
 
 	@Override

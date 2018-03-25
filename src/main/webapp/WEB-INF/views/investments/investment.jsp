@@ -50,6 +50,7 @@
 				<c:url var="salvar" value="/investment"></c:url>
 				<form:form action="${salvar}" method="POST" modelAttribute="investment" id="formInvestment">
 					<form:hidden path="id" id="id"/>
+					<form:hidden path="entryDate" id="entryDate" />
 					<table>
 						<tr>
 							<td><label for="descricao">Descrição</label></td>
@@ -74,6 +75,17 @@
 						<tr>
 							<td><label for="taxRate">Imposto sobre rendimento (%)</label></td>
 							<td><form:input cssClass="inputDecimal" id="taxRate" path="taxRate" size="12"/></td>
+						</tr>
+						<tr>
+							<td><label for="account">Conta</label></td>
+							<td>
+								<form:select path="account" id="account">
+									<form:options items="${investment.accounts}" itemValue="id" itemLabel="institutionName" />
+								</form:select>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2"><form:checkbox path="posted"/> Lançado</td>
 						</tr>
 					</table>
 					<div class="group">

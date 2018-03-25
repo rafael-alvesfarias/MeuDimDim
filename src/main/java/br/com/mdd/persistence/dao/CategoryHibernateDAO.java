@@ -2,6 +2,8 @@ package br.com.mdd.persistence.dao;
 
 import java.util.List;
 
+import javax.persistence.NoResultException;
+
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.stereotype.Repository;
@@ -9,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import br.com.mdd.application.repository.CategoryRepository;
 import br.com.mdd.domain.model.Category;
+import br.com.mdd.domain.model.User;
 import br.com.mdd.domain.model.Category.CategoryType;
 
 @Repository

@@ -55,17 +55,12 @@
 				</c:choose>
 				<form:form action="${salvar}" method="POST" modelAttribute="account" id="formAccount">
 					<form:errors path="institutionName" cssClass="error" />
-					<form:errors path="number" cssClass="error" />
 					<form:errors path="balance" cssClass="error" />
 					<form:hidden path="id" id="idDespesa" />
 					<table>
 						<tr>
 							<td><label for="institutionName">Instituição financeira</label></td>
 							<td><form:input  id="institutionName" path="institutionName" size="40" /></td>
-						</tr>
-						<tr>
-							<td><label for="number">Número da conta</label></td>
-							<td><form:input id="number" path="number" size="12" /></td>
 						</tr>
 						<tr>
 							<td><label for="type">Tipo de conta</label></td>
@@ -90,13 +85,23 @@
 							</c:otherwise>
 						</c:choose>
 					</table>
-					<div class="btn-group line-separator-top"> 
-						<input type="button" id="btnUpdateBalance" value="Atualizar saldo" class="btn" />
-					</div>
-					<div class="btn-group"> 
-						<input type="submit" value="Salvar"	class="btn-submit" />
-						<a href="${urlAccounts}"><input type="button" value="Cancelar" class="btn-cancel" /></a> 
-					</div>
+					<c:choose>
+						<c:when test="${account.id == null}">
+							<div class="btn-group line-separator-top"> 
+								<input type="submit" value="Salvar"	class="btn-submit" />
+								<a href="${urlAccounts}"><input type="button" value="Cancelar" class="btn-cancel" /></a> 
+							</div>
+						</c:when>
+						<c:otherwise>
+							<div class="btn-group line-separator-top"> 
+								<input type="button" id="btnUpdateBalance" value="Atualizar saldo" class="btn" />
+							</div>
+							<div class="btn-group"> 
+								<input type="submit" value="Salvar"	class="btn-submit" />
+								<a href="${urlAccounts}"><input type="button" value="Cancelar" class="btn-cancel" /></a> 
+							</div>
+						</c:otherwise>
+					</c:choose>
 				</form:form>
 			</div>
 		</div>

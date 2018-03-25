@@ -21,18 +21,20 @@ public class Income extends Entry{
 	@ManyToOne
 	private Category category;
 	
-	@Column
-	private Boolean received;
-	
-	@ManyToOne
-	private User user;
-
 	public Income(String name, BigDecimal value, LocalDate dueDate) {
-		super(name, value, dueDate);
+		super(name, value, dueDate, 1);
 	}
 	
 	Income() {
 		
+	}
+	
+	public void receive(Account a) {
+		super.post(a);
+	}
+	
+	public boolean isReceived() {
+		return super.isPosted();
 	}
 
 	public Category getCategory() {
@@ -42,21 +44,4 @@ public class Income extends Entry{
 	public void setCategory(Category category) {
 		this.category = category;
 	}
-
-	public Boolean getReceived() {
-		return received;
-	}
-
-	public void setReceived(Boolean received) {
-		this.received = received;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
-	}
-
 }

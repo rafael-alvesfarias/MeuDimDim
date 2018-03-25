@@ -14,8 +14,6 @@ public class AccountViewModel {
 	
 	private String institutionName;
 	
-	private Integer number;
-	
 	private AccountType type;
 	
 	@NumberFormat(style = Style.CURRENCY)
@@ -32,7 +30,6 @@ public class AccountViewModel {
 		AccountViewModel a = new AccountViewModel();
 		a.setId(account.getId());
 		a.setInstitutionName(account.getInstitutionName());
-		a.setNumber(account.getNumber());
 		a.setType(account.getType());
 		a.setBalance(account.getBalance());
 		
@@ -53,14 +50,6 @@ public class AccountViewModel {
 
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
-	}
-
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer number) {
-		this.number = number;
 	}
 
 	public BigDecimal getBalance() {

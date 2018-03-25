@@ -23,15 +23,25 @@ public class InvestmentViewModel extends EntryViewModel {
 	
 	public static InvestmentViewModel fromInvestment(Investment i) {
 		InvestmentViewModel viewModel = new InvestmentViewModel();
-		viewModel.setDueDate(i.getDueDate().toDate());
+		if (i.getDueDate() != null) {
+			viewModel.setDueDate(i.getDueDate().toDate());
+		}
 		viewModel.setId(i.getId());
 		viewModel.setName(i.getName());
 		viewModel.setReturnRate(i.getReturnRate());
 		viewModel.setTaxRate(i.getTaxRate());
 		viewModel.setValue(i.getValue());
+		if (i.getEntryDate() != null) {
+			viewModel.setEntryDate(i.getEntryDate().toDate());
+		}
 		if (i.getWithdrawlDate() != null) {
 			viewModel.setWithdrawlDate(i.getWithdrawlDate().toDate());
 		}
+		viewModel.setPosted(i.isPosted());
+		if (i.getAccount() != null) {
+			viewModel.setAccount(i.getAccount().getId());
+		}
+		
 		return viewModel;
 	}
 

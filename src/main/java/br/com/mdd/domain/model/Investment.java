@@ -6,7 +6,6 @@ import javax.persistence.AttributeOverride;
 import javax.persistence.AttributeOverrides;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import org.joda.time.LocalDate;
@@ -29,9 +28,8 @@ public class Investment extends Entry {
 		
 	}
 	
-	
 	public Investment(String name, BigDecimal value, LocalDate dueDate, BigDecimal returnRate, LocalDate withdrawlDate, BigDecimal taxRate) {
-		super(name, value, dueDate);
+		super(name, value, dueDate, 1);
 		this.returnRate = returnRate;
 		this.withdrawlDate = withdrawlDate;
 		this.taxRate = taxRate;
@@ -40,9 +38,6 @@ public class Investment extends Entry {
 	public Investment(String name, BigDecimal value, LocalDate dueDate, BigDecimal returnRate) {
 		this(name, value, dueDate, returnRate, null, BigDecimal.ZERO);
 	}
-
-	@ManyToOne
-	private User user;
 
 	public BigDecimal getReturnRate() {
 		return returnRate;
@@ -58,14 +53,6 @@ public class Investment extends Entry {
 
 	public void setTaxRate(BigDecimal taxRate) {
 		this.taxRate = taxRate;
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	public LocalDate getWithdrawlDate() {

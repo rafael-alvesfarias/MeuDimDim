@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -23,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import br.com.mdd.application.repository.AccountRepository;
 import br.com.mdd.application.repository.CategoryRepository;
 import br.com.mdd.application.repository.EntryRepository;
+import br.com.mdd.application.service.EntryService;
 import br.com.mdd.application.service.UserService;
+import br.com.mdd.domain.model.Account;
 import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 import br.com.mdd.domain.model.Category;
@@ -33,25 +37,28 @@ import br.com.mdd.domain.model.Entry;
 import br.com.mdd.domain.model.Category.CategoryType;
 import br.com.mdd.domain.model.Income;
 import br.com.mdd.domain.model.User;
+import br.com.mdd.presentation.view.model.AccountViewModel;
 import br.com.mdd.presentation.view.model.BudgetViewModel;
 import br.com.mdd.presentation.view.model.income.IncomeViewModel;
 
 @Controller
 public class IncomesController {
 	
-	private Set<Category> categories;
-	
-	private IncomeViewModel income;
-	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private EntryService entryService;
 	
 	@Autowired
 	@Qualifier("entryDAO")
 	private EntryRepository<Income> incomeRepository;
 	
 	@Autowired
-	private CategoryRepository categoryDAO;
+	private AccountRepository accountRepository;
+	
+	@Autowired
+	private CategoryRepository categoryRepository;
 	
 	@Autowired
 	private HttpSession session;
@@ -69,10 +76,13 @@ public class IncomesController {
 	}
 	
 	@RequestMapping(value = "/newIncome", method = RequestMethod.GET)
-	public String newIncome(Model model){
-		categories = getCategories();
-		income = new IncomeViewModel();
-		income.setCategories(categories);
+	public String newIncome(Model model, Principal principal) {
+		User user = userService.findByUsername(principal.getName());
+		
+		IncomeViewModel income = new IncomeViewModel();
+		income.setCategories(getCategories());
+		List<AccountViewModel> accounts = getAccounts(user).stream().map(a -> AccountViewModel.fromAccount(a)).collect(Collectors.toList());
+		income.setAccounts(accounts);
 		model.addAttribute("income", income);
 		
 		return "/incomes/income";
@@ -84,25 +94,33 @@ public class IncomesController {
 		User user = userService.findByUsername(principal.getName());
 		
 		Income i = new Income(income.getName(), income.getValue(), new LocalDate(income.getDueDate()));
-		i.setId(income.getId());	
-		i.setReceived(income.getReceived());
-		i.setCategory(getCategory(income.getCategory()));
+		i.setId(income.getId());
+		if (income.getEntryDate() != null) {
+			i.setEntryDate(new LocalDate(income.getEntryDate()));
+		}
+		if (income.getCategory() != null) {
+			i.setCategory(getCategory(income.getCategory()));
+		}
+		i.setAccount(getAccount(income.getAccount()));
 		i.setUser(user);
-		incomeRepository.save(i);
+		if (income.isReceived() && income.getEntryDate() == null) {
+			entryService.postEntry(i, i.getAccount());
+		} else {
+			incomeRepository.save(i);
+		}
 		
-		return newIncome(model);
+		return "redirect:/newIncome";
 	}
 	
 	@Transactional(readOnly=true)
 	@RequestMapping("/editIncome/{id}")
 	public String updateIncome(Model model, @PathVariable Integer id){
-		
 		Income i = incomeRepository.find(id, Income.class);
 		
-		//generateAnnualBudget(model);
-		
-		income = IncomeViewModel.fromIncome(i);
-		income.setCategories(categories);
+		IncomeViewModel income = IncomeViewModel.fromIncome(i);
+		income.setCategories(getCategories());
+		List<AccountViewModel> accounts = getAccounts(i.getUser()).stream().map(a -> AccountViewModel.fromAccount(a)).collect(Collectors.toList());
+		income.setAccounts(accounts);
 		
 		model.addAttribute("income", income);
 		
@@ -129,17 +147,12 @@ public class IncomesController {
 		return "/home";
 	}
 	
-	private Category getCategory(String nome) {
-		for (Category categoria : categories) {
-			if (categoria.getName().equals(nome)) {
-				return categoria;
-			}
-		}
-		return null;
+	private Category getCategory(Integer id) {
+		return categoryRepository.find(id, Category.class);
 	}
 	
 	private Set<Category> getCategories() {
-		Set<Category> categorias = new TreeSet<>(categoryDAO.findAllCategoriesByType(CategoryType.INCOME));
+		Set<Category> categorias = new TreeSet<>(categoryRepository.findAllCategoriesByType(CategoryType.INCOME));
 		
 		return categorias;
 	}
@@ -164,10 +177,20 @@ public class IncomesController {
 		return BudgetViewModel.fromBudget(b);
 	}
 	
+	private Account getAccount(Integer id) {
+		return accountRepository.find(id, Account.class);
+	}
+	
 	private Set<Entry> getIncomes(User user){
 		Set<Entry> despesas = new TreeSet<Entry>(incomeRepository.findByUser(user, Income.class));
 		
 		return despesas;
+	}
+	
+	private List<Account> getAccounts(User user) {
+		List<Account> categorias = new ArrayList<>(accountRepository.findByUser(user));
+		
+		return categorias;
 	}
 
 }

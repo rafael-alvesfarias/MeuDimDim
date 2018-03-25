@@ -22,8 +22,6 @@ public class Account {
 	
 	private String institutionName;
 	
-	private Integer number;
-	
 	private BigDecimal balance;
 	
 	@Column
@@ -37,20 +35,26 @@ public class Account {
 		this.balance = BigDecimal.ZERO;
 	}
 	
-	public Account(String institutionName, Integer number, BigDecimal balance, AccountType type) {
+	public Account(String institutionName, BigDecimal balance, AccountType type) {
 		super();
 		this.institutionName = institutionName;
-		this.number = number;
 		this.balance = balance;
 		this.type = type;
 	}
 
-	public Account(String institutionName, Integer number, AccountType type) {
+	public Account(String institutionName, AccountType type) {
 		super();
 		this.institutionName = institutionName;
-		this.number = number;
 		this.balance = BigDecimal.ZERO;
 		this.type = type;
+	}
+	
+	public void deposit(BigDecimal value) {
+		this.balance = this.balance.add(value);
+	}
+	
+	public void withdraw(BigDecimal value) {
+		this.balance = this.balance.subtract(value);
 	}
 
 	public Integer getId() {
@@ -67,14 +71,6 @@ public class Account {
 
 	public void setInstitutionName(String institutionName) {
 		this.institutionName = institutionName;
-	}
-
-	public Integer getNumber() {
-		return number;
-	}
-
-	public void setNumber(Integer number) {
-		this.number = number;
 	}
 
 	public BigDecimal getBalance() {
