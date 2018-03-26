@@ -295,4 +295,16 @@ form table, form td, form tr{
 	.div-3, .div-5, .div-6, .div-10 {
 		width: 100%;
 	}
+
+	*{
+		font-size:11px;
+	}
+
+	h2 {
+		font-size: 14px;
+	}
+
+	.panelTitle {
+		font-size: 13px;
+	}
 }
