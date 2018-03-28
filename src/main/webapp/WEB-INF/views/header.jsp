@@ -25,7 +25,7 @@
 </script>
 <div class="logo">
 	<a href="${urlHome}"><img src="<c:url value='/resources/imagens/logo.png'/>"/></a>
-	<h1>meu<span>dimdim</span></h1>
+	<h1>meu<span>dindin</span></h1>
 	<h2>rumo à independência financeira</h2>
 </div>
 <div class="login">
