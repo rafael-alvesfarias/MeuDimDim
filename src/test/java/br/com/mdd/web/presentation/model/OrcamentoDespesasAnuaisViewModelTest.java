@@ -7,11 +7,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.joda.time.LocalDate;
-import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.Test;
 
-import br.com.mdd.domain.model.Expense;
 import br.com.mdd.domain.model.FixedExpense;
 import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel;
 import br.com.mdd.presentation.view.model.expense.AnualExpensesBudgetViewModel.ConjuntoDespesas;
@@ -19,10 +17,6 @@ import br.com.mdd.domain.model.Budget;
 import br.com.mdd.domain.model.BudgetBuilder;
 
 public class OrcamentoDespesasAnuaisViewModelTest {
-
-	@AfterClass
-	public static void tearDownAfterClass() throws Exception {
-	}
 
 	@Before
 	public void setUp() throws Exception {

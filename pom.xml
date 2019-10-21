@@ -1,9 +1,10 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>br.com.mdd</groupId>
 	<artifactId>meudindin</artifactId>
-	<version>1.0</version>
+	<version>1.0.2</version>
 	<packaging>war</packaging>
 
 	<parent>
@@ -113,6 +114,29 @@
 				<configuration>
 					<source>1.8</source>
 					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>exec-maven-plugin</artifactId>
+				<version>1.6.0</version>
+				<executions>
+					<execution>
+						<goals>
+							<goal>exec</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<mainClass>br.com.mdd.App</mainClass>
+					<workingDirectory>/tmp</workingDirectory>
+					<arguments>
+						<argument>server</argument>
+						<argument>${project.basedir}/config/config-dev.yml</argument>
+					</arguments>
+					<environmentVariables>
+						
+					</environmentVariables>
 				</configuration>
 			</plugin>
 		</plugins>

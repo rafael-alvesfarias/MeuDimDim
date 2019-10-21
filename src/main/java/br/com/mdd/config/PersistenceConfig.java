@@ -27,7 +27,7 @@ import br.com.mdd.domain.model.VariableExpense;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource({ "file:${app_root_dir}/conf/persistence-mysql.properties" })
+@PropertySource({ "classpath:persistence-mysql.properties" })
 public class PersistenceConfig {
 	
 	@Autowired
