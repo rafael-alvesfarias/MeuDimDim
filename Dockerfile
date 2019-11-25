@@ -30,9 +30,7 @@ ARG DEPENDENCY=/app/target/dependency
 
 # Copy project dependencies from the build stage
 COPY --from=build /app/target/*.war /opt/app/app.war
-#COPY --from=build ${DEPENDENCY}/META-INF /app/META-INF
-#COPY --from=build ${DEPENDENCY}/WEB-INF/lib /app/lib
-#COPY --from=build ${DEPENDENCY}/WEB-INF/views /app/views
-#COPY --from=build ${DEPENDENCY}/WEB-INF/classes /app
 
-ENTRYPOINT ["java","-jar","/opt/app/app.war"]
+ENV JAVA_OPTS="-Xdebug -Xrunjdwp:transport=dt_socket,address=8000,server=y,suspend=n"
+
+ENTRYPOINT exec java $JAVA_OPTS -jar /opt/app/app.war

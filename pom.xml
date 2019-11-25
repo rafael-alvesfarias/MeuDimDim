@@ -134,9 +134,6 @@
 						<argument>server</argument>
 						<argument>${project.basedir}/config/config-dev.yml</argument>
 					</arguments>
-					<environmentVariables>
-						
-					</environmentVariables>
 				</configuration>
 			</plugin>
 		</plugins>
