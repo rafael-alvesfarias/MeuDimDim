@@ -3,7 +3,7 @@
 	margin: 0;
 	padding: 0;
 	font-family: 'arial', 'helvetica', 'sans-serif';
-	font-size: 11px;
+	font-size: 13px;
 	line-height: 1.5;
 	box-sizing: border-box;
 }
@@ -17,7 +17,7 @@ h2 {
 	font-weight: 600;
 	color: #555;
 	font-weight: 600;
-	font-size: 14px;
+	font-size: 16px;
 	padding-top: 10px;
 	padding-left: 10px;
 }
@@ -175,7 +175,7 @@ th{
 
 .panelTitle {
 	font-weight: 600;
-	font-size: 13px;
+	font-size: 14px;
 	color: #FFF;
 	position: relative;
 	top: -27px;
@@ -294,5 +294,17 @@ form table, form td, form tr{
 @media only screen and (max-width: 600px) {
 	.div-3, .div-5, .div-6, .div-10 {
 		width: 100%;
+	}
+
+	*{
+		font-size:11px;
+	}
+
+	h2 {
+		font-size: 14px;
+	}
+
+	.panelTitle {
+		font-size: 13px;
 	}
 }
